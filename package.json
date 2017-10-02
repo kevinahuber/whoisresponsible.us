@@ -1,0 +1,141 @@
+{
+  "name": "climate-change-responsibility",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "chroma-js": "^1.3.4",
+    "d3-scale": "^1.0.6",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.13",
+    "react-simple-maps": "^0.8.3",
+    "topojson-client": "^3.0.0",
+    "topojson-server": "^3.0.0"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "npm run flow && npm run lint",
+    "eject": "react-scripts eject",
+    "deploy": "npm run lint && npm run build && aws s3 sync build/ s3://climate-change-responsibility",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "lint:js": "standard",
+    "lint:scss": "stylelint \"**/*.scss\"",
+    "flow": "flow"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint-plugin-flowtype": "^2.37.0",
+    "flow-bin": "^0.56.0",
+    "jsonfile": "^4.0.0",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.1.1",
+    "standard": "^10.0.3",
+    "stylelint": "^8.1.1",
+    "stylelint-order": "^0.7.0",
+    "stylelint-scss": "^2.1.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ],
+    "globals": [
+      "it",
+      "URL",
+      "fetch",
+      "Subcategory",
+      "Category",
+      "Props",
+      "State",
+      "Geography"
+    ]
+  },
+  "stylelint": {
+    "plugins": [
+      "stylelint-scss",
+      "stylelint-order"
+    ],
+    "rules": {
+      "at-rule-blacklist": [
+        "debug"
+      ],
+      "at-rule-no-vendor-prefix": true,
+      "block-no-empty": true,
+      "block-opening-brace-space-before": "always",
+      "color-hex-case": "lower",
+      "color-hex-length": "short",
+      "color-named": "never",
+      "color-no-invalid-hex": true,
+      "declaration-bang-space-after": "never",
+      "declaration-bang-space-before": "always",
+      "declaration-block-semicolon-newline-after": "always",
+      "declaration-block-semicolon-space-before": "never",
+      "declaration-block-single-line-max-declarations": 1,
+      "declaration-block-trailing-semicolon": "always",
+      "declaration-colon-space-after": "always-single-line",
+      "declaration-colon-space-before": "never",
+      "declaration-property-value-blacklist": {
+        "/^border/": [
+          "none"
+        ]
+      },
+      "function-comma-space-after": "always-single-line",
+      "function-parentheses-space-inside": "never",
+      "function-url-quotes": "always",
+      "indentation": 2,
+      "length-zero-no-unit": true,
+      "max-nesting-depth": 2,
+      "media-feature-name-no-vendor-prefix": true,
+      "media-feature-parentheses-space-inside": "never",
+      "no-missing-end-of-source-newline": true,
+      "number-leading-zero": "always",
+      "number-no-trailing-zeros": true,
+      "order/properties-alphabetical-order": true,
+      "property-no-unknown": true,
+      "property-no-vendor-prefix": true,
+      "rule-empty-line-before": [
+        "always-multi-line",
+        {
+          "except": [
+            "first-nested"
+          ],
+          "ignore": [
+            "after-comment"
+          ]
+        }
+      ],
+      "scss/at-extend-no-missing-placeholder": true,
+      "scss/at-function-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
+      "scss/at-import-no-partial-leading-underscore": true,
+      "scss/at-import-partial-extension-blacklist": [
+        "scss"
+      ],
+      "scss/at-mixin-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
+      "scss/dollar-variable-colon-space-after": "always",
+      "scss/dollar-variable-colon-space-before": "never",
+      "scss/dollar-variable-pattern": "^[_]?[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
+      "scss/percent-placeholder-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
+      "scss/selector-no-redundant-nesting-selector": true,
+      "selector-class-pattern": [
+        "^[a-z0-9\\-]+$",
+        {
+          "message": "Selector should be written in lowercase with hyphens (selector-class-pattern)"
+        }
+      ],
+      "selector-list-comma-newline-after": "always",
+      "selector-max-compound-selectors": 3,
+      "selector-max-id": 0,
+      "selector-no-qualifying-type": true,
+      "selector-no-vendor-prefix": true,
+      "selector-pseudo-element-colon-notation": "double",
+      "selector-pseudo-element-no-unknown": true,
+      "shorthand-property-no-redundant-values": true,
+      "string-quotes": "single",
+      "value-no-vendor-prefix": true
+    }
+  }
+}

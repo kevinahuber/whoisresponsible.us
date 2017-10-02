@@ -1,0 +1,50 @@
+@import 'variables';
+
+.comparisons {
+  background: rgb(51, 52, 61);
+  border: solid 1px $orange;
+  box-sizing: border-box;
+  font-family: 'SanFranciscoText-RegularItalic';
+  margin-bottom: 50px;
+  max-width: 975px;
+  padding: 5px 25px 26px;
+  width: 100%;
+
+  &__row {
+    height: 60px;
+
+    &-title {
+      border-bottom: solid 11px $orange;
+      box-sizing: border-box;
+      color: $orange;
+      display: inline-block;
+      float: left;
+      font-size: 1.4375rem;
+      height: 60px;
+      padding-top: 17px;
+      width: 160px;
+    }
+  }
+
+  &__row-bar {
+    display: inline-block;
+    height: 60px;
+    width: calc(100% - 160px);
+
+    &-bar {
+      border-bottom: solid 3px $orange;
+      box-sizing: border-box;
+      color: $orange;
+      height: 60px;
+      position: relative;
+    }
+
+    &-value {
+      bottom: 0;
+      font-size: 1.4375rem;
+      line-height: 2.125rem;
+      position: absolute;
+      right: 0;
+    }
+  }
+}

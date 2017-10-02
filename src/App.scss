@@ -1,0 +1,16 @@
+@import 'variables';
+
+.app {
+  background-color: $bg-grey;
+  padding-top: 53px;
+
+  &__title {
+    color: $text-grey;
+    font-family: $title-font;
+    font-size: 2.8125rem;
+    font-weight: 400;
+    margin: 0 0 80px;
+    text-align: center;
+    width: 100%;
+  }
+}

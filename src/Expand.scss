@@ -1,0 +1,18 @@
+@import 'variables';
+
+.expand {
+  max-width: 975px;
+  position: relative;
+
+  &__image {
+    background-color: $trans-orange;
+    border: solid 1px $orange;
+    cursor: pointer;
+    height: 24px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: -80px;
+    width: 24px;
+  }
+}
