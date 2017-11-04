@@ -11,14 +11,14 @@ const names = {
   'Land-Use Change and Forestry': 'Land-Use'
 }
 
-const defaultTotals = Object.keys(names).reduce(
+const defaultMaxes = Object.keys(names).reduce(
   (m, n) => Object.assign({}, m, {[n]: 0}),
   {}
 )
 
-const totals = contributions.reduce((m, c) => {
+const maxes = contributions.reduce((m, c) => {
   return Object.keys(m).reduce((me, n) => {
-    return Object.assign({}, me, {[n]: m[n] + c[n]})
+    return Object.assign({}, me, {[n]: Math.max(m[n] + c[n]}))
   }, {})
 }, defaultTotals)
 

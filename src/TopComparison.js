@@ -3,8 +3,13 @@ import React, {Component} from 'react'
 import './TopComparisons.css'
 import data from './resources/aggregate-by-country.json'
 import codes from './resources/codes.json'
-// $FlowFixMe
-import {FaSortAmountAsc, FaSortAmountDesc} from 'react-icons/lib/fa'
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaSortAmountAsc,
+  FaSortAmountDesc
+  // $FlowFixMe
+} from 'react-icons/lib/fa'
 type Props = {
   activeSubcategories: string[],
   isSortedNegative: boolean,
@@ -76,19 +81,20 @@ export default class TopComparisons extends Component<Props, State> {
       : sortedSubcategories.slice(0, 10)
     return (
       <div className="top-comparisons">
-        <span className="top-comparisons__toggle" onClick={onSort}>
-          {isSortedNegative ? (
-            <FaSortAmountDesc fill="#f73f0a" key="desc" />
-          ) : (
-            <FaSortAmountAsc fill="#f73f0a" key="asc" />
-          )}
+        <span className="top-comparisons__toggle-sort" onClick={onSort}>
+          {isSortedNegative ? <FaSortAmountDesc /> : <FaSortAmountAsc />}
         </span>
         {visibleSubcategories.map((country, i) => {
           return this.renderBar(country.average, codes[country.code])
         })}
-        <span onClick={this.handleExpandToggle}>
-          {isExpanded ? 'Collapse' : 'Expand'}
-        </span>
+        <div className="top-comparisons__toggle-expand-container">
+          <span
+            className="top-comparisons__toggle-expand"
+            onClick={this.handleExpandToggle}
+          >
+            {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
+          </span>
+        </div>
       </div>
     )
   }

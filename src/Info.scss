@@ -1,0 +1,50 @@
+@import 'variables';
+@import 'mixins';
+
+$size: 20px;
+
+.info {
+  font-family: 'SanFranciscoText-RegularItalic';
+  color: $orange;
+  font-size: 1rem;
+
+  &__label {
+    line-height: $size;
+    text-align: center;
+    opacity: 0.7;
+    position: absolute;
+    right: 0px;
+    top: calc(-15px - #{$size});
+    cursor: pointer;
+    border: solid 1px $orange;
+    display: inline-block;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $trans-orange;
+    }
+  }
+
+  &__details {
+    width: calc(100% + 3px);
+    background-color: $bg-grey;
+    margin: -1px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+
+    @include widescreen-up {
+      width: 180px;
+      position: absolute;
+      margin: auto;
+      left: auto;
+      background-color: transparent;
+      right: -210px;
+      top: 0;
+    }
+  }
+}

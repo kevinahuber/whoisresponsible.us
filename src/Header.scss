@@ -1,23 +1,30 @@
 @import 'variables';
+@import 'mixins';
 
 .header {
   &__title {
     color: $text-grey;
     font-family: $title-font;
-    font-size: 2.8125rem;
+    font-size: 2rem;
     font-weight: 400;
-    margin: 0 0 80px;
+    margin: 0 0 40px;
+    line-height: 3rem;
     text-align: center;
     width: 100%;
 
+    @include desktop-up {
+      font-size: 2.8125rem;
+      margin: 0 0 80px;
+    }
+
     &--primary {
       cursor: pointer;
-      border-bottom: solid 5px $orange;
+      border-bottom: solid 5px $primary-color;
     }
 
     &--secondary {
       cursor: pointer;
-      border-bottom: solid 5px $teal;
+      border-bottom: solid 5px $secondary-color;
     }
   }
 }

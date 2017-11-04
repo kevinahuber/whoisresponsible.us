@@ -89,7 +89,7 @@ export default class App extends Component<{}, State> {
     const {activeSubcategories} = this.state
     const newActiveSubcategories = activeSubcategories.includes(sub)
       ? this.state.activeSubcategories.filter(s => s !== sub)
-      : this.state.activeSubcategories.concat(sub)
+      : [sub].concat(this.state.activeSubcategories)
     this.setState((state: State) => ({
       activeSubcategories: newActiveSubcategories
     }))

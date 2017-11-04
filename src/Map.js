@@ -8,7 +8,7 @@ import {
   // $FlowFixMe
 } from 'react-simple-maps'
 // $FlowFixMe
-import {Motion, spring, presets} from 'react-motion'
+import cn from 'classnames'
 
 // $FlowFixMe
 import {scaleLinear} from 'd3-scale'
@@ -16,7 +16,7 @@ import {scaleLinear} from 'd3-scale'
 import type {Geography as GeographyType} from './types.js'
 
 import data from './resources/aggregate-by-country.json'
-import './App.css'
+import styles from './Map.css'
 
 const excludes = [
   'ATA'
@@ -95,101 +95,92 @@ export default class Map extends Component<Props, State> {
     const height = 599
     const width = 959
 
-    const wrapperStyles = {
-      width: '100%',
-      maxWidth: spring(
-        !(activeCode && secondaryCode) ? 980 : 400,
-        presets.gentle
-      ),
-      display: 'inline-block',
-      margin: '-50px auto -160px'
-    }
-
     return (
-      <Motion style={wrapperStyles}>
-        {style => (
-          <div style={style}>
-            <ComposableMap
-              projectionConfig={{
-                scale: 205,
-                rotation: [-11, 0, 0]
-              }}
-              width={width}
-              height={height}
-              style={{
-                width: '100%',
-                height: 'auto'
-              }}
+      <div
+        className={cn('map', {
+          'map--collapsed': activeCode && secondaryCode
+        })}
+      >
+        <ComposableMap
+          projectionConfig={{
+            scale: 205,
+            rotation: [-11, 0, 0]
+          }}
+          width={width}
+          height={height}
+          style={{
+            width: '100%',
+            height: 'auto'
+          }}
+        >
+          <ZoomableGroup center={center} zoom={zoom} disablePanning>
+            <Geographies
+              geographyUrl={'/world-50m-with-population.json'}
+              disableOptimization={isOptimizationDisabled}
             >
-              <ZoomableGroup center={center} zoom={zoom} disablePanning>
-                <Geographies
-                  geographyUrl={'/world-50m-with-population.json'}
-                  disableOptimization={isOptimizationDisabled}
-                >
-                  {(geographies, projection) =>
-                    geographies.map((geography, i) => {
-                      const code = geography.properties.iso_a3
-                      if (excludes.includes(code)) return null
+              {(geographies, projection) =>
+                geographies.map((geography, i) => {
+                  const code = geography.properties.iso_a3
+                  if (excludes.includes(code)) return null
 
-                      let scale
-                      if (isShowingAll) {
-                        scale = this.getScale(code)
-                        if (
-                          typeof scale !== 'number' &&
-                          !!activeSubcategories.length
-                        )
-                          return null
-                      }
+                  let scale
+                  if (isShowingAll) {
+                    scale = this.getScale(code)
+                    if (
+                      typeof scale !== 'number' &&
+                      !!activeSubcategories.length
+                    )
+                      return null
+                  }
 
-                      const isActive = code === activeCode
-                      const isSecondary = code === secondaryCode
+                  const isActive = code === activeCode
+                  const isSecondary = code === secondaryCode
 
-                      // TODO: Import colors from css
-                      const color = isShowingAll
-                        ? popScale(scale)
-                        : isActive
-                          ? '#F73F0A'
-                          : isSecondary ? '#0AC9F7' : '#33343D'
-                      const hoverColor = isShowingAll
-                        ? popScale(scale)
-                        : isActive
-                          ? '#F73F0A'
-                          : isSecondary
-                            ? '#0AC9F7'
-                            : activeCode ? '#0AC9F7' : '#F73F0A'
-                      return (
-                        <Geography
-                          key={i}
-                          id={geography.properties.iso_a3}
-                          geography={geography}
-                          projection={projection}
-                          onClick={onGeographyClick}
-                          onMouseEnter={onGeographyMouseEnter}
-                          onMouseLeave={onGeographyMouseLeave}
-                          style={{
-                            default: {
-                              fill: color,
-                              outline: 'none'
-                            },
-                            hover: {
-                              fill: hoverColor,
-                              outline: 'none',
-                              cursor: 'pointer'
-                            },
-                            pressed: {
-                              fill: hoverColor,
-                              outline: 'none'
-                            }
-                          }}
-                        />
-                      )
-                    })}
-                </Geographies>
-              </ZoomableGroup>
-            </ComposableMap>
-          </div>
-        )}
-      </Motion>
+                  // TODO: Import colors from css
+                  const color = isShowingAll
+                    ? popScale(scale)
+                    : isActive
+                      ? styles.primary
+                      : isSecondary ? styles.secondary : '#33343D'
+                  const hoverColor = isShowingAll
+                    ? popScale(scale)
+                    : isActive
+                      ? styles.primary
+                      : isSecondary
+                        ? styles.secondary
+                        : activeCode ? styles.secondary : styles.primary
+                  return (
+                    <Geography
+                      key={i}
+                      id={geography.properties.iso_a3}
+                      geography={geography}
+                      projection={projection}
+                      onClick={onGeographyClick}
+                      onMouseEnter={onGeographyMouseEnter}
+                      onMouseLeave={onGeographyMouseLeave}
+                      style={{
+                        default: {
+                          fill: color,
+                          outline: 'none'
+                        },
+                        hover: {
+                          fill: hoverColor,
+                          outline: 'none',
+                          cursor: 'pointer'
+                        },
+                        pressed: {
+                          fill: hoverColor,
+                          outline: 'none',
+                          opacity: 0.5
+                        }
+                      }}
+                    />
+                  )
+                })}
+            </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
     )
   }
 }

@@ -3,6 +3,7 @@
 import React, {Component} from 'react'
 import './Categories.css'
 import type {Category} from './types.js'
+import Info from './Info.js'
 
 type Props = {
   activeSubcategories: string[],
@@ -22,6 +23,7 @@ export default class Categories extends Component<Props> {
 
     return (
       <div className="categories">
+        <Info />
         <div className="categories__container">
           {categories.map((category, i) => {
             return (

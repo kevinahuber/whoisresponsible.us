@@ -33,9 +33,9 @@ export default class Header extends Component<Props> {
       <div className="header">
         <h1 className="header__title">
           {isShowingAll && isSortedNegative ? (
-            'Top Worst'
-          ) : isShowingAll ? (
             'Top Best'
+          ) : isShowingAll ? (
+            'Top Worst'
           ) : !primary ? (
             'Who is responsible for Climate Change?'
           ) : secondary ? (

@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default class Controls extends Component<Props> {
-  render () {
+  render() {
     const {
       onBackClick,
       onAllToggle,
@@ -20,17 +20,21 @@ export default class Controls extends Component<Props> {
     } = this.props
 
     return (
-      <div className='controls'>
-        <div onClick={isShowingAll ? onAllToggle : onBackClick} className='controls__back'>
-          <span className='controls__label'>
-            {'< Back'}
-          </span>
+      <div className="controls">
+        <div
+          onClick={isShowingAll ? onAllToggle : onBackClick}
+          className="controls__back"
+        >
+          <span className="controls__label">{'< Back'}</span>
         </div>
-        {!isShowingAll && hasActiveSubcategories && <div onClick={onAllToggle} className='controls__all'>
-          <span className='controls__label'>
-            See how everyone stacks up
-          </span>
-        </div>}
+        {!isShowingAll &&
+          hasActiveSubcategories && (
+            <div onClick={onAllToggle} className="controls__all">
+              <span className="controls__label">
+                See how everyone stacks up
+              </span>
+            </div>
+          )}
       </div>
     )
   }

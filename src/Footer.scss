@@ -1,24 +1,29 @@
 @import 'variables';
+@import 'mixins';
 
 .footer {
-  height: 55px;
   background: $bg-black;
   color: $dark-grey;
   font-family: 'SanFranciscoText-RegularItalic';
-  flex-flow: center;
-  margin-top: 100px;
+  text-align: center;
+  @include desktop-up {
+    height: 55px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
   &__container {
     max-width: 975px;
     width: 100%;
     margin: auto;
-    display: flex;
-    line-height: 55px;
-    justify-content: space-between;
+
+    @include desktop-up {
+      line-height: 55px;
+      display: flex;
+      justify-content: space-between;
+    }
   }
   &__responsibility-link,
   &__attribution-link {
@@ -30,9 +35,13 @@
     }
   }
 
-  &__responsibility-link,
-  &__attribution {
+  &__attribution,
+  &__responsibility-link {
+    padding: 20px 30px;
+    display: block;
 
+    @include desktop-up {
+      padding: 0 30px;
+    }
   }
-
 }

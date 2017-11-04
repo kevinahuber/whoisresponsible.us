@@ -10,7 +10,17 @@
   width: 100%;
   position: relative;
 
-  &__toggle {
+  &__toggle-expand {
+    color: $orange;
+    cursor: pointer;
+  }
+
+  &__toggle-expand-container {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+  }
+  &__toggle-sort {
     color: $orange;
     position: absolute;
     top: 15px;

@@ -1,0 +1,19 @@
+@import 'variables';
+@import 'mixins';
+
+:export {
+  primary: $primary-color;
+  secondary: $secondary-color;
+}
+
+.map {
+  width: 100%;
+  max-width: 980px;
+  display: inline-block;
+  transition: max-width 0.1s;
+  @include desktop-up {
+    &--collapsed {
+      max-width: 400px;
+    }
+  }
+}

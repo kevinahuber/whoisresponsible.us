@@ -35,17 +35,17 @@
 
     &-active,
     &-secondary {
-      border-bottom: solid 6px $orange;
+      border-bottom: solid 6px $primary-color;
       box-sizing: border-box;
-      color: $orange;
+      color: $primary-color;
       height: 60px;
       position: absolute;
     }
 
     &-secondary {
-      border-bottom: solid 6px $teal;
+      border-bottom: solid 6px $secondary-color;
       height: 54px;
-      color: $teal;
+      color: $secondary-color;
       line-height: 1.5rem;
     }
 
