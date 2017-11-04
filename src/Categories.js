@@ -1,47 +1,48 @@
 // @flow
 
-import React, { Component } from "react";
-import "./Categories.css";
-import type { Category } from "./types.js";
-import Info from "./Info.js";
+import React, {Component} from 'react'
+import './Categories.css'
+import type {Category} from './types.js'
+import Info from './Info.js'
+import cn from 'classnames'
 
 const categories: Category[] = [
   {
-    title: "Vulnerability",
+    title: 'Vulnerability',
     subcategories: [
-      "Capacity",
-      "Ecosystem",
-      "Exposure",
-      "Food",
-      "Habitat",
-      "Health",
-      "Infrastructure",
-      "Sensitivity",
-      "Water"
+      'Capacity',
+      'Ecosystem',
+      'Exposure',
+      'Food',
+      'Habitat',
+      'Health',
+      'Infrastructure',
+      'Sensitivity',
+      'Water'
     ]
   },
   {
-    title: "Preparedness",
-    subcategories: ["Economic", "Governance", "Social"]
+    title: 'Preparedness',
+    subcategories: ['Economic', 'Governance', 'Social']
   },
   {
-    title: "Contribution",
+    title: 'Contribution',
     subcategories: [
-      "Energy",
-      "Industrial",
-      "Agriculture",
-      "Waste",
-      "Land-Use",
-      "Bunker Fuels"
+      'Energy',
+      'Industrial',
+      'Agriculture',
+      'Waste',
+      'Land-Use',
+      'Bunker Fuels'
     ]
   }
-];
+]
 
 type Props = {
   activeSubcategories: string[],
   onCategoryClick: (category: Category) => mixed,
   onSubcategoryClick: (title: string) => mixed
-};
+}
 
 export default class Categories extends Component<Props> {
   render() {
@@ -49,7 +50,7 @@ export default class Categories extends Component<Props> {
       activeSubcategories,
       onSubcategoryClick,
       onCategoryClick
-    } = this.props;
+    } = this.props
 
     return (
       <div className="categories">
@@ -68,21 +69,21 @@ export default class Categories extends Component<Props> {
                   category.subcategories.map((s, i) => (
                     <div
                       key={i}
-                      className={`categories__subcategory-title ${activeSubcategories.includes(
-                        s
-                      )
-                        ? "categories__subcategory-title--active"
-                        : ""}`}
+                      className={cn('categories__subcategory-title', {
+                        'categories__subcategory-title--active': activeSubcategories.includes(
+                          s
+                        )
+                      })}
                       onClick={onSubcategoryClick(s)}
                     >
                       {s}
                     </div>
                   ))}
               </div>
-            );
+            )
           })}
         </div>
       </div>
-    );
+    )
   }
 }

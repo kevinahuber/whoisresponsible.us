@@ -1,17 +1,17 @@
 // @flow
-import React, { Component } from "react";
+import React, {Component} from 'react'
 
-import Categories from "./Categories.js";
-import Comparisons from "./Comparisons.js";
-import TopComparison from "./TopComparison.js";
-import Footer from "./Footer.js";
-import Header from "./Header.js";
-import Map from "./Map.js";
-import Controls from "./Controls.js";
-import type { Category, Geography as GeographyType } from "./types.js";
+import Categories from './Categories.js'
+import Comparisons from './Comparisons.js'
+import TopComparison from './TopComparison.js'
+import Footer from './Footer.js'
+import Header from './Header.js'
+import Map from './Map.js'
+import Controls from './Controls.js'
+import type {Category, Geography as GeographyType} from './types.js'
 
-import data from "./resources/aggregate-by-country.json";
-import "./App.css";
+import data from './resources/aggregate-by-country.json'
+import './App.css'
 
 type State = {
   activeSubcategories: string[],
@@ -21,7 +21,7 @@ type State = {
   hoveredPrimaryName?: string,
   hoveredSecondaryName?: string,
   isSortedNegative: boolean
-};
+}
 
 export default class App extends Component<{}, State> {
   state = {
@@ -32,10 +32,10 @@ export default class App extends Component<{}, State> {
     hoveredPrimaryName: undefined,
     hoveredSecondaryName: undefined,
     isSortedNegative: false
-  };
+  }
 
   handleCategoryClick = (category: Category) => () => {
-    const { activeSubcategories } = this.state;
+    const {activeSubcategories} = this.state
     const newActiveSubcategories = category.subcategories.every(s =>
       activeSubcategories.includes(s)
     )
@@ -46,46 +46,46 @@ export default class App extends Component<{}, State> {
           category.subcategories
             .map(s => s)
             .filter(s => !activeSubcategories.includes(s))
-        );
+        )
     this.setState((state: State) => ({
       activeSubcategories: newActiveSubcategories
-    }));
-  };
+    }))
+  }
 
   handleSubcategoryClick = (sub: string) => () => {
-    const { activeSubcategories } = this.state;
+    const {activeSubcategories} = this.state
     const newActiveSubcategories = activeSubcategories.includes(sub)
       ? this.state.activeSubcategories.filter(s => s !== sub)
-      : [sub].concat(this.state.activeSubcategories);
+      : [sub].concat(this.state.activeSubcategories)
     this.setState((state: State) => ({
       activeSubcategories: newActiveSubcategories
-    }));
-  };
+    }))
+  }
 
   handleGeographyClick = (geography: GeographyType) => {
-    const newState = {};
+    const newState = {}
 
     if (this.state.primaryGeography) {
       if (
         geography.properties.iso_a3 ===
         this.state.primaryGeography.properties.iso_a3
       ) {
-        newState.primaryGeography = undefined;
+        newState.primaryGeography = undefined
       } else if (
         this.state.secondaryGeography &&
         geography.properties.iso_a3 ===
           this.state.secondaryGeography.properties.iso_a3
       ) {
-        newState.secondaryGeography = undefined;
+        newState.secondaryGeography = undefined
       } else {
-        newState.secondaryGeography = geography;
+        newState.secondaryGeography = geography
       }
     } else {
-      newState.primaryGeography = geography;
+      newState.primaryGeography = geography
     }
 
-    this.setState((state: State) => newState);
-  };
+    this.setState((state: State) => newState)
+  }
 
   handleGeographyMouseEnter = (geography: GeographyType) => {
     this.setState((state: State) => ({
@@ -96,55 +96,55 @@ export default class App extends Component<{}, State> {
         state.primaryGeography && state.secondaryGeography
           ? undefined
           : state.primaryGeography ? geography.properties.name_long : undefined
-    }));
-  };
+    }))
+  }
 
   handleClearGeography = () => {
     const newState = {
       primaryGeography: undefined,
       secondaryGeography: undefined,
       isShowingAll: false
-    };
-    this.setState((state: State) => newState);
-  };
+    }
+    this.setState((state: State) => newState)
+  }
 
   handleAllToggle = () => {
     this.setState((state: State) => ({
       isShowingAll: !state.isShowingAll
-    }));
-  };
+    }))
+  }
 
   handleTopSort = () => {
     this.setState((state: State) => ({
       isSortedNegative: !state.isSortedNegative
-    }));
-  };
+    }))
+  }
 
   handlePrimaryClick = () => {
-    console.log("clicked");
+    console.log('clicked')
     this.setState((state: State) => ({
       primaryGeography: undefined
-    }));
-  };
+    }))
+  }
 
   handleSecondaryClick = () => {
     this.setState((state: State) => ({
       secondaryGeography: undefined
-    }));
-  };
+    }))
+  }
 
   getScale = (code: string) => {
-    const { activeSubcategories } = this.state;
+    const {activeSubcategories} = this.state
 
     if (!activeSubcategories || !activeSubcategories.length || !data[code])
-      return null;
+      return null
 
     return (
       activeSubcategories.reduce((m, sc) => {
-        return m + data[code][sc.toLowerCase()] || 0;
+        return m + data[code][sc.toLowerCase()] || 0
       }, 0) / activeSubcategories.length
-    );
-  };
+    )
+  }
 
   render() {
     const {
@@ -155,7 +155,7 @@ export default class App extends Component<{}, State> {
       hoveredPrimaryName,
       hoveredSecondaryName,
       isSortedNegative
-    } = this.state;
+    } = this.state
 
     return (
       <div className="app">
@@ -209,24 +209,25 @@ export default class App extends Component<{}, State> {
                   isShowingAll={isShowingAll}
                   hasActiveSubcategories={!!activeSubcategories.length}
                 />
-                {!!activeSubcategories.length && !isShowingAll ? (
-                  <Comparisons
-                    activeSubcategories={activeSubcategories}
-                    activeCode={primaryGeography.properties.iso_a3}
-                    secondaryCode={secondaryGeography.properties.iso_a3}
-                  />
-                ) : (
-                  <TopComparison
-                    activeSubcategories={activeSubcategories}
-                    onSort={this.handleTopSort}
-                    isSortedNegative={isSortedNegative}
-                  />
-                )}
+                {!!activeSubcategories.length &&
+                  (!isShowingAll ? (
+                    <Comparisons
+                      activeSubcategories={activeSubcategories}
+                      activeCode={primaryGeography.properties.iso_a3}
+                      secondaryCode={secondaryGeography.properties.iso_a3}
+                    />
+                  ) : (
+                    <TopComparison
+                      activeSubcategories={activeSubcategories}
+                      onSort={this.handleTopSort}
+                      isSortedNegative={isSortedNegative}
+                    />
+                  ))}
               </div>
             )}
         </div>
         <Footer />
       </div>
-    );
+    )
   }
 }

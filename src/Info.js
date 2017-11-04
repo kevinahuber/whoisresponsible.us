@@ -1,41 +1,44 @@
 // @flow
-import React, { Component } from "react";
-import "./Info.css";
+import React, {Component} from 'react'
+import './Info.css'
 
 type State = {
   isShowing: boolean
-};
+}
 export default class Info extends Component<{}, State> {
   state = {
     isShowing: false
-  };
+  }
 
   handleToggleShow = () => {
-    this.setState((state: State) => ({ isShowing: !state.isShowing }));
-  };
+    this.setState((state: State) => ({isShowing: !state.isShowing}))
+  }
   render() {
-    const { isShowing } = this.state;
+    const {isShowing} = this.state
     return (
       <div className="info">
         <div onClick={this.handleToggleShow} className="info__label">
-          {isShowing ? "x" : "i"}
+          {isShowing ? 'x' : 'i'}
         </div>
         {isShowing && (
           <div className="info__details">
-            Lorem Khaled Ipsum is a major key to success. Fan luv. The key is to
-            drink coconut, fresh coconut, trust me. Major key, don’t fall for
-            the trap, stay focused. It’s the ones closest to you that want to
-            see you fail. I’m up to something. Stay focused.
+            <b>Vulnerability</b> is the exposure a nation has to climate change.
             <br />
             <br />
-            It’s important to use cocoa butter. It’s the key to more success,
-            why not live smooth? Why live rough? We the best. Bless up. Let’s
-            see what Chef Dee got that they don’t want us to eat. You do know,
-            you do know that they don’t want you to have lunch. I’m keeping it
-            real with you, so what you going do is have lunch.
+            <b>Preparedness</b> is the ability for a nation to respond.
+            <br />
+            <br />
+            <b>Contribution</b> is the amount of damage a nation has done to the
+            climate.
+            <br />
+            <br />
+            In all categories, the higher the number, the worse off.
+            <br />
+            <br />
+            All data is from 2014.
           </div>
         )}
       </div>
-    );
+    )
   }
 }

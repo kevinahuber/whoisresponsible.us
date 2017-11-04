@@ -29,6 +29,7 @@
     width: 100%;
 
     @include tablet-up {
+      margin-top: 0;
       max-width: 190px;
     }
 
