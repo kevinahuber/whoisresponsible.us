@@ -7,8 +7,11 @@
     "d3-scale": "^1.0.6",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-icons": "^2.2.7",
+    "react-motion": "^0.5.2",
     "react-scripts": "1.0.13",
     "react-simple-maps": "^0.8.3",
+    "react-svg-morph-2": "^0.0.1",
     "topojson-client": "^3.0.0",
     "topojson-server": "^3.0.0"
   },
@@ -22,7 +25,7 @@
     "eject": "react-scripts eject",
     "deploy": "npm run lint && npm run build && aws s3 sync build/ s3://climate-change-responsibility",
     "lint": "npm run lint:js && npm run lint:scss",
-    "lint:js": "standard",
+    "lint:js": "prettier",
     "lint:scss": "stylelint \"**/*.scss\"",
     "flow": "flow"
   },
@@ -30,29 +33,14 @@
     "babel-eslint": "^7.1.1",
     "eslint-plugin-flowtype": "^2.37.0",
     "flow-bin": "^0.56.0",
+    "inquirer": "^3.3.0",
     "jsonfile": "^4.0.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.1",
-    "standard": "^10.0.3",
+    "prettier": "1.7.4",
     "stylelint": "^8.1.1",
     "stylelint-order": "^0.7.0",
     "stylelint-scss": "^2.1.0"
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "plugins": [
-      "flowtype"
-    ],
-    "globals": [
-      "it",
-      "URL",
-      "fetch",
-      "Subcategory",
-      "Category",
-      "Props",
-      "State",
-      "Geography"
-    ]
   },
   "stylelint": {
     "plugins": [

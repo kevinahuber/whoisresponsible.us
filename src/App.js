@@ -1,353 +1,277 @@
 // @flow
-import React, { Component } from 'react'
-import {
-  ComposableMap,
-  ZoomableGroup,
-  Geographies,
-  Geography
-  // $FlowFixMe
-} from 'react-simple-maps'
-// import chroma from 'chroma-js'
-// $FlowFixMe
-import {topology} from 'topojson-server'
-// $FlowFixMe
-import { scaleLinear } from 'd3-scale'
+import React, {Component} from 'react'
+
 import Categories from './Categories.js'
 import Comparisons from './Comparisons.js'
-import Expand from './Expand.js'
+import TopComparison from './TopComparison.js'
+import Footer from './Footer.js'
+import Header from './Header.js'
+import Map from './Map.js'
+import Controls from './Controls.js'
+import type {Category, Geography as GeographyType} from './types.js'
 
-import type {Category, Subcategory, Geography as GeographyType} from './types.js' // eslint-disable-line
-
-// TODO: Move to it's own file.
-// TODO: BETTER: Bind to map data
-import vulnerabilities from './resources/vulnerabilities/vulnerabilities.json'
-import capacity from './resources/vulnerabilities/capacity.json'
-import ecosystem from './resources/vulnerabilities/ecosystem.json'
-import social from './resources/readiness/social.json'
-import readiness from './resources/readiness/readiness.json'
-import governance from './resources/readiness/governance.json'
-import economic from './resources/readiness/economic.json'
-import exposure from './resources/vulnerabilities/exposure.json'
-import food from './resources/vulnerabilities/food.json'
-import health from './resources/vulnerabilities/health.json'
-import infrastructure from './resources/vulnerabilities/infrastructure.json'
-import sensitivity from './resources/vulnerabilities/sensitivity.json'
-import habitat from './resources/vulnerabilities/habitat.json'
-import water from './resources/vulnerabilities/water.json'
-import contributions from './resources/contributions.json'
+import data from './resources/aggregate-by-country.json'
 import './App.css'
-const wrapperStyles = {
-  width: '100%',
-  maxWidth: 980,
-  margin: '0 auto'
-}
 
+// TODO: move to own file
 const categories: Category[] = [
   {
     title: 'Vulnerability',
-    data: vulnerabilities,
     subcategories: [
-      {
-        title: 'Capacity',
-        data: capacity
-      },
-      {
-        title: 'Ecosystem',
-        data: ecosystem
-      },
-      {
-        title: 'Exposure',
-        data: exposure
-      },
-      {
-        title: 'Food',
-        data: food
-      },
-      {
-        title: 'Habitat',
-        data: habitat
-      },
-      {
-        title: 'Health',
-        data: health
-      },
-      {
-        title: 'Infrastructure',
-        data: infrastructure
-      },
-      {
-        title: 'Sensitivity',
-        data: sensitivity
-      },
-      {
-        title: 'Water',
-        data: water
-      }
+      'Capacity',
+      'Ecosystem',
+      'Exposure',
+      'Food',
+      'Habitat',
+      'Health',
+      'Infrastructure',
+      'Sensitivity',
+      'Water'
     ]
   },
   {
     title: 'Preparedness',
-    data: readiness,
-    subcategories: [
-      {
-        title: 'Economics',
-        data: economic
-      },
-      {
-        title: 'Governance',
-        data: governance
-      },
-      {
-        title: 'Social',
-        data: social
-      }
-    ]
+    subcategories: ['Economic', 'Governance', 'Social']
   },
   {
     title: 'Contribution',
-    data: contributions,
     subcategories: [
-      {
-        title: 'Energy'
-      },
-      {
-        title: 'Industrial'
-      },
-      {
-        title: 'Agriculture'
-      },
-      {
-        title: 'Waste'
-      },
-      {
-        title: 'Land-Use'
-      },
-      {
-        title: 'Bunker Fuels'
-      }
+      'Energy',
+      'Industrial',
+      'Agriculture',
+      'Waste',
+      'Land-Use',
+      'Bunker Fuels'
     ]
   }
 ]
 
-const excludes = [
-  'ATA'
-  // 'GRL'
-
-]
-const year = '2015'
-// const totalContributions = contributions.reduce((m, c) => {
-//   return m + c[year]
-// }, 0)
-
-const subcategories: Subcategory[] = categories.reduce((m, c) => {
-  return m.concat(c.subcategories)
-}, [])
-
-const popScale = scaleLinear()
-  .domain([0, 1])
-  .range(['#33343D', '#D8D8D8'])
-
 type State = {
-  optimizationDisabled: boolean,
-  mainOpen: boolean,
   activeSubcategories: string[],
-  activeGeography?: GeographyType
+  primaryGeography?: GeographyType,
+  secondaryGeography?: GeographyType,
+  isShowingAll: boolean,
+  hoveredPrimaryName?: string,
+  hoveredSecondaryName?: string,
+  isSortedNegative: boolean
 }
 
 export default class App extends Component<{}, State> {
-  state = { // eslint-disable-line
-    optimizationDisabled: false,
-    mainOpen: true,
+  state = {
     activeSubcategories: [],
-    activeGeography: undefined
+    primaryGeography: undefined,
+    secondaryGeography: undefined,
+    isShowingAll: false,
+    hoveredPrimaryName: undefined,
+    hoveredSecondaryName: undefined,
+    isSortedNegative: false
   }
 
-  handleCategoryClick = (category: Category) => () => { // eslint-disable-line
-    const {
-      activeSubcategories
-    } = this.state
-    const newActiveSubcategories = category.subcategories.every(s => activeSubcategories.includes(s.title))
-      ? activeSubcategories.filter(s => !category.subcategories.find(sc => sc.title === s))
-      : activeSubcategories.concat(category.subcategories.map(s => s.title).filter(s => !activeSubcategories.includes(s)))
+  handleCategoryClick = (category: Category) => () => {
+    const {activeSubcategories} = this.state
+    const newActiveSubcategories = category.subcategories.every(s =>
+      activeSubcategories.includes(s)
+    )
+      ? activeSubcategories.filter(
+          s => !category.subcategories.find(sc => sc === s)
+        )
+      : activeSubcategories.concat(
+          category.subcategories
+            .map(s => s)
+            .filter(s => !activeSubcategories.includes(s))
+        )
     this.setState((state: State) => ({
-      activeSubcategories: newActiveSubcategories,
-      optimizationDisabled: true
-    }), () => {
-      this.setState((state: State) => ({
-        optimizationDisabled: false
-      }))
-    })
+      activeSubcategories: newActiveSubcategories
+    }))
   }
 
-  handleSubcategoryClick = (sub: string) => () => { // eslint-disable-line
-    const {
-      activeSubcategories
-    } = this.state
-    const newActiveSubcategories = activeSubcategories.includes(sub) ? this.state.activeSubcategories.filter(s => s !== sub) : this.state.activeSubcategories.concat(sub)
+  handleSubcategoryClick = (sub: string) => () => {
+    const {activeSubcategories} = this.state
+    const newActiveSubcategories = activeSubcategories.includes(sub)
+      ? this.state.activeSubcategories.filter(s => s !== sub)
+      : this.state.activeSubcategories.concat(sub)
     this.setState((state: State) => ({
-      activeSubcategories: newActiveSubcategories,
-      optimizationDisabled: true
-    }), () => {
-      this.setState((state: State) => ({
-        optimizationDisabled: false
-      }))
-    })
+      activeSubcategories: newActiveSubcategories
+    }))
   }
 
-  handleMainToggle = () => { // eslint-disable-line
-    this.setState({mainOpen: !this.state.mainOpen})
-  }
+  handleGeographyClick = (geography: GeographyType) => {
+    const newState = {}
 
-  handleClick = (geography: Geography) => { // eslint-disable-line
-    this.setState((state: State) => ({
-      activeGeography: geography,
-      optimizationDisabled: true
-    }), () => {
-      this.setState((state: State) => ({
-        optimizationDisabled: false
-      }))
-    })
-  }
-
-  handleClearGeography = () => { // eslint-disable-line
-    this.setState((state: State) => ({
-      activeGeography: undefined,
-      optimizationDisabled: true
-    }), () => {
-      this.setState((state: State) => ({
-        optimizationDisabled: false
-      }))
-    })
-  }
-
-  getScale = (geography: Geography) => { // eslint-disable-line
-    const {
-      activeSubcategories
-    } = this.state
-
-    if (activeSubcategories && activeSubcategories.length) {
-      let noData = false
-      const scale = activeSubcategories.reduce((m, sc) => {
-        const sub = subcategories.find(s => s.title === sc)
-        if (!sub || !sub.data) {
-          noData = true
-          return m
-        }
-        return m + (sub.data.find(v => v.ISO3 === geography.properties.iso_a3) || {})[year] || 0
-      }, 0) / activeSubcategories.length
-      return noData ? null : scale
+    if (this.state.primaryGeography) {
+      if (
+        geography.properties.iso_a3 ===
+        this.state.primaryGeography.properties.iso_a3
+      ) {
+        newState.primaryGeography = undefined
+      } else if (
+        this.state.secondaryGeography &&
+        geography.properties.iso_a3 ===
+          this.state.secondaryGeography.properties.iso_a3
+      ) {
+        newState.secondaryGeography = undefined
+      } else {
+        newState.secondaryGeography = geography
+      }
+    } else {
+      newState.primaryGeography = geography
     }
-    return null
+
+    this.setState((state: State) => newState)
   }
 
-  render () {
+  handleGeographyMouseEnter = (geography: GeographyType) => {
+    this.setState((state: State) => ({
+      hoveredPrimaryName: state.primaryGeography
+        ? undefined
+        : geography.properties.name_long,
+      hoveredSecondaryName:
+        state.primaryGeography && state.secondaryGeography
+          ? undefined
+          : state.primaryGeography ? geography.properties.name_long : undefined
+    }))
+  }
+
+  handleGeographyMouseLeave = () => {
+    // TODO: figure out how to clear only when not on a geography
+    // this.setState((state: State) => ({
+    //   hoveredPrimaryName: undefined,
+    //   hoveredSecondaryName: undefined
+    // }))
+  }
+
+  handleClearGeography = () => {
+    const newState = {
+      primaryGeography: undefined,
+      secondaryGeography: undefined,
+      isShowingAll: false
+    }
+    this.setState((state: State) => newState)
+  }
+
+  handleAllToggle = () => {
+    this.setState((state: State) => ({
+      isShowingAll: !state.isShowingAll
+    }))
+  }
+
+  handleTopSort = () => {
+    this.setState((state: State) => ({
+      isSortedNegative: !state.isSortedNegative
+    }))
+  }
+
+  handlePrimaryClick = () => {
+    console.log('clicked')
+    this.setState((state: State) => ({
+      primaryGeography: undefined
+    }))
+  }
+
+  handleSecondaryClick = () => {
+    this.setState((state: State) => ({
+      secondaryGeography: undefined
+    }))
+  }
+
+  getScale = (code: string) => {
+    const {activeSubcategories} = this.state
+
+    if (!activeSubcategories || !activeSubcategories.length || !data[code])
+      return null
+
+    return (
+      activeSubcategories.reduce((m, sc) => {
+        return m + data[code][sc.toLowerCase()] || 0
+      }, 0) / activeSubcategories.length
+    )
+  }
+
+  render() {
     const {
       activeSubcategories,
-      activeGeography,
-      optimizationDisabled
+      primaryGeography,
+      secondaryGeography,
+      isShowingAll,
+      hoveredPrimaryName,
+      hoveredSecondaryName,
+      isSortedNegative
     } = this.state
 
-    let center = [0, 0]
-    let zoom = 1
-
-    const height = 699
-    const width = 959
-    if (activeGeography) {
-      const {bbox} = topology(activeGeography)
-      center = [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
-      zoom = 2.5
-      // TODO: FIGURE IT OUT
-      const area = ((bbox[2] - bbox[0]) * (bbox[3] - bbox[1]))
-      zoom = area / height * width
-    }
-    const wrapperStyles = {
-      width: "100%",
-      maxWidth: 980,
-      margin: "0 auto",
-    }
-    console.log(center, zoom)
     return (
-      <div className='app'>
-        <div onClick={this.handleMainToggle}>
-          <h1 className='app__title'>
-            {activeGeography ? activeGeography.properties.name_long : 'Who is responsible for Climate Change?'}
-          </h1>
-        </div>
-
-        <div style={wrapperStyles}>
-          <ComposableMap
-            projectionConfig={{
-              scale: 205,
-              rotation: [-11, 0, 0]
-            }}
-            width={width}
-            height={height}
-            style={{
-              width: '100%',
-              height: 'auto'
-            }}
-            >
-            <ZoomableGroup center={center} zoom={zoom} disablePanning>
-              <Geographies
-                geographyUrl={'/world-50m-with-population.json'}
-                disableOptimization={optimizationDisabled}
-                >
-                {(geographies, projection) =>
-                  geographies.map((geography, i) => {
-                    if (excludes.includes(geography.properties.iso_a3)) return null
-                    if (activeGeography && geography.properties.iso_a3 !== activeGeography.properties.iso_a3) return null
-                    const scale = this.getScale(geography)
-                    if (typeof scale !== 'number' && !!activeSubcategories.length) return null
-
-                    return (
-                      <Geography
-                        key={i}
-                        id={geography.properties.iso_a3}
-                        geography={geography}
-                        projection={projection}
-                        onClick={this.handleClick}
-                        style={{
-                          default: {
-                            fill: popScale(scale),
-                            outline: 'none'
-                          },
-                          hover: {
-                            fill: '#F73F0A',
-                            strokeWidth: 1.5,
-                            zIndex: 1,
-                            outline: 'none'
-                          },
-                          pressed: {
-                            stroke: '#F73F0A',
-                            fill: popScale(scale),
-                            strokeWidth: 1.5,
-                            zIndex: 1,
-                            outline: 'none'
-                          }
-                        }}
-                      />
-                    )
-                  }
-                )}
-              </Geographies>
-            </ZoomableGroup>
-          </ComposableMap>
-          {activeGeography && <Expand onClick={this.handleClearGeography} />}
-          {activeGeography && !!activeSubcategories.length && (
-            <Comparisons
-              subcategories={subcategories}
-              activeSubcategories={activeSubcategories}
-              activeCode={activeGeography.properties.iso_a3}
-              year={year}
-            />
-          )}
-        </div>
-        <Categories
-          onCategoryClick={this.handleCategoryClick}
-          onSubcategoryClick={this.handleSubcategoryClick}
-          categories={categories}
-          activeSubcategories={activeSubcategories}
+      <div className="app">
+        <Header
+          primaryName={
+            primaryGeography && primaryGeography.properties.name_long
+          }
+          secondaryName={
+            secondaryGeography && secondaryGeography.properties.name_long
+          }
+          hoveredPrimaryName={hoveredPrimaryName}
+          hoveredSecondaryName={hoveredSecondaryName}
+          isShowingAll={isShowingAll}
+          isSortedNegative={isSortedNegative}
+          onPrimaryClick={this.handlePrimaryClick}
+          onSecondaryClick={this.handleSecondaryClick}
         />
+        <div className="app__body">
+          <div className="app__container">
+            <Map
+              onGeographyClick={this.handleGeographyClick}
+              onGeographyMouseEnter={this.handleGeographyMouseEnter}
+              onGeographyMouseLeave={this.handleGeographyMouseLeave}
+              activeSubcategories={activeSubcategories}
+              activeCode={
+                primaryGeography
+                  ? primaryGeography.properties.iso_a3
+                  : undefined
+              }
+              secondaryCode={
+                secondaryGeography
+                  ? secondaryGeography.properties.iso_a3
+                  : undefined
+              }
+              isShowingAll={isShowingAll}
+            />
+            {primaryGeography &&
+              secondaryGeography && (
+                <Categories
+                  onCategoryClick={this.handleCategoryClick}
+                  onSubcategoryClick={this.handleSubcategoryClick}
+                  categories={categories}
+                  activeSubcategories={activeSubcategories}
+                />
+              )}
+          </div>
+          {primaryGeography &&
+            secondaryGeography && (
+              <div className="app__details">
+                <Controls
+                  onBackClick={this.handleClearGeography}
+                  onAllToggle={this.handleAllToggle}
+                  isShowingAll={isShowingAll}
+                  hasActiveSubcategories={!!activeSubcategories.length}
+                />
+                {!!activeSubcategories.length &&
+                  !isShowingAll && (
+                    <Comparisons
+                      activeSubcategories={activeSubcategories}
+                      activeCode={primaryGeography.properties.iso_a3}
+                      secondaryCode={secondaryGeography.properties.iso_a3}
+                    />
+                  )}
+                {isShowingAll &&
+                  !!activeSubcategories.length && (
+                    <TopComparison
+                      activeSubcategories={activeSubcategories}
+                      onSort={this.handleTopSort}
+                      isSortedNegative={isSortedNegative}
+                    />
+                  )}
+              </div>
+            )}
+        </div>
+        <Footer />
       </div>
     )
   }

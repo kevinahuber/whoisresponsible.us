@@ -1,0 +1,27 @@
+@import 'variables';
+
+.controls {
+  max-width: 975px;
+  margin: 20px auto 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &__back,
+  &__all {
+    border: solid 1px $orange;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    padding: 0 40px;
+  }
+  &__label {
+    background-color: $trans-orange;
+    font-family: 'SanFranciscoText-RegularItalic';
+    color: $orange;
+    font-size: 1rem;
+    height: 24px;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+}

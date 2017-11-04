@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default class Categories extends Component<Props> {
-  render () {
+  render() {
     const {
       categories,
       activeSubcategories,
@@ -21,24 +21,35 @@ export default class Categories extends Component<Props> {
     } = this.props
 
     return (
-      <div className='categories'>
-        {categories.map((category, i) => {
-          return (
-            <div className='categories__category' key={i}>
-              <div className='categories__category-title' onClick={onCategoryClick(category)} >
-                {category.title}
-              </div>
-              {category.subcategories && category.subcategories.map((s, i) => (
+      <div className="categories">
+        <div className="categories__container">
+          {categories.map((category, i) => {
+            return (
+              <div className="categories__category" key={i}>
                 <div
-                  key={i}
-                  className={`categories__subcategory-title ${activeSubcategories.includes(s.title) ? 'categories__subcategory-title--active' : ''}`}
-                  onClick={onSubcategoryClick(s.title)}>
-                  {s.title}
+                  className="categories__category-title"
+                  onClick={onCategoryClick(category)}
+                >
+                  {category.title}
                 </div>
-            ))}
-            </div>
-          )
-        })}
+                {category.subcategories &&
+                  category.subcategories.map((s, i) => (
+                    <div
+                      key={i}
+                      className={`categories__subcategory-title ${activeSubcategories.includes(
+                        s
+                      )
+                        ? 'categories__subcategory-title--active'
+                        : ''}`}
+                      onClick={onSubcategoryClick(s)}
+                    >
+                      {s}
+                    </div>
+                  ))}
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }

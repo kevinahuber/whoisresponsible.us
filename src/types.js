@@ -1,14 +1,13 @@
 // @flow
 
-export type Subcategory = {
-  title: string,
-  data?: any // TODO: Explicitly type
-}
-
 export type Category = {
   title: string,
-  data: any, // TODO: Explicitly type
-  subcategories: Subcategory[]
+  subcategories: string[]
 }
 
-export type Geography = Object
+export type Geography = {
+  properties: {
+    name_long: string,
+    iso_a3: string
+  }
+}

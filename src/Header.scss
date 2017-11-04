@@ -1,9 +1,6 @@
 @import 'variables';
 
-.app {
-  background-color: $bg-grey;
-  padding-top: 53px;
-
+.header {
   &__title {
     color: $text-grey;
     font-family: $title-font;
@@ -12,15 +9,15 @@
     margin: 0 0 80px;
     text-align: center;
     width: 100%;
-  }
 
-  &__body {
-    margin-bottom: 100px;
-  }
-  &__container {
-    max-width: 975px;
-    width: 100%;
-    margin: auto;
-    position: relative;
+    &--primary {
+      cursor: pointer;
+      border-bottom: solid 5px $orange;
+    }
+
+    &--secondary {
+      cursor: pointer;
+      border-bottom: solid 5px $teal;
+    }
   }
 }

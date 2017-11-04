@@ -1,0 +1,38 @@
+@import 'variables';
+
+.footer {
+  height: 55px;
+  background: $bg-black;
+  color: $dark-grey;
+  font-family: 'SanFranciscoText-RegularItalic';
+  flex-flow: center;
+  margin-top: 100px;
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  &__container {
+    max-width: 975px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    line-height: 55px;
+    justify-content: space-between;
+  }
+  &__responsibility-link,
+  &__attribution-link {
+    color: $dark-grey;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  &__responsibility-link,
+  &__attribution {
+
+  }
+
+}
