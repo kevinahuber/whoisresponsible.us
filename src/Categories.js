@@ -1,25 +1,55 @@
 // @flow
 
-import React, {Component} from 'react'
-import './Categories.css'
-import type {Category} from './types.js'
-import Info from './Info.js'
+import React, { Component } from "react";
+import "./Categories.css";
+import type { Category } from "./types.js";
+import Info from "./Info.js";
+
+const categories: Category[] = [
+  {
+    title: "Vulnerability",
+    subcategories: [
+      "Capacity",
+      "Ecosystem",
+      "Exposure",
+      "Food",
+      "Habitat",
+      "Health",
+      "Infrastructure",
+      "Sensitivity",
+      "Water"
+    ]
+  },
+  {
+    title: "Preparedness",
+    subcategories: ["Economic", "Governance", "Social"]
+  },
+  {
+    title: "Contribution",
+    subcategories: [
+      "Energy",
+      "Industrial",
+      "Agriculture",
+      "Waste",
+      "Land-Use",
+      "Bunker Fuels"
+    ]
+  }
+];
 
 type Props = {
   activeSubcategories: string[],
-  categories: Category[],
   onCategoryClick: (category: Category) => mixed,
   onSubcategoryClick: (title: string) => mixed
-}
+};
 
 export default class Categories extends Component<Props> {
   render() {
     const {
-      categories,
       activeSubcategories,
       onSubcategoryClick,
       onCategoryClick
-    } = this.props
+    } = this.props;
 
     return (
       <div className="categories">
@@ -41,18 +71,18 @@ export default class Categories extends Component<Props> {
                       className={`categories__subcategory-title ${activeSubcategories.includes(
                         s
                       )
-                        ? 'categories__subcategory-title--active'
-                        : ''}`}
+                        ? "categories__subcategory-title--active"
+                        : ""}`}
                       onClick={onSubcategoryClick(s)}
                     >
                       {s}
                     </div>
                   ))}
               </div>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
 }

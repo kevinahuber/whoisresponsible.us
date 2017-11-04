@@ -1,16 +1,19 @@
 @import 'variables';
 @import 'mixins';
 
+/* stylelint-disable */
 :export {
   primary: $primary-color;
   secondary: $secondary-color;
 }
+/* stylelint-enable */
 
 .map {
-  width: 100%;
-  max-width: 980px;
   display: inline-block;
+  max-width: 980px;
   transition: max-width 0.1s;
+  width: 100%;
+
   @include desktop-up {
     &--collapsed {
       max-width: 400px;

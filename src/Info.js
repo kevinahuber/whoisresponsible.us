@@ -1,24 +1,24 @@
 // @flow
-import React, {Component} from 'react'
-import './Info.css'
+import React, { Component } from "react";
+import "./Info.css";
 
 type State = {
   isShowing: boolean
-}
+};
 export default class Info extends Component<{}, State> {
   state = {
     isShowing: false
-  }
+  };
 
   handleToggleShow = () => {
-    this.setState((state: State) => ({isShowing: !state.isShowing}))
-  }
+    this.setState((state: State) => ({ isShowing: !state.isShowing }));
+  };
   render() {
-    const {isShowing} = this.state
+    const { isShowing } = this.state;
     return (
       <div className="info">
         <div onClick={this.handleToggleShow} className="info__label">
-          {isShowing ? 'x' : 'i'}
+          {isShowing ? "x" : "i"}
         </div>
         {isShowing && (
           <div className="info__details">
@@ -36,6 +36,6 @@ export default class Info extends Component<{}, State> {
           </div>
         )}
       </div>
-    )
+    );
   }
 }

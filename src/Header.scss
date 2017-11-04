@@ -7,8 +7,8 @@
     font-family: $title-font;
     font-size: 2rem;
     font-weight: 400;
-    margin: 0 0 40px;
     line-height: 3rem;
+    margin: 0 0 40px;
     text-align: center;
     width: 100%;
 
@@ -18,13 +18,13 @@
     }
 
     &--primary {
-      cursor: pointer;
       border-bottom: solid 5px $primary-color;
+      cursor: pointer;
     }
 
     &--secondary {
-      cursor: pointer;
       border-bottom: solid 5px $secondary-color;
+      cursor: pointer;
     }
   }
 }

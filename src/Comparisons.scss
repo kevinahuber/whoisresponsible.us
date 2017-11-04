@@ -27,11 +27,11 @@
 
   &__row-bar {
     display: inline-block;
-    height: 60px;
-    width: calc(100% - 160px);
-    position: relative;
     font-size: 1rem;
+    height: 60px;
     line-height: 2.1rem;
+    position: relative;
+    width: calc(100% - 160px);
 
     &-active,
     &-secondary {
@@ -44,8 +44,8 @@
 
     &-secondary {
       border-bottom: solid 6px $secondary-color;
-      height: 54px;
       color: $secondary-color;
+      height: 54px;
       line-height: 1.5rem;
     }
 

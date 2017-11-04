@@ -2,26 +2,17 @@
 
 .app {
   background-color: $bg-grey;
-  padding-top: 53px;
   margin: 30px;
-
-  &__title {
-    color: $text-grey;
-    font-family: $title-font;
-    font-size: 2.8125rem;
-    font-weight: 400;
-    margin: 0 0 80px;
-    text-align: center;
-    width: 100%;
-  }
+  padding-top: 53px;
 
   &__body {
     margin-bottom: 100px;
   }
+
   &__container {
-    max-width: 975px;
-    width: 100%;
     margin: auto;
+    max-width: 975px;
     position: relative;
+    width: 100%;
   }
 }

@@ -1,17 +1,17 @@
 // @flow
-import React, {Component} from 'react'
-import './Comparisons.css'
-import data from './resources/aggregate-by-country.json'
+import React, { Component } from "react";
+import "./Comparisons.css";
+import data from "./resources/aggregate-by-country.json";
 
 type Props = {
   activeSubcategories: string[],
   activeCode: string,
   secondaryCode: string
-}
+};
 
 export default class Comparisons extends Component<Props> {
   renderBar(activeScale: number, secondaryScale: number, title: string) {
-    console.log(activeScale)
+    console.log(activeScale);
     return (
       <div className="comparisons__row" key={title}>
         <div className="comparisons__row-title">{title}</div>
@@ -38,25 +38,25 @@ export default class Comparisons extends Component<Props> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   render() {
-    const {activeSubcategories, activeCode, secondaryCode} = this.props
+    const { activeSubcategories, activeCode, secondaryCode } = this.props;
 
     return (
       <div className="comparisons">
         {activeSubcategories.map(as => {
           const activeScale = data[activeCode]
             ? data[activeCode][as.toLowerCase()]
-            : 0
+            : 0;
           const secondaryScale = data[secondaryCode]
             ? data[secondaryCode][as.toLowerCase()]
-            : 0
+            : 0;
 
-          return this.renderBar(activeScale, secondaryScale, as)
+          return this.renderBar(activeScale, secondaryScale, as);
         })}
       </div>
-    )
+    );
   }
 }

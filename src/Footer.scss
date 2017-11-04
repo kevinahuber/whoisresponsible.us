@@ -6,25 +6,27 @@
   color: $dark-grey;
   font-family: 'SanFranciscoText-RegularItalic';
   text-align: center;
+
   @include desktop-up {
+    bottom: 0;
     height: 55px;
+    left: 0;
     position: fixed;
     right: 0;
-    bottom: 0;
-    left: 0;
   }
 
   &__container {
+    margin: auto;
     max-width: 975px;
     width: 100%;
-    margin: auto;
 
     @include desktop-up {
-      line-height: 55px;
       display: flex;
       justify-content: space-between;
+      line-height: 55px;
     }
   }
+
   &__responsibility-link,
   &__attribution-link {
     color: $dark-grey;
@@ -37,8 +39,8 @@
 
   &__attribution,
   &__responsibility-link {
-    padding: 20px 30px;
     display: block;
+    padding: 20px 30px;
 
     @include desktop-up {
       padding: 0 30px;

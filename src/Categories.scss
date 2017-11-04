@@ -2,29 +2,30 @@
 @import 'mixins';
 
 .categories {
-  position: relative;
   font-family: 'SanFranciscoText-RegularItalic';
+  position: relative;
 
   @include desktop-up {
-    position: absolute;
     max-width: 475px;
-    width: 100%;
+    position: absolute;
     right: 0;
     top: 0;
+    width: 100%;
   }
+
   &__container {
     @include tablet-up {
       align-items: flex-start;
       display: flex;
-      justify-content: space-between;
       flex-grow: 1;
+      justify-content: space-between;
     }
   }
 
   &__category {
     border: solid 1px $orange;
-    margin-top: 30px;
     cursor: pointer;
+    margin-top: 30px;
     width: 100%;
 
     @include tablet-up {
@@ -56,6 +57,7 @@
     &:hover {
       background-color: $trans-orange;
     }
+
     &--active,
     &--active:hover {
       background-color: $orange;

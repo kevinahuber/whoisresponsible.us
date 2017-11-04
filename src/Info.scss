@@ -4,23 +4,23 @@
 $size: 20px;
 
 .info {
-  font-family: 'SanFranciscoText-RegularItalic';
   color: $orange;
+  font-family: 'SanFranciscoText-RegularItalic';
   font-size: 1rem;
 
   &__label {
+    border: solid 1px $orange;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    height: $size;
     line-height: $size;
-    text-align: center;
     opacity: 0.7;
     position: absolute;
-    right: 0px;
+    right: 0;
+    text-align: center;
     top: calc(-15px - #{$size});
-    cursor: pointer;
-    border: solid 1px $orange;
-    display: inline-block;
     width: $size;
-    height: $size;
-    border-radius: 50%;
 
     &:hover {
       background-color: $trans-orange;
@@ -28,23 +28,23 @@ $size: 20px;
   }
 
   &__details {
-    width: calc(100% + 3px);
     background-color: $bg-grey;
+    bottom: 0;
+    left: 0;
     margin: -1px;
     position: absolute;
-    left: 0;
     right: 0;
-    bottom: 0;
     top: 0;
+    width: calc(100% + 3px);
 
     @include widescreen-up {
-      width: 180px;
-      position: absolute;
-      margin: auto;
-      left: auto;
       background-color: transparent;
+      left: auto;
+      margin: auto;
+      position: absolute;
       right: -210px;
       top: 0;
+      width: 180px;
     }
   }
 }

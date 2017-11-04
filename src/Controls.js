@@ -1,14 +1,14 @@
 // @flow
 
-import React, {Component} from 'react'
-import './Controls.css'
+import React, { Component } from "react";
+import "./Controls.css";
 
 type Props = {
   onBackClick: () => mixed,
   onAllToggle: () => mixed,
   isShowingAll: boolean,
   hasActiveSubcategories: boolean
-}
+};
 
 export default class Controls extends Component<Props> {
   render() {
@@ -17,7 +17,7 @@ export default class Controls extends Component<Props> {
       onAllToggle,
       isShowingAll,
       hasActiveSubcategories
-    } = this.props
+    } = this.props;
 
     return (
       <div className="controls">
@@ -25,7 +25,7 @@ export default class Controls extends Component<Props> {
           onClick={isShowingAll ? onAllToggle : onBackClick}
           className="controls__back"
         >
-          <span className="controls__label">{'< Back'}</span>
+          <span className="controls__label">{"< Back"}</span>
         </div>
         {!isShowingAll &&
           hasActiveSubcategories && (
@@ -36,6 +36,6 @@ export default class Controls extends Component<Props> {
             </div>
           )}
       </div>
-    )
+    );
   }
 }
