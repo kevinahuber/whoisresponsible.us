@@ -5,10 +5,10 @@ import cn from 'classnames'
 
 import {scaleLinear} from 'd3-scale'
 
-import type {Geography as GeographyType} from './types.js'
+import type {Geography as GeographyType} from '../../types.js'
 
-import data from './resources/aggregate-by-country.json'
-import styles from './Map.css'
+import data from '../../resources/aggregate-by-country.json'
+import styles from './styles.css'
 
 const excludes = [
   'ATA'

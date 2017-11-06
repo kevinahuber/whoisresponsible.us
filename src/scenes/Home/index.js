@@ -1,22 +1,24 @@
 // @flow
 import React, {Component} from 'react'
 
-import Categories from './Categories.js'
-import Comparisons from './Comparisons.js'
-import TopComparison from './TopComparison.js'
-import Footer from './Footer.js'
-import Header from './Header.js'
-import Map from './Map.js'
-import Controls from './Controls.js'
-import type {Category, Geography as GeographyType} from './types.js'
+import {
+  Categories,
+  Comparisons,
+  Controls,
+  Footer,
+  Header,
+  Map
+} from '../../components'
 
-import data from './resources/aggregate-by-country.json'
-import './App.css'
+import type {Geography, Category} from '../../types.js'
+
+import data from '../../resources/aggregate-by-country.json'
+import './styles.css'
 
 type State = {
   activeSubcategories: string[],
-  primaryGeography?: GeographyType,
-  secondaryGeography?: GeographyType,
+  primaryGeography?: Geography,
+  secondaryGeography?: Geography,
   isShowingAll: boolean,
   hoveredPrimaryName?: string,
   hoveredSecondaryName?: string,
@@ -62,7 +64,7 @@ export default class App extends Component<{}, State> {
     }))
   }
 
-  handleGeographyClick = (geography: GeographyType) => {
+  handleGeographyClick = (geography: Geography) => {
     const newState = {}
 
     if (this.state.primaryGeography) {
@@ -87,7 +89,7 @@ export default class App extends Component<{}, State> {
     this.setState((state: State) => newState)
   }
 
-  handleGeographyMouseEnter = (geography: GeographyType) => {
+  handleGeographyMouseEnter = (geography: Geography) => {
     this.setState((state: State) => ({
       hoveredPrimaryName: state.primaryGeography
         ? undefined
@@ -208,20 +210,16 @@ export default class App extends Component<{}, State> {
                   isShowingAll={isShowingAll}
                   hasActiveSubcategories={!!activeSubcategories.length}
                 />
-                {!!activeSubcategories.length &&
-                  (!isShowingAll ? (
-                    <Comparisons
-                      activeSubcategories={activeSubcategories}
-                      activeCode={primaryGeography.properties.iso_a3}
-                      secondaryCode={secondaryGeography.properties.iso_a3}
-                    />
-                  ) : (
-                    <TopComparison
-                      activeSubcategories={activeSubcategories}
-                      onSort={this.handleTopSort}
-                      isSortedNegative={isSortedNegative}
-                    />
-                  ))}
+                {!!activeSubcategories.length && (
+                  <Comparisons
+                    activeSubcategories={activeSubcategories}
+                    activeCode={primaryGeography.properties.iso_a3}
+                    secondaryCode={secondaryGeography.properties.iso_a3}
+                    onTopSort={this.handleTopSort}
+                    isSortedNegative={isSortedNegative}
+                    isShowingAll={isShowingAll}
+                  />
+                )}
               </div>
             )}
         </div>

@@ -1,9 +1,9 @@
 // @flow
 
 import React, {Component} from 'react'
-import './Categories.css'
-import type {Category} from './types.js'
-import Info from './Info.js'
+import './styles.css'
+import type {Category} from '../../types.js'
+import Info from './components/Info'
 import cn from 'classnames'
 
 const categories: Category[] = [

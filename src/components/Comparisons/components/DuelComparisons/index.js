@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
-import './Comparisons.css'
-import data from './resources/aggregate-by-country.json'
+import './styles.css'
+import data from '../../../../resources/aggregate-by-country.json'
 
 type Props = {
   activeSubcategories: string[],
@@ -9,29 +9,29 @@ type Props = {
   secondaryCode: string
 }
 
-export default class Comparisons extends Component<Props> {
+export default class DuelComparisons extends Component<Props> {
   renderBar(activeScale: number, secondaryScale: number, title: string) {
     return (
-      <div className="comparisons__row" key={title}>
-        <div className="comparisons__row-title">{title}</div>
-        <div className="comparisons__row-bar">
+      <div className="duel-comparisons__row" key={title}>
+        <div className="duel-comparisons__row-title">{title}</div>
+        <div className="duel-comparisons__row-bar">
           <div
-            className="comparisons__row-bar-active"
+            className="duel-comparisons__row-bar-active"
             style={{
               width: `${(activeScale || 0) * 100}%`
             }}
           >
-            <span className="comparisons__row-bar-value">{`${Math.round(
+            <span className="duel-comparisons__row-bar-value">{`${Math.round(
               activeScale * 100
             )}%`}</span>
           </div>
           <div
-            className="comparisons__row-bar-bar comparisons__row-bar-secondary"
+            className="duel-comparisons__row-bar-bar duel-comparisons__row-bar-secondary"
             style={{
               width: `${(secondaryScale || 0) * 100}%`
             }}
           >
-            <span className="comparisons__row-bar-value">{`${Math.round(
+            <span className="duel-comparisons__row-bar-value">{`${Math.round(
               secondaryScale * 100
             )}%`}</span>
           </div>
@@ -44,7 +44,7 @@ export default class Comparisons extends Component<Props> {
     const {activeSubcategories, activeCode, secondaryCode} = this.props
 
     return (
-      <div className="comparisons">
+      <div className="duel-comparisons">
         {activeSubcategories.map(as => {
           const activeScale = data[activeCode]
             ? data[activeCode][as.toLowerCase()]

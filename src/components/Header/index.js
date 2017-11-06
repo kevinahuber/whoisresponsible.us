@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react'
-import './Header.css'
+import './styles.css'
 
 type Props = {
   primaryName?: string,

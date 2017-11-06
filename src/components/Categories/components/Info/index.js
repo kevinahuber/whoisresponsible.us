@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react'
-import './Info.css'
+import './styles.css'
 
 type State = {
   isShowing: boolean

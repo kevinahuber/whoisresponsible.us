@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./Footer.css";
+import React, {Component} from 'react'
+import './styles.css'
 
 export default class Footer extends Component {
   render() {
@@ -13,14 +13,14 @@ export default class Footer extends Component {
             Who is responsible for this data?
           </a>
           <span className="footer__attribution">
-            {"Developed & Designed with ♥  by "}
+            {'Developed & Designed with ♥  by '}
             <a
               className="footer__attribution-link"
               href="https://www.behance.net/csweetdesigns"
             >
               Claire Sweet
             </a>
-            {" and "}
+            {' and '}
             <a
               className="footer__attribution-link"
               href="https://kevinahuber.com"
@@ -30,6 +30,6 @@ export default class Footer extends Component {
           </span>
         </div>
       </div>
-    );
+    )
   }
 }

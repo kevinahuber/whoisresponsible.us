@@ -1,14 +1,6 @@
-@import 'variables';
+@import '../../../../variables';
 
-.comparisons {
-  border: solid 1px $orange;
-  box-sizing: border-box;
-  font-family: 'SanFranciscoText-RegularItalic';
-  margin: 20px auto 0;
-  max-width: 975px;
-  padding: 5px 25px 26px;
-  width: 100%;
-
+.duel-comparisons {
   &__row {
     height: 60px;
 

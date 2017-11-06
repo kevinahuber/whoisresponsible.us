@@ -1,8 +1,10 @@
 // @flow
 import React, {Component} from 'react'
-import './TopComparisons.css'
-import data from './resources/aggregate-by-country.json'
-import codes from './resources/codes.json'
+import './styles.css'
+import data from '../../../../resources/aggregate-by-country.json'
+import codes from '../../../../resources/codes.json'
+
+// Import individual to utilize import bundling benefits
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaSortAmountAsc from 'react-icons/lib/fa/sort-amount-asc'
