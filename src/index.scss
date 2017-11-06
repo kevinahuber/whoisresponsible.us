@@ -1,23 +1,23 @@
 body {
+  background: #1d1d25;
+  font-family: sans-serif;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background: #1d1d25;
 }
 
 @font-face {
   font-family: 'SanFranciscoText-RegularItalic';
-  src: url(./fonts/SanFranciscoText-RegularItalic.otf) format('opentype');
+  src: url('./fonts/SanFranciscoText-RegularItalic.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'SanFranciscoText-BoldItalic';
-  src: url(./fonts/SanFranciscoText-BoldItalic.otf) format('opentype');
+  src: url('./fonts/SanFranciscoText-BoldItalic.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'SanFranciscoText-HeavyItalic';
-  src: url(./fonts/SanFranciscoText-HeavyItalic.otf) format('opentype');
+  src: url('./fonts/SanFranciscoText-HeavyItalic.otf') format('opentype');
 }
 
 b {
