@@ -2,8 +2,22 @@
   "name": "climate-change-responsibility",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
+    "build:css": "node-sass-chokidar src/ -o src/",
+    "watch:css": "npm run build:css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch:css start-js",
+    "build": "npm run build:css && react-scripts build",
+    "test": "npm run flow && npm run lint",
+    "eject": "react-scripts eject",
+    "deploy": "npm run lint && npm run build && aws s3 sync build/ s3://climate-change-responsibility",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "lint:js": "prettier --write \"{scripts, src}/*.js\"",
+    "lint:scss": "stylelint \"**/*.scss\"",
+    "flow": "flow"
+  },
   "dependencies": {
-    "chroma-js": "^1.3.4",
     "classnames": "^2.2.5",
     "d3-scale": "^1.0.6",
     "react": "^15.6.1",
@@ -11,22 +25,6 @@
     "react-icons": "^2.2.7",
     "react-scripts": "1.0.13",
     "react-simple-maps": "^0.8.3"
-  },
-  "scripts": {
-    "build:css": "node-sass-chokidar src/ -o src/",
-    "watch:css":
-      "npm run build:css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch:css start-js",
-    "build": "npm run build:css && react-scripts build",
-    "test": "npm run flow && npm run lint",
-    "eject": "react-scripts eject",
-    "deploy":
-      "npm run lint && npm run build && aws s3 sync build/ s3://climate-change-responsibility",
-    "lint": "npm run lint:js && npm run lint:scss",
-    "lint:js": "prettier --write \"{scripts, src}/*.js\"",
-    "lint:scss": "stylelint \"**/*.scss\"",
-    "flow": "flow"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
@@ -36,14 +34,20 @@
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.1",
     "prettier": "1.7.4",
+    "source-map-explorer": "^1.5.0",
     "stylelint": "^8.1.1",
     "stylelint-order": "^0.7.0",
     "stylelint-scss": "^2.1.0"
   },
   "stylelint": {
-    "plugins": ["stylelint-scss", "stylelint-order"],
+    "plugins": [
+      "stylelint-scss",
+      "stylelint-order"
+    ],
     "rules": {
-      "at-rule-blacklist": ["debug"],
+      "at-rule-blacklist": [
+        "debug"
+      ],
       "at-rule-no-vendor-prefix": true,
       "block-no-empty": true,
       "block-opening-brace-space-before": "always",
@@ -60,7 +64,9 @@
       "declaration-colon-space-after": "always-single-line",
       "declaration-colon-space-before": "never",
       "declaration-property-value-blacklist": {
-        "/^border/": ["none"]
+        "/^border/": [
+          "none"
+        ]
       },
       "function-comma-space-after": "always-single-line",
       "function-parentheses-space-inside": "never",
@@ -79,14 +85,20 @@
       "rule-empty-line-before": [
         "always-multi-line",
         {
-          "except": ["first-nested"],
-          "ignore": ["after-comment"]
+          "except": [
+            "first-nested"
+          ],
+          "ignore": [
+            "after-comment"
+          ]
         }
       ],
       "scss/at-extend-no-missing-placeholder": true,
       "scss/at-function-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
       "scss/at-import-no-partial-leading-underscore": true,
-      "scss/at-import-partial-extension-blacklist": ["scss"],
+      "scss/at-import-partial-extension-blacklist": [
+        "scss"
+      ],
       "scss/at-mixin-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
       "scss/dollar-variable-colon-space-after": "always",
       "scss/dollar-variable-colon-space-before": "never",
@@ -96,8 +108,7 @@
       "selector-class-pattern": [
         "^[a-z0-9\\-]+$",
         {
-          "message":
-            "Selector should be written in lowercase with hyphens (selector-class-pattern)"
+          "message": "Selector should be written in lowercase with hyphens (selector-class-pattern)"
         }
       ],
       "selector-list-comma-newline-after": "always",

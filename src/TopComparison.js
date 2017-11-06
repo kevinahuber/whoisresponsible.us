@@ -1,30 +1,27 @@
 // @flow
-import React, { Component } from "react";
-import "./TopComparisons.css";
-import data from "./resources/aggregate-by-country.json";
-import codes from "./resources/codes.json";
-import {
-  FaChevronDown,
-  FaChevronUp,
-  FaSortAmountAsc,
-  FaSortAmountDesc
-  // $FlowFixMe: Figure out how this should work with flow types
-} from "react-icons/lib/fa";
+import React, {Component} from 'react'
+import './TopComparisons.css'
+import data from './resources/aggregate-by-country.json'
+import codes from './resources/codes.json'
+import FaChevronDown from 'react-icons/lib/fa/chevron-down'
+import FaChevronUp from 'react-icons/lib/fa/chevron-up'
+import FaSortAmountAsc from 'react-icons/lib/fa/sort-amount-asc'
+import FaSortAmountDesc from 'react-icons/lib/fa/sort-amount-desc'
 
 type Props = {
   activeSubcategories: string[],
   isSortedNegative: boolean,
   onSort: () => mixed
-};
+}
 
 type State = {
   isExpanded: boolean
-};
+}
 
 export default class TopComparisons extends Component<Props, State> {
   state = {
     isExpanded: false
-  };
+  }
 
   renderBar(activeScale: number, title: string) {
     return (
@@ -43,7 +40,7 @@ export default class TopComparisons extends Component<Props, State> {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   getAveragedSubcategories(activeSubcategories: string[]) {
@@ -52,41 +49,41 @@ export default class TopComparisons extends Component<Props, State> {
         code,
         average:
           activeSubcategories.reduce((m, sc) => {
-            return m + data[code][sc.toLowerCase()] || 0;
+            return m + data[code][sc.toLowerCase()] || 0
           }, 0) / activeSubcategories.length
-      });
-    }, []);
+      })
+    }, [])
   }
 
   sortData(a: Object, b: Object) {
-    return b.average - a.average;
+    return b.average - a.average
   }
 
   handleExpandToggle = () => {
-    this.setState((state: State) => ({ isExpanded: !this.state.isExpanded }));
-  };
+    this.setState((state: State) => ({isExpanded: !this.state.isExpanded}))
+  }
 
   render() {
-    const { activeSubcategories, isSortedNegative, onSort } = this.props;
+    const {activeSubcategories, isSortedNegative, onSort} = this.props
 
-    const { isExpanded } = this.state;
+    const {isExpanded} = this.state
 
     const averageSubcategories = this.getAveragedSubcategories(
       activeSubcategories
-    ).sort(this.sortData);
+    ).sort(this.sortData)
     const sortedSubcategories = isSortedNegative
       ? averageSubcategories.sort(this.sortData).reverse()
-      : averageSubcategories.sort(this.sortData);
+      : averageSubcategories.sort(this.sortData)
     const visibleSubcategories = isExpanded
       ? sortedSubcategories
-      : sortedSubcategories.slice(0, 10);
+      : sortedSubcategories.slice(0, 10)
     return (
       <div className="top-comparisons">
         <span className="top-comparisons__toggle-sort" onClick={onSort}>
           {isSortedNegative ? <FaSortAmountDesc /> : <FaSortAmountAsc />}
         </span>
         {visibleSubcategories.map((country, i) => {
-          return this.renderBar(country.average, codes[country.code]);
+          return this.renderBar(country.average, codes[country.code])
         })}
         <div className="top-comparisons__toggle-expand-container">
           <span
@@ -97,6 +94,6 @@ export default class TopComparisons extends Component<Props, State> {
           </span>
         </div>
       </div>
-    );
+    )
   }
 }

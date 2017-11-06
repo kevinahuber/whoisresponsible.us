@@ -1,7 +1,7 @@
 // @flow
 
-import React, { Component } from "react";
-import "./Header.css";
+import React, {Component} from 'react'
+import './Header.css'
 
 type Props = {
   primaryName?: string,
@@ -12,7 +12,7 @@ type Props = {
   onSecondaryClick: () => mixed,
   isShowingAll: boolean,
   isSortedNegative: boolean
-};
+}
 export default class Header extends Component<Props> {
   render() {
     const {
@@ -24,26 +24,26 @@ export default class Header extends Component<Props> {
       onSecondaryClick,
       isShowingAll,
       isSortedNegative
-    } = this.props;
+    } = this.props
 
-    const primary = hoveredPrimaryName || primaryName;
-    const secondary = hoveredSecondaryName || secondaryName;
+    const primary = hoveredPrimaryName || primaryName
+    const secondary = hoveredSecondaryName || secondaryName
 
     return (
-      <div className="header">
+      <header className="header">
         <h1 className="header__title">
           {isShowingAll && isSortedNegative ? (
-            "Top Best"
+            'Top Best'
           ) : isShowingAll ? (
-            "Top Worst"
+            'Top Worst'
           ) : !primary ? (
-            "Who is responsible for Climate Change?"
+            'Who is responsible for Climate Change?'
           ) : secondary ? (
             <div>
               <span onClick={onPrimaryClick} className="header__title--primary">
                 {primary}
               </span>
-              {" or "}
+              {' or '}
               <span
                 onClick={onSecondaryClick}
                 className="header__title--secondary"
@@ -57,7 +57,7 @@ export default class Header extends Component<Props> {
             </span>
           )}
         </h1>
-      </div>
-    );
+      </header>
+    )
   }
 }

@@ -121,7 +121,6 @@ export default class App extends Component<{}, State> {
   }
 
   handlePrimaryClick = () => {
-    console.log('clicked')
     this.setState((state: State) => ({
       primaryGeography: undefined
     }))
