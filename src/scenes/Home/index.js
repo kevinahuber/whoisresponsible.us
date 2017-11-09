@@ -17,23 +17,25 @@ import './styles.css'
 
 type State = {
   activeSubcategories: string[],
-  primaryGeography?: Geography,
-  secondaryGeography?: Geography,
-  isShowingAll: boolean,
   hoveredPrimaryName?: string,
   hoveredSecondaryName?: string,
-  isSortedNegative: boolean
+  isShowingAll: boolean,
+  isShowingParis: boolean,
+  isSortedNegative: boolean,
+  primaryGeography?: Geography,
+  secondaryGeography?: Geography
 }
 
 export default class App extends Component<{}, State> {
   state = {
     activeSubcategories: [],
-    primaryGeography: undefined,
-    secondaryGeography: undefined,
-    isShowingAll: false,
     hoveredPrimaryName: undefined,
     hoveredSecondaryName: undefined,
-    isSortedNegative: false
+    isShowingAll: false,
+    isShowingParis: false,
+    isSortedNegative: false,
+    primaryGeography: undefined,
+    secondaryGeography: undefined
   }
 
   handleCategoryClick = (category: Category) => () => {
@@ -134,6 +136,12 @@ export default class App extends Component<{}, State> {
     }))
   }
 
+  handleParisClick = () => {
+    this.setState((state: State) => ({
+      isShowingParis: !state.isShowingParis
+    }))
+  }
+
   getScale = (code: string) => {
     const {activeSubcategories} = this.state
 
@@ -150,12 +158,13 @@ export default class App extends Component<{}, State> {
   render() {
     const {
       activeSubcategories,
-      primaryGeography,
-      secondaryGeography,
-      isShowingAll,
       hoveredPrimaryName,
       hoveredSecondaryName,
-      isSortedNegative
+      isShowingAll,
+      isShowingParis,
+      isSortedNegative,
+      primaryGeography,
+      secondaryGeography
     } = this.state
 
     return (
@@ -180,7 +189,7 @@ export default class App extends Component<{}, State> {
               onGeographyClick={this.handleGeographyClick}
               onGeographyMouseEnter={this.handleGeographyMouseEnter}
               activeSubcategories={activeSubcategories}
-              activeCode={
+              primaryCode={
                 primaryGeography
                   ? primaryGeography.properties.iso_a3
                   : undefined
@@ -197,7 +206,9 @@ export default class App extends Component<{}, State> {
                 <Categories
                   onCategoryClick={this.handleCategoryClick}
                   onSubcategoryClick={this.handleSubcategoryClick}
+                  onParisClick={this.handleParisClick}
                   activeSubcategories={activeSubcategories}
+                  isShowingParis={isShowingParis}
                 />
               )}
           </div>
@@ -213,11 +224,12 @@ export default class App extends Component<{}, State> {
                 {!!activeSubcategories.length && (
                   <Comparisons
                     activeSubcategories={activeSubcategories}
-                    activeCode={primaryGeography.properties.iso_a3}
+                    primaryCode={primaryGeography.properties.iso_a3}
                     secondaryCode={secondaryGeography.properties.iso_a3}
                     onTopSort={this.handleTopSort}
                     isSortedNegative={isSortedNegative}
                     isShowingAll={isShowingAll}
+                    isShowingParis={isShowingParis}
                   />
                 )}
               </div>

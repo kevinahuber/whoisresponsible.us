@@ -34,13 +34,16 @@ const categories: Category[] = [
       'Waste',
       'Land-Use',
       'Bunker Fuels'
-    ]
+    ],
+    paris: false
   }
 ]
 
 type Props = {
   activeSubcategories: string[],
+  isShowingParis: boolean,
   onCategoryClick: (category: Category) => mixed,
+  onParisClick: () => mixed,
   onSubcategoryClick: (title: string) => mixed
 }
 
@@ -48,8 +51,10 @@ export default class Categories extends Component<Props> {
   render() {
     const {
       activeSubcategories,
-      onSubcategoryClick,
-      onCategoryClick
+      isShowingParis,
+      onCategoryClick,
+      onParisClick,
+      onSubcategoryClick
     } = this.props
 
     return (
@@ -59,26 +64,38 @@ export default class Categories extends Component<Props> {
           {categories.map((category, i) => {
             return (
               <div className="categories__category" key={i}>
-                <div
-                  className="categories__category-title"
-                  onClick={onCategoryClick(category)}
-                >
-                  {category.title}
+                <div className="categories__category-container">
+                  <div
+                    className="categories__category-title"
+                    onClick={onCategoryClick(category)}
+                  >
+                    {category.title}
+                  </div>
+                  {category.subcategories &&
+                    category.subcategories.map((s, i) => (
+                      <div
+                        key={i}
+                        className={cn('categories__subcategory-title', {
+                          'categories__subcategory-title--active': activeSubcategories.includes(
+                            s
+                          )
+                        })}
+                        onClick={onSubcategoryClick(s)}
+                      >
+                        {s}
+                      </div>
+                    ))}
                 </div>
-                {category.subcategories &&
-                  category.subcategories.map((s, i) => (
-                    <div
-                      key={i}
-                      className={cn('categories__subcategory-title', {
-                        'categories__subcategory-title--active': activeSubcategories.includes(
-                          s
-                        )
-                      })}
-                      onClick={onSubcategoryClick(s)}
-                    >
-                      {s}
-                    </div>
-                  ))}
+                {category.paris && (
+                  <div
+                    onClick={onParisClick}
+                    className={cn('categories__paris', {
+                      'categories__paris--active': isShowingParis
+                    })}
+                  >
+                    Paris Accord
+                  </div>
+                )}
               </div>
             )
           })}

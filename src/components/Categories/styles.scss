@@ -2,7 +2,6 @@
 @import '../../mixins';
 
 .categories {
-  font-family: 'SanFranciscoText-RegularItalic';
   position: relative;
 
   @include desktop-up {
@@ -22,9 +21,8 @@
     }
   }
 
-  &__category {
+  &__category-container {
     border: solid 1px $orange;
-    cursor: pointer;
     margin-top: 30px;
     width: 100%;
 
@@ -39,30 +37,18 @@
   }
 
   &__category-title {
+    @include button;
     background-color: $trans-orange;
     border-bottom: solid 1px $orange;
-    color: $orange;
-    font-size: 1rem;
-    height: 24px;
-    line-height: 1.5rem;
-    text-align: center;
   }
 
-  &__subcategory-title {
-    color: $orange;
-    font-size: 1rem;
-    height: 24px;
-    line-height: 1.5rem;
-    text-align: center;
+  &__paris {
+    border: solid 1px $orange;
+    margin-top: 1rem;
+  }
 
-    &:hover {
-      background-color: $trans-orange;
-    }
-
-    &--active,
-    &--active:hover {
-      background-color: $orange;
-      color: $bg-grey;
-    }
+  &__subcategory-title,
+  &__paris {
+    @include button;
   }
 }

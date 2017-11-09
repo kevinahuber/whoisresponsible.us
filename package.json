@@ -21,6 +21,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "d3-scale": "^1.0.6",
+    "normalize.css": "^7.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-icons": "^2.2.7",

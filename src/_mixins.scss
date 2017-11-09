@@ -1,7 +1,34 @@
+@import 'variables';
+
 $mobile-width: 0;
 $tablet-width: 640px;
 $desktop-width: 1024px;
 $widescreen-width: 1440px;
+
+@mixin button {
+  color: $orange;
+  cursor: pointer;
+  font-size: 1rem;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-family: 'SanFranciscoText-RegularItalic';
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  &:hover {
+    background-color: $trans-orange;
+  }
+
+  &--active,
+  &--active:hover {
+    background-color: $orange;
+    color: $bg-grey;
+  }
+
+  @include tablet-up {
+    height: 24px;
+    line-height: 24px;
+  }
+}
 
 @mixin mobile-only {
   @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1px}) {

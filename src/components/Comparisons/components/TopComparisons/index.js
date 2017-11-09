@@ -25,7 +25,7 @@ export default class TopComparisons extends Component<Props, State> {
     isExpanded: false
   }
 
-  renderBar(activeScale: number, title: string) {
+  renderBar(scale: number, title: string) {
     return (
       <div className="top-comparisons__row" key={title}>
         <div className="top-comparisons__row-title">{title}</div>
@@ -33,12 +33,11 @@ export default class TopComparisons extends Component<Props, State> {
           <div
             className="top-comparisons__row-bar-active"
             style={{
-              width: `${activeScale * 100}%`
+              width: `${scale * 100}%`
             }}
           >
-            <span className="top-comparisons__row-bar-value">{`${Math.round(
-              activeScale * 100
-            )}%`}</span>
+            <span className="top-comparisons__row-bar-value">{`${(scale * 100
+            ).toFixed(1)}`}</span>
           </div>
         </div>
       </div>

@@ -22,14 +22,15 @@ export default class Info extends Component<{}, State> {
         </div>
         {isShowing && (
           <div className="info__details">
-            <b>Vulnerability</b> is the exposure a nation has to climate change.
+            <b>Vulnerability</b> is the exposure a country has to climate
+            change.
             <br />
             <br />
-            <b>Preparedness</b> is the ability for a nation to respond.
+            <b>Preparedness</b> is the ability for a country to respond.
             <br />
             <br />
-            <b>Contribution</b> is the amount of damage a nation has done to the
-            climate.
+            <b>Contribution</b> is the amount of damage a country has done to
+            the climate.
             <br />
             <br />
             In all categories, the higher the number, the worse off.

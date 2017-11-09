@@ -1,12 +1,16 @@
 @import '../../variables';
+@import '../../mixins';
 
 .app {
   background-color: $bg-grey;
-  margin: 30px;
-  padding-top: 53px;
+  margin: 0 30px;
 
   &__body {
-    margin-bottom: 100px;
+    padding-bottom: 175px;
+
+    @include desktop-up {
+      padding-bottom: 100px;
+    }
   }
 
   &__container {

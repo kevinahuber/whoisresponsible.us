@@ -1,8 +1,16 @@
+@import '~normalize.css/normalize.css';
+
+html {
+  height: calc(100% - 20px);
+}
+
 body {
   background: #1d1d25;
   font-family: sans-serif;
   margin: 0;
   padding: 0;
+  position: relative;
+  min-height: 100%;
 }
 
 @font-face {

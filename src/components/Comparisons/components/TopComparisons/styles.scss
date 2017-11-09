@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .top-comparisons {
   &__toggle-expand {
@@ -24,7 +25,6 @@
     height: 60px;
 
     &-title {
-      border-bottom: solid 12px $orange;
       box-sizing: border-box;
       color: $orange;
       display: inline-block;
@@ -33,20 +33,30 @@
       height: 60px;
       padding-top: 17px;
       white-space: nowrap;
-      width: 160px;
+      overflow: hidden;
+      width: 100%;
+      text-overflow: ellipsis;
+      @include tablet-up {
+        width: 160px;
+        border-bottom: solid 12px $orange;
+      }
     }
   }
 
   &__row-bar {
-    display: inline-block;
+    display: block;
     font-size: 1rem;
     height: 60px;
     line-height: 2.1rem;
     position: relative;
-    width: calc(100% - 160px);
+    width: 100%;
 
-    &-active,
-    &-secondary {
+    @include tablet-up {
+      display: inline-block;
+      width: calc(100% - 160px);
+    }
+
+    &-active {
       border-bottom: solid 6px $orange;
       box-sizing: border-box;
       color: $orange;
@@ -54,17 +64,15 @@
       position: absolute;
     }
 
-    &-secondary {
-      border-bottom: solid 6px $teal;
-      color: $teal;
-      height: 54px;
-      line-height: 1.5rem;
-    }
-
     &-value {
-      bottom: 0;
+      bottom: -8px;
       position: absolute;
       right: 0;
+      font-size: 0.7rem;
+      @include tablet-up {
+        font-size: 1rem;
+        bottom: 0px;
+      }
     }
   }
 }

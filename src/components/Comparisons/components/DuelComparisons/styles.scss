@@ -1,11 +1,11 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .duel-comparisons {
   &__row {
     height: 60px;
 
     &-title {
-      border-bottom: solid 12px $orange;
       box-sizing: border-box;
       color: $orange;
       display: inline-block;
@@ -14,18 +14,26 @@
       height: 60px;
       padding-top: 17px;
       width: 160px;
+
+      @include tablet-up {
+        border-bottom: solid 12px $orange;
+      }
     }
   }
 
   &__row-bar {
-    display: inline-block;
+    display: block;
     font-size: 1rem;
     height: 60px;
     line-height: 2.1rem;
     position: relative;
-    width: calc(100% - 160px);
+    width: 100%;
 
-    &-active,
+    @include tablet-up {
+      display: inline-block;
+      width: calc(100% - 160px);
+    }
+    &-primary,
     &-secondary {
       border-bottom: solid 6px $primary-color;
       box-sizing: border-box;
@@ -42,13 +50,20 @@
     }
 
     &-value {
-      bottom: 0;
+      bottom: -4px;
       position: absolute;
       right: 0;
+      font-size: 0.7rem;
+      @include tablet-up {
+        font-size: 1rem;
+      }
     }
 
-    &-active &-value {
-      bottom: -33px;
+    &-primary &-value {
+      bottom: -30px;
+      @include tablet-up {
+        bottom: -33px;
+      }
     }
   }
 }

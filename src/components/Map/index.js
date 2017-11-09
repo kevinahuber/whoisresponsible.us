@@ -21,7 +21,7 @@ const popScale = scaleLinear()
 
 type Props = {
   activeSubcategories: string[],
-  activeCode?: string,
+  primaryCode?: string,
   secondaryCode?: string,
   isShowingAll: boolean,
   onGeographyClick: (geography: GeographyType) => mixed,
@@ -29,19 +29,28 @@ type Props = {
 }
 
 type State = {
+  canHover: boolean,
   isOptimizationDisabled: boolean
 }
 
 export default class Map extends Component<Props, State> {
   state = {
+    canHover: false,
     isOptimizationDisabled: false
+  }
+
+  componentDidMount() {
+    const canHover =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(hover: hover)').matches
+    this.setState((state: State) => ({canHover}))
   }
 
   componentWillReceiveProps(nextProps: Props) {
     if (
       this.props.activeSubcategories.length !==
         nextProps.activeSubcategories.length ||
-      this.props.activeCode !== nextProps.activeCode ||
+      this.props.primaryCode !== nextProps.primaryCode ||
       this.props.secondaryCode !== nextProps.secondaryCode ||
       this.props.isShowingAll !== nextProps.isShowingAll
     ) {
@@ -71,14 +80,14 @@ export default class Map extends Component<Props, State> {
   render() {
     const {
       activeSubcategories,
-      activeCode,
+      primaryCode,
       secondaryCode,
       isShowingAll,
       onGeographyClick,
       onGeographyMouseEnter
     } = this.props
 
-    const {isOptimizationDisabled} = this.state
+    const {canHover, isOptimizationDisabled} = this.state
 
     const height = 630
     const width = 959
@@ -86,7 +95,7 @@ export default class Map extends Component<Props, State> {
     return (
       <div
         className={cn('map', {
-          'map--collapsed': activeCode && secondaryCode
+          'map--collapsed': primaryCode && secondaryCode
         })}
       >
         <ComposableMap
@@ -117,7 +126,7 @@ export default class Map extends Component<Props, State> {
                     return null
                 }
 
-                const isActive = code === activeCode
+                const isActive = code === primaryCode
                 const isSecondary = code === secondaryCode
 
                 // TODO: Import colors from css
@@ -132,7 +141,7 @@ export default class Map extends Component<Props, State> {
                     ? styles.primary
                     : isSecondary
                       ? styles.secondary
-                      : activeCode ? styles.secondary : styles.primary
+                      : primaryCode ? styles.secondary : styles.primary
                 return (
                   <Geography
                     key={i}
@@ -140,7 +149,7 @@ export default class Map extends Component<Props, State> {
                     geography={geography}
                     projection={projection}
                     onClick={onGeographyClick}
-                    onMouseEnter={onGeographyMouseEnter}
+                    onMouseEnter={canHover ? onGeographyMouseEnter : undefined}
                     style={{
                       default: {
                         fill: color,

@@ -6,13 +6,14 @@
   color: $dark-grey;
   font-family: 'SanFranciscoText-RegularItalic';
   text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 
   @include desktop-up {
-    bottom: 0;
     height: 55px;
-    left: 0;
     position: fixed;
-    right: 0;
   }
 
   &__container {
