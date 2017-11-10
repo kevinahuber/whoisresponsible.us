@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import './styles.css'
 import data from '../../../../resources/aggregate-by-country.json'
 import codes from '../../../../resources/codes.json'
+import Row from '../Row'
 
 // Import individual to utilize import bundling benefits
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
@@ -84,7 +85,13 @@ export default class TopComparisons extends Component<Props, State> {
           {isSortedNegative ? <FaSortAmountDesc /> : <FaSortAmountAsc />}
         </span>
         {visibleSubcategories.map((country, i) => {
-          return this.renderBar(country.average, codes[country.code])
+          return (
+            <Row
+              key={i}
+              primaryScale={country.average}
+              title={codes[country.code]}
+            />
+          )
         })}
         <div className="top-comparisons__toggle-expand-container">
           <span

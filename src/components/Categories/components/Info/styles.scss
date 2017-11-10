@@ -3,11 +3,21 @@
 
 $size: 20px;
 
+/* stylelint-disable */
+:export {
+  enter: $max-enter-duration;
+  exit: $max-exit-duration;
+}
+/* stylelint-enable */
+
 .info {
   color: $orange;
   font-family: 'SanFranciscoText-RegularItalic';
   font-size: 1rem;
 
+  &__fade {
+    @include fade;
+  }
   &__label {
     border: solid 1px $orange;
     border-radius: 50%;

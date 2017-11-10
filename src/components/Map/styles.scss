@@ -11,9 +11,8 @@
 .map {
   display: inline-block;
   max-width: 980px;
-  transition: max-width 0.1s;
   width: 100%;
-
+  @include resize;
   @include desktop-up {
     &--collapsed {
       max-width: 400px;

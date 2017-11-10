@@ -1,7 +1,13 @@
 // @flow
 import React, {Component} from 'react'
-import './styles.css'
 import data from '../../../../resources/aggregate-by-country.json'
+import Row from '../Row'
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
+import styles from './styles.css'
+const TIMEOUT = {
+  enter: parseInt(styles.enter, 10),
+  exit: parseInt(styles.exit, 10)
+}
 
 type Props = {
   primaryCode: string,
@@ -24,35 +30,6 @@ export default class DuelComparisons extends Component<Props> {
       </div>
     )
   }
-  renderBar(primaryScale: number, secondaryScale: number, title: string) {
-    return (
-      <div className="duel-comparisons__row" key={title}>
-        <div className="duel-comparisons__row-title">{title}</div>
-        <div className="duel-comparisons__row-bar">
-          <div
-            className="duel-comparisons__row-bar-primary"
-            style={{
-              width: `${(primaryScale || 0) * 100}%`
-            }}
-          >
-            <span className="duel-comparisons__row-bar-value">{`${(primaryScale *
-              100
-            ).toFixed(1)}`}</span>
-          </div>
-          <div
-            className="duel-comparisons__row-bar-bar duel-comparisons__row-bar-secondary"
-            style={{
-              width: `${(secondaryScale || 0) * 100}%`
-            }}
-          >
-            <span className="duel-comparisons__row-bar-value">{`${(secondaryScale *
-              100
-            ).toFixed(1)}`}</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   render() {
     const {
@@ -65,16 +42,32 @@ export default class DuelComparisons extends Component<Props> {
     return (
       <div className="duel-comparisons">
         {isShowingParis && this.renderParis(primaryCode, secondaryCode)}
-        {activeSubcategories.map(as => {
-          const primaryScale = data[primaryCode]
-            ? data[primaryCode][as.toLowerCase()]
-            : 0
-          const secondaryScale = data[secondaryCode]
-            ? data[secondaryCode][as.toLowerCase()]
-            : 0
+        <TransitionGroup>
+          {activeSubcategories.map((as, i) => {
+            const primaryScale = data[primaryCode]
+              ? data[primaryCode][as.toLowerCase()]
+              : 0
+            const secondaryScale = data[secondaryCode]
+              ? data[secondaryCode][as.toLowerCase()]
+              : 0
 
-          return this.renderBar(primaryScale, secondaryScale, as)
-        })}
+            return (
+              <CSSTransition
+                unmountOnExit
+                appear
+                key={as}
+                timeout={TIMEOUT}
+                classNames="duel-comparisons__row-fade"
+              >
+                <Row
+                  primaryScale={primaryScale}
+                  secondaryScale={secondaryScale}
+                  title={as}
+                />
+              </CSSTransition>
+            )
+          })}
+        </TransitionGroup>
       </div>
     )
   }

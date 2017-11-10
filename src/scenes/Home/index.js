@@ -95,11 +95,11 @@ export default class App extends Component<{}, State> {
     this.setState((state: State) => ({
       hoveredPrimaryName: state.primaryGeography
         ? undefined
-        : geography.properties.name_long,
+        : geography.properties.name,
       hoveredSecondaryName:
         state.primaryGeography && state.secondaryGeography
           ? undefined
-          : state.primaryGeography ? geography.properties.name_long : undefined
+          : state.primaryGeography ? geography.properties.name : undefined
     }))
   }
 
@@ -170,11 +170,9 @@ export default class App extends Component<{}, State> {
     return (
       <div className="app">
         <Header
-          primaryName={
-            primaryGeography && primaryGeography.properties.name_long
-          }
+          primaryName={primaryGeography && primaryGeography.properties.name}
           secondaryName={
-            secondaryGeography && secondaryGeography.properties.name_long
+            secondaryGeography && secondaryGeography.properties.name
           }
           hoveredPrimaryName={hoveredPrimaryName}
           hoveredSecondaryName={hoveredSecondaryName}
@@ -201,16 +199,15 @@ export default class App extends Component<{}, State> {
               }
               isShowingAll={isShowingAll}
             />
-            {primaryGeography &&
-              secondaryGeography && (
-                <Categories
-                  onCategoryClick={this.handleCategoryClick}
-                  onSubcategoryClick={this.handleSubcategoryClick}
-                  onParisClick={this.handleParisClick}
-                  activeSubcategories={activeSubcategories}
-                  isShowingParis={isShowingParis}
-                />
-              )}
+
+            <Categories
+              onCategoryClick={this.handleCategoryClick}
+              onSubcategoryClick={this.handleSubcategoryClick}
+              onParisClick={this.handleParisClick}
+              activeSubcategories={activeSubcategories}
+              isShowingParis={isShowingParis}
+              isShowing={!!primaryGeography && !!secondaryGeography}
+            />
           </div>
           {primaryGeography &&
             secondaryGeography && (

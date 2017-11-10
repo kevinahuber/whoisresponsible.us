@@ -1,5 +1,11 @@
 @import '../../variables';
 @import '../../mixins';
+/* stylelint-disable */
+:export {
+  enter: $max-enter-duration;
+  exit: $max-exit-duration;
+}
+/* stylelint-enable */
 
 .categories {
   position: relative;
@@ -10,6 +16,10 @@
     right: 0;
     top: 0;
     width: 100%;
+  }
+
+  &__category-fade {
+    @include fade;
   }
 
   &__container {

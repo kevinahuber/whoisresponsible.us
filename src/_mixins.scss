@@ -4,20 +4,95 @@ $mobile-width: 0;
 $tablet-width: 640px;
 $desktop-width: 1024px;
 $widescreen-width: 1440px;
+$max-enter-duration: 300;
+$max-exit-duration: 255;
 
-@mixin fade-in($delay) {
-  opacity: 0;
-  transition: $property 375ms ease-in-out $delay;
+@mixin create($height, $width) {
+  @include slide($height, $width);
+  @include fade;
+  transition-property: opacity, max-height, width;
+}
 
-  &--active {
+@mixin slide($height, $width) {
+  overflow-y: hidden;
+  max-height: 0;
+  transition-property: max-height, width;
+
+  &-enter,
+  &-appear {
+    max-height: 0;
+    width: 0;
+    @include transition-in;
+  }
+
+  &-enter-active,
+  &-appear-active {
+    max-height: $height;
+    width: $width;
+  }
+
+  &-exit {
+    max-height: $height;
+    width: $width;
+    @include transition-out;
+  }
+
+  &-exit-active {
+    max-height: 0;
+    width: 0;
+  }
+}
+
+@mixin fade {
+  transition-property: opacity;
+
+  &-enter,
+  &-appear {
+    opacity: 0;
+    @include transition-in;
+  }
+
+  &-enter-active,
+  &-appear-active {
     opacity: 1;
   }
+
+  &-exit {
+    opacity: 1;
+    @include transition-out;
+  }
+
+  &-exit-active {
+    opacity: 0;
+  }
+}
+
+@mixin resize {
+  transition-property: max-width;
+  @include transition-in;
+}
+
+@mixin transition-in {
+  transition-duration: 225ms;
+  transition-timing-function: ease-in-out;
   @include tablet-up {
-    transition-duration: 390ms;
+    transition-duration: 295ms;
   }
 
   @include desktop-up {
     transition-duration: 200ms;
+  }
+}
+
+@mixin transition-out {
+  transition-duration: 195ms;
+  transition-timing-function: ease-in-out;
+  @include tablet-up {
+    transition-duration: 250ms;
+  }
+
+  @include desktop-up {
+    transition-duration: 175ms;
   }
 }
 

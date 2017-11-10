@@ -7,7 +7,7 @@ export type Category = {
 
 export type Geography = {
   properties: {
-    name_long: string,
+    name: string,
     iso_a3: string
   }
 }

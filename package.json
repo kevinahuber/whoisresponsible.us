@@ -26,7 +26,8 @@
     "react-dom": "^15.6.1",
     "react-icons": "^2.2.7",
     "react-scripts": "1.0.13",
-    "react-simple-maps": "^0.8.3"
+    "react-simple-maps": "^0.8.3",
+    "react-transition-group": "^2.2.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
