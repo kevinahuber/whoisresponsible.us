@@ -5,15 +5,32 @@ $tablet-width: 640px;
 $desktop-width: 1024px;
 $widescreen-width: 1440px;
 
+@mixin fade-in($delay) {
+  opacity: 0;
+  transition: $property 375ms ease-in-out $delay;
+
+  &--active {
+    opacity: 1;
+  }
+  @include tablet-up {
+    transition-duration: 390ms;
+  }
+
+  @include desktop-up {
+    transition-duration: 200ms;
+  }
+}
+
 @mixin button {
   color: $orange;
   cursor: pointer;
+  font-family: 'SanFranciscoText-RegularItalic';
   font-size: 1rem;
   height: 35px;
   line-height: 35px;
-  text-align: center;
-  font-family: 'SanFranciscoText-RegularItalic';
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-align: center;
+
   &:hover {
     background-color: $trans-orange;
   }

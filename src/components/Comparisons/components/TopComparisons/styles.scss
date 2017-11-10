@@ -23,23 +23,23 @@
 
   &__row {
     height: 60px;
+  }
 
-    &-title {
-      box-sizing: border-box;
-      color: $orange;
-      display: inline-block;
-      float: left;
-      font-size: 1rem;
-      height: 60px;
-      padding-top: 17px;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 100%;
-      text-overflow: ellipsis;
-      @include tablet-up {
-        width: 160px;
-        border-bottom: solid 12px $orange;
-      }
+  &__row-title {
+    box-sizing: border-box;
+    color: $orange;
+    display: inline-block;
+    float: left;
+    font-size: 1rem;
+    height: 60px;
+    overflow: hidden;
+    padding-top: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    @include tablet-up {
+      border-bottom: solid 12px $orange;
+      width: 160px;
     }
   }
 
@@ -63,16 +63,16 @@
       height: 60px;
       position: absolute;
     }
+  }
 
-    &-value {
-      bottom: -8px;
-      position: absolute;
-      right: 0;
-      font-size: 0.7rem;
-      @include tablet-up {
-        font-size: 1rem;
-        bottom: 0px;
-      }
+  &__row-bar-value {
+    bottom: -8px;
+    font-size: 0.7rem;
+    position: absolute;
+    right: 0;
+    @include tablet-up {
+      bottom: 0;
+      font-size: 1rem;
     }
   }
 }

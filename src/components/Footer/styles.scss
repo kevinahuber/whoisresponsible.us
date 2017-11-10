@@ -3,13 +3,13 @@
 
 .footer {
   background: $bg-black;
+  bottom: 0;
   color: $dark-grey;
   font-family: 'SanFranciscoText-RegularItalic';
-  text-align: center;
   left: 0;
-  right: 0;
-  bottom: 0;
   position: absolute;
+  right: 0;
+  text-align: center;
 
   @include desktop-up {
     height: 55px;
