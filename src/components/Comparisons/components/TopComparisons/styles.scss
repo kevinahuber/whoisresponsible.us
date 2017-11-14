@@ -1,6 +1,13 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
+/* stylelint-disable */
+:export {
+  enter: $max-enter-duration;
+  exit: $max-exit-duration;
+}
+/* stylelint-enable */
+
 .top-comparisons {
   &__toggle-expand {
     color: $orange;
@@ -19,5 +26,9 @@
     position: absolute;
     right: 15px;
     top: 15px;
+  }
+
+  &__row-fade {
+    @include create(64px, 100%);
   }
 }

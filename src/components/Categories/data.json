@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Vulnerability",
+    "subcategories": [
+      "Capacity",
+      "Ecosystem",
+      "Exposure",
+      "Food",
+      "Habitat",
+      "Health",
+      "Infrastructure",
+      "Sensitivity",
+      "Water"
+    ],
+    "isNegative": true
+  },
+  {
+    "title": "Preparedness",
+    "subcategories": ["Economic", "Governance", "Social"],
+    "paris": false,
+    "isNegative": false
+  },
+  {
+    "title": "Contribution",
+    "subcategories": [
+      "Energy",
+      "Industrial",
+      "Agriculture",
+      "Waste",
+      "Land-Use",
+      "Bunker Fuels"
+    ],
+    "isNegative": true
+  }
+]

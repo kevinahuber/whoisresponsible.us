@@ -14,8 +14,8 @@ $max-exit-duration: 255;
 }
 
 @mixin slide($height, $width) {
-  overflow-y: hidden;
   max-height: 0;
+  overflow-y: hidden;
   transition-property: max-height, width;
 
   &-enter,
@@ -40,6 +40,20 @@ $max-exit-duration: 255;
   &-exit-active {
     max-height: 0;
     width: 0;
+  }
+}
+
+@mixin fade-in {
+  animation: fade-in-animation 1s;
+}
+
+@keyframes fade-in-animation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
@@ -97,7 +111,8 @@ $max-exit-duration: 255;
 }
 
 @mixin button {
-  color: $orange;
+  // background-color: $orange;
+  // color: $bg-grey;
   cursor: pointer;
   font-family: 'SanFranciscoText-RegularItalic';
   font-size: 1rem;
@@ -105,11 +120,12 @@ $max-exit-duration: 255;
   line-height: 35px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   text-align: center;
-
-  &:hover {
-    background-color: $trans-orange;
-  }
-
+  border: 1px solid $orange;
+  background-color: $bg-grey;
+  color: $orange;
+  // &--active {
+  //   opacity: 1;
+  // }
   &--active,
   &--active:hover {
     background-color: $orange;
@@ -117,8 +133,20 @@ $max-exit-duration: 255;
   }
 
   @include tablet-up {
+    background-color: $bg-grey;
+    color: $orange;
     height: 24px;
     line-height: 24px;
+
+    &:hover {
+      background-color: $trans-orange;
+    }
+
+    &--active,
+    &--active:hover {
+      background-color: $orange;
+      color: $bg-grey;
+    }
   }
 }
 

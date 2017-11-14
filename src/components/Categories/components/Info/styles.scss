@@ -18,6 +18,7 @@ $size: 20px;
   &__fade {
     @include fade;
   }
+
   &__label {
     border: solid 1px $orange;
     border-radius: 50%;

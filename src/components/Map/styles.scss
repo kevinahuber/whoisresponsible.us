@@ -12,10 +12,15 @@
   display: inline-block;
   max-width: 980px;
   width: 100%;
+  @include fade-in;
   @include resize;
   @include desktop-up {
     &--collapsed {
       max-width: 400px;
     }
+  }
+
+  &--zoomed {
+    cursor: move;
   }
 }

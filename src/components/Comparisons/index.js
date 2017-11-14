@@ -8,6 +8,7 @@ type Props = {
   isShowingAll: boolean,
   isShowingParis: boolean,
   isSortedNegative: boolean,
+  isVisible: boolean,
   onTopSort: () => mixed,
   primaryCode: string,
   secondaryCode: string
@@ -20,18 +21,20 @@ export default class Comparisons extends Component<Props> {
       isShowingAll,
       isShowingParis,
       isSortedNegative,
+      isVisible,
       onTopSort,
       primaryCode,
       secondaryCode
     } = this.props
 
     return (
-      <div className="comparisons">
+      <div className={isVisible ? 'comparisons' : ''}>
         {isShowingAll ? (
           <TopComparisons
             activeSubcategories={activeSubcategories}
             isShowingParis={isShowingParis}
             isSortedNegative={isSortedNegative}
+            isVisible={isVisible}
             onSort={onTopSort}
           />
         ) : (

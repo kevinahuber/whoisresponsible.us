@@ -10,32 +10,40 @@ import {
   Map
 } from '../../components'
 
+import withRedux from 'next-redux-wrapper'
+import {initStore} from '../../store'
+// TODO: Abstract into component
+import {Tooltip, actions as tooltipActions} from 'redux-tooltip'
 import type {Geography, Category} from '../../types.js'
 
 import data from '../../resources/aggregate-by-country.json'
 import './styles.css'
 
+const LIMIT = Infinity
+
 type State = {
   activeSubcategories: string[],
-  hoveredPrimaryName?: string,
-  hoveredSecondaryName?: string,
   isShowingAll: boolean,
   isShowingParis: boolean,
   isSortedNegative: boolean,
   primaryGeography?: Geography,
-  secondaryGeography?: Geography
+  secondaryGeography?: Geography,
+  clicktime: Date
 }
 
-export default class App extends Component<{}, State> {
+type Props = {
+  dispatch: *
+}
+class App extends Component<Props, State> {
   state = {
     activeSubcategories: [],
-    hoveredPrimaryName: undefined,
-    hoveredSecondaryName: undefined,
+    isPaused: false,
     isShowingAll: false,
     isShowingParis: false,
     isSortedNegative: false,
     primaryGeography: undefined,
-    secondaryGeography: undefined
+    secondaryGeography: undefined,
+    clicktime: new Date()
   }
 
   handleCategoryClick = (category: Category) => () => {
@@ -46,11 +54,10 @@ export default class App extends Component<{}, State> {
       ? activeSubcategories.filter(
           s => !category.subcategories.find(sc => sc === s)
         )
-      : activeSubcategories.concat(
-          category.subcategories
-            .map(s => s)
-            .filter(s => !activeSubcategories.includes(s))
-        )
+      : category.subcategories
+          .map(s => s)
+          .filter(s => !activeSubcategories.includes(s))
+          .concat(activeSubcategories)
     this.setState((state: State) => ({
       activeSubcategories: newActiveSubcategories
     }))
@@ -60,13 +67,15 @@ export default class App extends Component<{}, State> {
     const {activeSubcategories} = this.state
     const newActiveSubcategories = activeSubcategories.includes(sub)
       ? this.state.activeSubcategories.filter(s => s !== sub)
-      : [sub].concat(this.state.activeSubcategories)
+      : [sub].concat(this.state.activeSubcategories.slice(0, LIMIT - 1))
     this.setState((state: State) => ({
       activeSubcategories: newActiveSubcategories
     }))
   }
 
-  handleGeographyClick = (geography: Geography) => {
+  handleGeographyClick = (geography: Geography, evt: window.Event) => {
+    evt.stopPropagation()
+    if (!this.canClick()) return
     const newState = {}
 
     if (this.state.primaryGeography) {
@@ -87,20 +96,32 @@ export default class App extends Component<{}, State> {
     } else {
       newState.primaryGeography = geography
     }
+    const x = evt.clientX + window.pageXOffset
+    const y = evt.clientY + window.pageYOffset
 
-    this.setState((state: State) => newState)
+    this.setState(
+      (state: State) => newState,
+      () => {
+        if (this.state.primaryGeography && this.state.secondaryGeography) {
+          this.props.dispatch(tooltipActions.hide())
+        } else {
+          this.props.dispatch(
+            tooltipActions.show({
+              origin: {x, y},
+              content: 'Pick a second country'
+            })
+          )
+        }
+      }
+    )
   }
 
-  handleGeographyMouseEnter = (geography: Geography) => {
-    this.setState((state: State) => ({
-      hoveredPrimaryName: state.primaryGeography
-        ? undefined
-        : geography.properties.name,
-      hoveredSecondaryName:
-        state.primaryGeography && state.secondaryGeography
-          ? undefined
-          : state.primaryGeography ? geography.properties.name : undefined
-    }))
+  canClick = () => {
+    const {clicktime} = this.state
+    if (!clicktime) return false
+    if (new Date() - clicktime < 500) return false
+    this.setState((state: State) => ({clicktime: new Date()}))
+    return true
   }
 
   handleClearGeography = () => {
@@ -158,8 +179,6 @@ export default class App extends Component<{}, State> {
   render() {
     const {
       activeSubcategories,
-      hoveredPrimaryName,
-      hoveredSecondaryName,
       isShowingAll,
       isShowingParis,
       isSortedNegative,
@@ -169,13 +188,18 @@ export default class App extends Component<{}, State> {
 
     return (
       <div className="app">
+        <Tooltip
+          className={
+            !primaryGeography
+              ? 'app__tooltip--primary'
+              : 'app__tooltip--secondary'
+          }
+        />
         <Header
           primaryName={primaryGeography && primaryGeography.properties.name}
           secondaryName={
             secondaryGeography && secondaryGeography.properties.name
           }
-          hoveredPrimaryName={hoveredPrimaryName}
-          hoveredSecondaryName={hoveredSecondaryName}
           isShowingAll={isShowingAll}
           isSortedNegative={isSortedNegative}
           onPrimaryClick={this.handlePrimaryClick}
@@ -185,7 +209,6 @@ export default class App extends Component<{}, State> {
           <div className="app__container">
             <Map
               onGeographyClick={this.handleGeographyClick}
-              onGeographyMouseEnter={this.handleGeographyMouseEnter}
               activeSubcategories={activeSubcategories}
               primaryCode={
                 primaryGeography
@@ -198,6 +221,7 @@ export default class App extends Component<{}, State> {
                   : undefined
               }
               isShowingAll={isShowingAll}
+              // pause={this.handlePause}
             />
 
             <Categories
@@ -218,17 +242,16 @@ export default class App extends Component<{}, State> {
                   isShowingAll={isShowingAll}
                   hasActiveSubcategories={!!activeSubcategories.length}
                 />
-                {!!activeSubcategories.length && (
-                  <Comparisons
-                    activeSubcategories={activeSubcategories}
-                    primaryCode={primaryGeography.properties.iso_a3}
-                    secondaryCode={secondaryGeography.properties.iso_a3}
-                    onTopSort={this.handleTopSort}
-                    isSortedNegative={isSortedNegative}
-                    isShowingAll={isShowingAll}
-                    isShowingParis={isShowingParis}
-                  />
-                )}
+                <Comparisons
+                  activeSubcategories={activeSubcategories}
+                  primaryCode={primaryGeography.properties.iso_a3}
+                  secondaryCode={secondaryGeography.properties.iso_a3}
+                  onTopSort={this.handleTopSort}
+                  isSortedNegative={isSortedNegative}
+                  isShowingAll={isShowingAll}
+                  isShowingParis={isShowingParis}
+                  isVisible={!!activeSubcategories.length}
+                />
               </div>
             )}
         </div>
@@ -237,3 +260,5 @@ export default class App extends Component<{}, State> {
     )
   }
 }
+
+export default withRedux(initStore)(App)

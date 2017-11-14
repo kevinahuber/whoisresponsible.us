@@ -4,6 +4,8 @@ import data from '../../../../resources/aggregate-by-country.json'
 import Row from '../Row'
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
 import styles from './styles.css'
+import categories from '../../../Categories/data.json'
+
 const TIMEOUT = {
   enter: parseInt(styles.enter, 10),
   exit: parseInt(styles.exit, 10)
@@ -51,6 +53,12 @@ export default class DuelComparisons extends Component<Props> {
               ? data[secondaryCode][as.toLowerCase()]
               : 0
 
+            const activeCategory = categories.find(c =>
+              c.subcategories.includes(as)
+            )
+            console.log(as, activeCategory)
+            const isNegative = (activeCategory || {}).isNegative
+            console.log(isNegative)
             return (
               <CSSTransition
                 unmountOnExit
@@ -60,6 +68,7 @@ export default class DuelComparisons extends Component<Props> {
                 classNames="duel-comparisons__row-fade"
               >
                 <Row
+                  isNegative={isNegative}
                   primaryScale={primaryScale}
                   secondaryScale={secondaryScale}
                   title={as}

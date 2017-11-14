@@ -1,9 +1,11 @@
 // @flow
 import React, {Component} from 'react'
-import './styles.css'
+import styles from './styles.css'
+
 import data from '../../../../resources/aggregate-by-country.json'
 import codes from '../../../../resources/codes.json'
 import Row from '../Row'
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
 
 // Import individual to utilize import bundling benefits
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
@@ -11,9 +13,14 @@ import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaSortAmountAsc from 'react-icons/lib/fa/sort-amount-asc'
 import FaSortAmountDesc from 'react-icons/lib/fa/sort-amount-desc'
 
+const TIMEOUT = {
+  enter: parseInt(styles.enter, 10),
+  exit: parseInt(styles.exit, 10)
+}
 type Props = {
   activeSubcategories: string[],
   isSortedNegative: boolean,
+  isVisible: boolean,
   onSort: () => mixed
 }
 
@@ -21,30 +28,12 @@ type State = {
   isExpanded: boolean
 }
 
+const LIMIT = 5
+
 export default class TopComparisons extends Component<Props, State> {
   state = {
     isExpanded: false
   }
-
-  renderBar(scale: number, title: string) {
-    return (
-      <div className="top-comparisons__row" key={title}>
-        <div className="top-comparisons__row-title">{title}</div>
-        <div className="top-comparisons__row-bar">
-          <div
-            className="top-comparisons__row-bar-active"
-            style={{
-              width: `${scale * 100}%`
-            }}
-          >
-            <span className="top-comparisons__row-bar-value">{`${(scale * 100
-            ).toFixed(1)}`}</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   getAveragedSubcategories(activeSubcategories: string[]) {
     return Object.keys(data).reduce((memo, code) => {
       return [].concat(memo, {
@@ -57,6 +46,10 @@ export default class TopComparisons extends Component<Props, State> {
     }, [])
   }
 
+  getScale = (index: number) => {
+    return (index - 0.5) * 2
+  }
+
   sortData(a: Object, b: Object) {
     return b.average - a.average
   }
@@ -66,7 +59,12 @@ export default class TopComparisons extends Component<Props, State> {
   }
 
   render() {
-    const {activeSubcategories, isSortedNegative, onSort} = this.props
+    const {
+      activeSubcategories,
+      isSortedNegative,
+      onSort,
+      isVisible
+    } = this.props
 
     const {isExpanded} = this.state
 
@@ -78,21 +76,35 @@ export default class TopComparisons extends Component<Props, State> {
       : averageSubcategories.sort(this.sortData)
     const visibleSubcategories = isExpanded
       ? sortedSubcategories
-      : sortedSubcategories.slice(0, 10)
+      : sortedSubcategories.slice(0, LIMIT)
     return (
       <div className="top-comparisons">
         <span className="top-comparisons__toggle-sort" onClick={onSort}>
           {isSortedNegative ? <FaSortAmountDesc /> : <FaSortAmountAsc />}
         </span>
-        {visibleSubcategories.map((country, i) => {
-          return (
-            <Row
-              key={i}
-              primaryScale={country.average}
-              title={codes[country.code]}
-            />
-          )
-        })}
+        <TransitionGroup>
+          {isVisible &&
+            visibleSubcategories.map((country, i) => {
+              const primaryScale = this.getScale(country.average)
+              return (
+                <CSSTransition
+                  unmountOnExit
+                  appear
+                  key={country.code}
+                  timeout={TIMEOUT}
+                  classNames="top-comparisons__row-fade"
+                >
+                  <Row
+                    key={i}
+                    primaryScale={primaryScale}
+                    title={codes[country.code]}
+                    isNegative={false}
+                  />
+                </CSSTransition>
+              )
+            })}
+        </TransitionGroup>
+
         <div className="top-comparisons__toggle-expand-container">
           <span
             className="top-comparisons__toggle-expand"

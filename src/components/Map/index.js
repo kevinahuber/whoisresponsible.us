@@ -1,9 +1,19 @@
 // @flow
 import React, {Component} from 'react'
-import {ComposableMap, Geographies, Geography} from 'react-simple-maps'
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  ZoomableGroup
+} from 'react-simple-maps'
 import cn from 'classnames'
+import {Motion, spring} from 'react-motion'
+import withRedux from 'next-redux-wrapper'
+import {initStore} from '../../store'
 
-import {scaleLinear} from 'd3-scale'
+import {actions as tooltipActions} from 'redux-tooltip'
+
+import {scalePow} from 'd3-scale'
 
 import type {Geography as GeographyType} from '../../types.js'
 
@@ -15,28 +25,35 @@ const excludes = [
   // 'GRL'
 ]
 
-const popScale = scaleLinear()
+const ZOOM = 10
+
+const popScale = scalePow()
   .domain([0, 1])
   .range(['#33343D', '#D8D8D8'])
 
 type Props = {
   activeSubcategories: string[],
+  dispatch: *, // TODO: Properly type
   primaryCode?: string,
   secondaryCode?: string,
   isShowingAll: boolean,
-  onGeographyClick: (geography: GeographyType) => mixed,
-  onGeographyMouseEnter: (geography: GeographyType) => mixed
+  onGeographyClick: (geography: GeographyType) => mixed
 }
 
 type State = {
   canHover: boolean,
-  isOptimizationDisabled: boolean
+  isOptimizationDisabled: boolean,
+  zoom: number,
+  center: [number, number]
 }
 
-export default class Map extends Component<Props, State> {
+class Map extends Component<Props, State> {
   state = {
     canHover: false,
-    isOptimizationDisabled: false
+    isOptimizationDisabled: false,
+    zoom: 1,
+    center: [0, 0],
+    isPanning: false
   }
 
   componentDidMount() {
@@ -77,17 +94,53 @@ export default class Map extends Component<Props, State> {
     )
   }
 
+  handleMove = (geography: Geography, evt: window.Event) => {
+    const x = evt.clientX + window.pageXOffset
+    const y = evt.clientY + window.pageYOffset
+
+    const content =
+      geography.properties.iso_a3 === this.props.primaryCode
+        ? 'Pick a second country'
+        : geography.properties.name
+    this.props.dispatch(
+      tooltipActions.show({
+        origin: {x, y},
+        content
+      })
+    )
+  }
+
+  handleZoomIn = (evt: window.Event) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    this.setState((state: State) => ({
+      zoom: state.zoom * ZOOM
+    }))
+  }
+
+  handleZoomOut = (evt: window.Event) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    this.setState((state: State) => ({
+      zoom: state.zoom / ZOOM,
+      center: [0, 0]
+    }))
+  }
+
+  handleLeave = () => {
+    this.props.dispatch(tooltipActions.hide())
+  }
+
   render() {
     const {
       activeSubcategories,
       primaryCode,
       secondaryCode,
       isShowingAll,
-      onGeographyClick,
-      onGeographyMouseEnter
+      onGeographyClick
     } = this.props
 
-    const {canHover, isOptimizationDisabled} = this.state
+    const {canHover, isOptimizationDisabled, zoom, center} = this.state
 
     const height = 630
     const width = 959
@@ -95,83 +148,114 @@ export default class Map extends Component<Props, State> {
     return (
       <div
         className={cn('map', {
-          'map--collapsed': primaryCode && secondaryCode
+          'map--collapsed': primaryCode && secondaryCode,
+          'map--zoomed': zoom === ZOOM
         })}
+        onDoubleClick={zoom === ZOOM ? this.handleZoomOut : this.handleZoomIn}
       >
-        <ComposableMap
-          projectionConfig={{
-            scale: 205,
-            rotation: [-11, 0, 0]
+        {' '}
+        <Motion
+          defaultStyle={{
+            zoom: 1,
+            x: 0,
+            y: 20
           }}
-          width={width}
-          height={height}
           style={{
-            width: '100%',
-            height: 'auto'
+            zoom: spring(zoom, {stiffness: 210, damping: 20}),
+            x: spring(center[0], {stiffness: 210, damping: 20}),
+            y: spring(center[1], {stiffness: 210, damping: 20})
           }}
         >
-          <Geographies
-            geographyUrl={'/world-50m-with-population.json'}
-            disableOptimization={isOptimizationDisabled}
-          >
-            {(geographies, projection) =>
-              geographies.map((geography, i) => {
-                const code = geography.properties.iso_a3
-                if (excludes.includes(code)) return null
+          {({zoom, x, y}) => (
+            <ComposableMap
+              projectionConfig={{
+                scale: 205,
+                rotation: [-11, 0, 0]
+              }}
+              width={width}
+              height={height}
+              style={{
+                width: '100%',
+                height: 'auto'
+              }}
+            >
+              <ZoomableGroup center={[x, y]} zoom={zoom}>
+                <Geographies
+                  geographyUrl={'/world-50m-with-population.json'}
+                  disableOptimization={isOptimizationDisabled}
+                >
+                  {(geographies, projection) =>
+                    geographies.map((geography, i) => {
+                      const code = geography.properties.iso_a3
+                      if (excludes.includes(code)) return null
 
-                let scale
-                if (isShowingAll) {
-                  scale = this.getScale(code)
-                  if (typeof scale !== 'number' && !!activeSubcategories.length)
-                    return null
-                }
-
-                const isActive = code === primaryCode
-                const isSecondary = code === secondaryCode
-
-                // TODO: Import colors from css
-                const color = isShowingAll
-                  ? popScale(scale)
-                  : isActive
-                    ? styles.primary
-                    : isSecondary ? styles.secondary : '#33343D'
-                const hoverColor = isShowingAll
-                  ? popScale(scale)
-                  : isActive
-                    ? styles.primary
-                    : isSecondary
-                      ? styles.secondary
-                      : primaryCode ? styles.secondary : styles.primary
-                return (
-                  <Geography
-                    key={i}
-                    id={geography.properties.iso_a3}
-                    geography={geography}
-                    projection={projection}
-                    onClick={onGeographyClick}
-                    onMouseEnter={canHover ? onGeographyMouseEnter : undefined}
-                    style={{
-                      default: {
-                        fill: color,
-                        outline: 'none'
-                      },
-                      hover: {
-                        fill: hoverColor,
-                        outline: 'none',
-                        cursor: 'pointer'
-                      },
-                      pressed: {
-                        fill: hoverColor,
-                        outline: 'none',
-                        opacity: 0.5
+                      let scale
+                      if (isShowingAll) {
+                        scale = this.getScale(code)
+                        if (
+                          typeof scale !== 'number' &&
+                          !!activeSubcategories.length
+                        )
+                          return null
                       }
-                    }}
-                  />
-                )
-              })}
-          </Geographies>
-        </ComposableMap>
+
+                      const isActive = code === primaryCode
+                      const isSecondary = code === secondaryCode
+
+                      // TODO: Import colors from css
+                      const color = isShowingAll
+                        ? popScale(scale)
+                        : isActive
+                          ? styles.primary
+                          : isSecondary ? styles.secondary : '#33343D'
+                      const hoverColor = isShowingAll
+                        ? popScale(scale)
+                        : isActive
+                          ? styles.primary
+                          : isSecondary
+                            ? styles.secondary
+                            : primaryCode ? styles.secondary : styles.primary
+                      return (
+                        <Geography
+                          key={i}
+                          id={geography.properties.iso_a3}
+                          geography={geography}
+                          projection={projection}
+                          onClick={onGeographyClick}
+                          onMouseMove={canHover ? this.handleMove : null}
+                          onMouseLeave={canHover ? this.handleLeave : null}
+                          style={{
+                            default: {
+                              fill: color,
+                              outline: 'none',
+                              right: -10,
+                              left: -10,
+                              top: -10,
+                              bottom: -10,
+                              position: 'absolute'
+                            },
+                            hover: {
+                              fill: hoverColor,
+                              outline: 'none',
+                              cursor: 'pointer'
+                            },
+                            pressed: {
+                              fill: hoverColor,
+                              outline: 'none',
+                              opacity: 0.5
+                            }
+                          }}
+                        />
+                      )
+                    })}
+                </Geographies>
+              </ZoomableGroup>
+            </ComposableMap>
+          )}
+        </Motion>
       </div>
     )
   }
 }
+
+export default withRedux(initStore)(Map)

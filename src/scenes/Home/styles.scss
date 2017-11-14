@@ -5,6 +5,41 @@
   background-color: $bg-grey;
   margin: 0 30px;
 
+  // This is alllll a bunch of hacks
+  &__tooltip--primary,
+  &__tooltip--secondary {
+    background: $bg-grey !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+
+    &-content {
+      font-family: 'SanFranciscoText-RegularItalic';
+      font-size: 0.75rem !important;
+      text-align: center;
+    }
+
+    &-arrow span {
+      /* stylelint-disable-next-line declaration-property-value-blacklist */
+      border: none !important;
+    }
+  }
+
+  &__tooltip--primary {
+    border: solid 1px $primary-color;
+
+    &-content {
+      color: $primary-color !important;
+    }
+  }
+
+  &__tooltip--secondary {
+    border: solid 1px $secondary-color;
+
+    &-content {
+      color: $secondary-color !important;
+    }
+  }
+
   &__body {
     padding-bottom: 175px;
 

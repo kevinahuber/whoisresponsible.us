@@ -5,12 +5,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 20px auto 0;
+  margin: 20.5px auto 0;
   max-width: 975px;
   width: 100%;
 
   &__back,
   &__all {
+    @include button;
+
     border: solid 1px $orange;
     cursor: pointer;
     display: inline-block;
@@ -22,18 +24,6 @@
     @include tablet-up {
       margin: 0;
       width: auto;
-    }
-
-    &:hover {
-      background-color: $trans-orange;
-    }
-  }
-
-  &__label {
-    @include button;
-
-    &:hover {
-      background-color: transparent;
     }
   }
 }

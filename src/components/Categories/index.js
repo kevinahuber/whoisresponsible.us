@@ -6,43 +6,12 @@ import styles from './styles.css'
 import type {Category as CategoryType} from '../../types.js'
 import Info from './components/Info'
 import cn from 'classnames'
+import categories from './data.json'
 
 const TIMEOUT = {
   enter: parseInt(styles.enter, 10),
   exit: parseInt(styles.exit, 10)
 }
-const categories: CategoryType[] = [
-  {
-    title: 'Vulnerability',
-    subcategories: [
-      'Capacity',
-      'Ecosystem',
-      'Exposure',
-      'Food',
-      'Habitat',
-      'Health',
-      'Infrastructure',
-      'Sensitivity',
-      'Water'
-    ]
-  },
-  {
-    title: 'Preparedness',
-    subcategories: ['Economic', 'Governance', 'Social']
-  },
-  {
-    title: 'Contribution',
-    subcategories: [
-      'Energy',
-      'Industrial',
-      'Agriculture',
-      'Waste',
-      'Land-Use',
-      'Bunker Fuels'
-    ],
-    paris: false
-  }
-]
 
 type SubcategoryProps = {
   activeSubcategories: string[],
