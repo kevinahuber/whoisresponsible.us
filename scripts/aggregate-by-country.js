@@ -1,13 +1,14 @@
 const jsonfile = require('jsonfile')
 const fs = require('fs')
 const file = 'aggregate-by-country.json'
-const readinessFolder = './src/resources/archive/readiness'
-const vulnerabilitiesFolder = './src/resources/archive/vulnerabilities'
-const contributions = require('../src/resources/archive/contribution/percent-with-code-cleaned.json')
+const readinessFolder = './scripts/archive/readiness'
+const vulnerabilitiesFolder = './scripts/archive/vulnerabilities'
+const contributions = require('./archive/contribution/index-with-code-cleaned.json')
 const year = '2014'
 const obj = {}
 
-function importAndManipulate(folder, inverse) {
+// HACK: this can all be done a lot more intelligently
+function importAndManipulate(folder) {
   fs.readdirSync(folder).forEach(file => {
     const title = file.split('.')[0]
     console.log(title)
@@ -15,7 +16,7 @@ function importAndManipulate(folder, inverse) {
 
     data.forEach(d => {
       if (!obj[d.ISO3]) obj[d.ISO3] = {}
-      obj[d.ISO3][title] = inverse ? 1 - d[year] : d[year]
+      obj[d.ISO3][title] = d[year]
     })
   })
 }

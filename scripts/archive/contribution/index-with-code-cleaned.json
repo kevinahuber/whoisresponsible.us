@@ -5,7 +5,7 @@
     "Industrial": 0.0002582193328197164,
     "Agriculture": 0.020906263853383584,
     "Waste": 0.042241017290810506,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -32,7 +32,7 @@
     "Industrial": 0,
     "Agriculture": 0,
     "Waste": 0.0002831058306328828,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.000012930047591248472
   },
   {
@@ -50,7 +50,7 @@
     "Industrial": 0.00028941633732277287,
     "Agriculture": 0.00003138416514387465,
     "Waste": 0.0007887950730104689,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.000003918041316953653
   },
   {
@@ -104,7 +104,7 @@
     "Industrial": 0.000044780727366344504,
     "Agriculture": 0.00003647615892392137,
     "Waste": 0.0010649430311255083,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.00022967481156504336
   },
   {
@@ -131,7 +131,7 @@
     "Industrial": 0.00008373036600901574,
     "Agriculture": 0.00007540709607760966,
     "Waste": 0.009630936660444428,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0000025187153692724607
   },
   {
@@ -158,7 +158,7 @@
     "Industrial": 0.000046828192536468424,
     "Agriculture": 0.00045003683444829834,
     "Waste": 0.044081402471177346,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0013555681650972585
   },
   {
@@ -176,7 +176,7 @@
     "Industrial": 0.00023818127513069244,
     "Agriculture": 0.000639866328652904,
     "Waste": 0.00027375822645778447,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.0022532442911976217
   },
   {
@@ -239,7 +239,7 @@
     "Industrial": 0.00016320408107495043,
     "Agriculture": 0.028076189603236882,
     "Waste": 0.0037138637889325607,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.005407905240688138
   },
   {
@@ -248,7 +248,7 @@
     "Industrial": 0.000055263177926973,
     "Agriculture": 0.003139718164394625,
     "Waste": 0.0018749717038843124,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0013418449144761487
   },
   {
@@ -284,7 +284,7 @@
     "Industrial": 0.0000016207191637346727,
     "Agriculture": 0.00015832464627861016,
     "Waste": 0.00016158167674965273,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.00010026750916341365
   },
   {
@@ -293,7 +293,7 @@
     "Industrial": 0.00001948014618476781,
     "Agriculture": 0.024981274709732514,
     "Waste": 0.015416483981894871,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.007921540852866867
   },
   {
@@ -302,7 +302,7 @@
     "Industrial": 0.00008526718750154024,
     "Agriculture": 0.02722262812429868,
     "Waste": 0.008398360272729588,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.014985630181607488
   },
   {
@@ -338,7 +338,7 @@
     "Industrial": 6.073685372684246e-7,
     "Agriculture": 0.00033549657983384485,
     "Waste": 0.000028356662569142937,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.000039829575808080166
   },
   {
@@ -365,7 +365,7 @@
     "Industrial": 0.000002547589293606225,
     "Agriculture": 0.00001921244454711657,
     "Waste": 0.00010974847737504084,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 3.626274812377448e-9
   },
   {
@@ -437,7 +437,7 @@
     "Industrial": 0.00013794495995682812,
     "Agriculture": 0.0009187906639892454,
     "Waste": 0.000581792004321447,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -446,7 +446,7 @@
     "Industrial": 0.000001274875901161673,
     "Agriculture": 0.0000462773248718774,
     "Waste": 0.00036262387589332506,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.00006910954537428941
   },
   {
@@ -491,7 +491,7 @@
     "Industrial": 0.000014080940366949866,
     "Agriculture": 0.000029704498225504397,
     "Waste": 0.0008315865663364934,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0031865519558158936
   },
   {
@@ -527,7 +527,7 @@
     "Industrial": 0.00010651318805838451,
     "Agriculture": 0.001246101022645716,
     "Waste": 0.0005601350827996702,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.001777712565335121
   },
   {
@@ -563,7 +563,7 @@
     "Industrial": 0.000005296484942367602,
     "Agriculture": 0.0017096567310420112,
     "Waste": 0.02947601750716182,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.0001452491297729611
   },
   {
@@ -608,7 +608,7 @@
     "Industrial": 0.000003105192748187545,
     "Agriculture": 0.000020360061495129764,
     "Waste": 0.008461072988586551,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -626,7 +626,7 @@
     "Industrial": 0.00019344616307563804,
     "Agriculture": 0.015969400865331274,
     "Waste": 0.007871256918069062,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.008408371575467711
   },
   {
@@ -635,7 +635,7 @@
     "Industrial": 0.000016830317942313603,
     "Agriculture": 0.0023335310366018403,
     "Waste": 0.00038647167598692046,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0008754580592191829
   },
   {
@@ -644,7 +644,7 @@
     "Industrial": 0.000022445324879318457,
     "Agriculture": 0.0032242481157010107,
     "Waste": 0.0006264054694262131,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.012184692246935103
   },
   {
@@ -797,7 +797,7 @@
     "Industrial": 9.179407966312454e-7,
     "Agriculture": 0.000011473060556002355,
     "Waste": 0.00006575353706873557,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.0000033673231224968553
   },
   {
@@ -842,7 +842,7 @@
     "Industrial": 0.0008242359491834684,
     "Agriculture": 0.01144204055892584,
     "Waste": 0.0025277225372720732,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.010739916294722285
   },
   {
@@ -869,7 +869,7 @@
     "Industrial": 0.000005042682130742087,
     "Agriculture": 0.0020455056085056304,
     "Waste": 0.001086544028507325,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.00011473295717849959
   },
   {
@@ -878,7 +878,7 @@
     "Industrial": 0.00014089199041820383,
     "Agriculture": 0.0005932429239995116,
     "Waste": 0.003694573124366292,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0008071981321992951
   },
   {
@@ -896,7 +896,7 @@
     "Industrial": 0.0000047348480907108535,
     "Agriculture": 0.00002554998638525814,
     "Waste": 0.000008638549856185764,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -932,7 +932,7 @@
     "Industrial": 0.00012209555432566912,
     "Agriculture": 0.031028559901455966,
     "Waste": 0.0032176436907226116,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.012892618728260443
   },
   {
@@ -941,7 +941,7 @@
     "Industrial": 0.00021575281083690824,
     "Agriculture": 0.0074041477130188564,
     "Waste": 0.0014175432946075261,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0025802514694246636
   },
   {
@@ -959,7 +959,7 @@
     "Industrial": 0.000004793777993500781,
     "Agriculture": 0.0000025473393799884027,
     "Waste": 0.0004033907689492734,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0000014260771553134852
   },
   {
@@ -968,7 +968,7 @@
     "Industrial": 0.000019354256550998075,
     "Agriculture": 0.04200101485232147,
     "Waste": 0.0017480961653380783,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.004260179334900288
   },
   {
@@ -986,7 +986,7 @@
     "Industrial": 0.000001309887458090184,
     "Agriculture": 0,
     "Waste": 0.00017544743902119572,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -995,7 +995,7 @@
     "Industrial": 0.00027729375978434223,
     "Agriculture": 0.010871564286327217,
     "Waste": 0.000610173314826043,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.0009024074041293388
   },
   {
@@ -1022,7 +1022,7 @@
     "Industrial": 0.0000016787666753449964,
     "Agriculture": 0.000023666967565866956,
     "Waste": 0.00002483531692006053,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.000017437804418674
   },
   {
@@ -1094,7 +1094,7 @@
     "Industrial": 5.863944617432972e-7,
     "Agriculture": 0.0000017157021753267058,
     "Waste": 0.00001950057312316097,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -1157,7 +1157,7 @@
     "Industrial": 0.000026497575279399686,
     "Agriculture": 0,
     "Waste": 0.000004423467106012005,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.00002876236342208841
   },
   {
@@ -1193,7 +1193,7 @@
     "Industrial": 0.00010821339293743135,
     "Agriculture": 0,
     "Waste": 0.00007626318410471449,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -1211,7 +1211,7 @@
     "Industrial": 0.00012111429015333042,
     "Agriculture": 0.007995680446117634,
     "Waste": 0.015345698731251134,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.035214190787540504
   },
   {
@@ -1292,7 +1292,7 @@
     "Industrial": 0.00007106371798049534,
     "Agriculture": 0.0042341743468835924,
     "Waste": 0.009384865305455452,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0005122803948111339
   },
   {
@@ -1301,7 +1301,7 @@
     "Industrial": 0.000010704379130124672,
     "Agriculture": 0.00009359967219549199,
     "Waste": 0.0003225556334813372,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0000043977796404927685
   },
   {
@@ -1310,7 +1310,7 @@
     "Industrial": 0.000008848112178493346,
     "Agriculture": 0.00004003644231121904,
     "Waste": 0.003443470206216892,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.000019797023143329925
   },
   {
@@ -1319,7 +1319,7 @@
     "Industrial": 0.0000020065904010516514,
     "Agriculture": 0.00001908130447474171,
     "Waste": 0.00024703153647286726,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.000010794528409526586
   },
   {
@@ -1328,7 +1328,7 @@
     "Industrial": 0.0000044363082516458615,
     "Agriculture": 0.0002100510672612361,
     "Waste": 0.0005877727386186812,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 4.078072985722835e-8
   },
   {
@@ -1337,7 +1337,7 @@
     "Industrial": 0.000001186425940312733,
     "Agriculture": 0.000022139920559312273,
     "Waste": 0.00006623281306505273,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -1373,7 +1373,7 @@
     "Industrial": 0.0000010511106710488398,
     "Agriculture": 0.000006165420493149563,
     "Waste": 0.00030758603879045353,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -1382,7 +1382,7 @@
     "Industrial": 0.0001771524662977226,
     "Agriculture": 0.0039935617075402205,
     "Waste": 0.012563927822473923,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.003634795547585358
   },
   {
@@ -1418,7 +1418,7 @@
     "Industrial": 0.000002244126820737871,
     "Agriculture": 0.00008693555200901174,
     "Waste": 0.001525413830939492,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0011770531358208766
   },
   {
@@ -1427,7 +1427,7 @@
     "Industrial": 0.00016749517607900355,
     "Agriculture": 0.028699409056323233,
     "Waste": 0.010504897966436727,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.007847615376753228
   },
   {
@@ -1481,7 +1481,7 @@
     "Industrial": 0.000008576095416428943,
     "Agriculture": 0.001307652915710402,
     "Waste": 0.0024786053588841334,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.0001456594932980405
   },
   {
@@ -1553,7 +1553,7 @@
     "Industrial": 0.000002031346642028534,
     "Agriculture": 0.00012629707515464635,
     "Waste": 0.0005999739981327956,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0
   },
   {
@@ -1598,7 +1598,7 @@
     "Industrial": 2.9319757314906503e-7,
     "Agriculture": 0,
     "Waste": 0.000032839844262471086,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 2.3778851228704577e-10
   },
   {
@@ -1607,7 +1607,7 @@
     "Industrial": 0.0007415581984970242,
     "Agriculture": 0.03391348633012589,
     "Waste": 0.0024602597541228855,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": 0.015344569681913917
   },
   {
@@ -1670,7 +1670,7 @@
     "Industrial": 0.000004850075098403387,
     "Agriculture": 0.0006014747898356972,
     "Waste": 0.0005965327081357432,
-    "Bunker Fuels": 0,
+    "Bunker Fuels": null,
     "Land-Use": -0.000008326878123267768
   },
   {

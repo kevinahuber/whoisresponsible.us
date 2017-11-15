@@ -1,6 +1,6 @@
 const jsonfile = require('jsonfile')
-const contributions = require('../src/resources/archive/contribution/total-with-code.json')
-const file = 'percent-with-code-cleaned.json'
+const contributions = require('./archive/contribution/total-with-code.json')
+const file = './scripts/archive/contribution/index-with-code-cleaned.json'
 
 const names = {
   Energy: 'Energy',
@@ -30,7 +30,9 @@ const obj = contributions.map(c => {
       code: c.code
     },
     Object.keys(names).reduce((m, t) => {
-      return Object.assign({}, m, {[names[t]]: (c[t] || 0) / maxes[t]})
+      return Object.assign({}, m, {
+        [names[t]]: typeof c[t] === 'number' ? c[t] / maxes[t] : null
+      })
     }, {})
   )
 })
