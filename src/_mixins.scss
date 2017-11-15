@@ -113,6 +113,9 @@ $max-exit-duration: 255;
 @mixin button {
   // background-color: $orange;
   // color: $bg-grey;
+  background-color: $bg-grey;
+  border: 1px solid $orange;
+  color: $orange;
   cursor: pointer;
   font-family: 'SanFranciscoText-RegularItalic';
   font-size: 1rem;
@@ -120,9 +123,6 @@ $max-exit-duration: 255;
   line-height: 35px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   text-align: center;
-  border: 1px solid $orange;
-  background-color: $bg-grey;
-  color: $orange;
   // &--active {
   //   opacity: 1;
   // }

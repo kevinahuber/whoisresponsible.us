@@ -42,16 +42,27 @@ type Props = {
   primaryScale: number,
   secondaryScale?: number,
   title: string,
-  isNegative: boolean
+  isNegative?: boolean,
+  hasNegative?: boolean
 }
 
-const Row = ({primaryScale, secondaryScale, title, isNegative}: Props) => (
-  <div className="row" key={title}>
-    <Bar
-      primaryScale={isNegative ? primaryScale * -1 : primaryScale}
-      secondaryScale={isNegative ? (secondaryScale || 0) * -1 : secondaryScale}
-      isNegative
-    />
+const Row = ({
+  primaryScale,
+  secondaryScale,
+  title,
+  isNegative,
+  hasNegative
+}: Props) => (
+  <div className={cn('row', {'row--negative': hasNegative})} key={title}>
+    {hasNegative && (
+      <Bar
+        primaryScale={isNegative ? primaryScale * -1 : primaryScale}
+        secondaryScale={
+          isNegative ? (secondaryScale || 0) * -1 : secondaryScale
+        }
+        isNegative
+      />
+    )}
     <div className="row__title">{title}</div>
     <Bar
       primaryScale={isNegative ? primaryScale * -1 : primaryScale}

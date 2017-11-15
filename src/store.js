@@ -3,7 +3,7 @@ import {createStore, combineReducers} from 'redux'
 import {reducer as tooltip} from 'redux-tooltip'
 
 const initialState = {
-  title: 'With Redux Tooltip'
+  title: ''
 }
 
 const appReducer = (state = initialState, action) => {

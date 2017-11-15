@@ -190,9 +190,11 @@ class App extends Component<Props, State> {
       <div className="app">
         <Tooltip
           className={
-            !primaryGeography
-              ? 'app__tooltip--primary'
-              : 'app__tooltip--secondary'
+            isShowingAll
+              ? 'app__tooltip--all'
+              : !primaryGeography
+                ? 'app__tooltip--primary'
+                : 'app__tooltip--secondary'
           }
         />
         <Header

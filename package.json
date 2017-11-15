@@ -31,7 +31,7 @@
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
-    "react-simple-maps": "^0.8.3",
+    "react-simple-maps": "^0.9.0",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-tooltip": "^0.7.2"
@@ -84,11 +84,6 @@
       "declaration-block-trailing-semicolon": "always",
       "declaration-colon-space-after": "always-single-line",
       "declaration-colon-space-before": "never",
-      "declaration-property-value-blacklist": {
-        "/^border/": [
-          "none"
-        ]
-      },
       "function-comma-space-after": "always-single-line",
       "function-parentheses-space-inside": "never",
       "function-url-quotes": "always",
@@ -127,9 +122,9 @@
       "scss/percent-placeholder-pattern": "^[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
       "scss/selector-no-redundant-nesting-selector": true,
       "selector-class-pattern": [
-        "^[a-z0-9\\-]+$",
+        "^[a-z0-9(\\_|\\-)]+$",
         {
-          "message": "Selector should be written in lowercase with hyphens (selector-class-pattern)"
+          "message": "Selector should be written in lowercase with hyphens or underscores (selector-class-pattern)"
         }
       ],
       "selector-list-comma-newline-after": "always",

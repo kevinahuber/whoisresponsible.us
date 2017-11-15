@@ -30,5 +30,11 @@
 
   &__row-fade {
     @include create(64px, 100%);
+
+    &-enter,
+    &-appear,
+    &-exit {
+      transition-timing-function: linear;
+    }
   }
 }

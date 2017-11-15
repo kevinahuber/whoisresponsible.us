@@ -21,7 +21,7 @@ function importAndManipulate(folder, inverse) {
 }
 
 importAndManipulate(vulnerabilitiesFolder)
-importAndManipulate(readinessFolder, true)
+importAndManipulate(readinessFolder)
 contributions.forEach(d => {
   if (!obj[d.code]) obj[d.code] = {}
 

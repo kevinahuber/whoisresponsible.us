@@ -7,9 +7,12 @@ import {
   ZoomableGroup
 } from 'react-simple-maps'
 import cn from 'classnames'
+
+// $FlowFixMe
 import {Motion, spring} from 'react-motion'
 import withRedux from 'next-redux-wrapper'
 import {initStore} from '../../store'
+import getScale from '../../services/getScale.js'
 
 import {actions as tooltipActions} from 'redux-tooltip'
 
@@ -17,7 +20,6 @@ import {scalePow} from 'd3-scale'
 
 import type {Geography as GeographyType} from '../../types.js'
 
-import data from '../../resources/aggregate-by-country.json'
 import styles from './styles.css'
 
 const excludes = [
@@ -25,11 +27,11 @@ const excludes = [
   // 'GRL'
 ]
 
-const ZOOM = 10
+const ZOOM = 2
 
 const popScale = scalePow()
   .domain([0, 1])
-  .range(['#33343D', '#D8D8D8'])
+  .range(['#1d1d25', '#D8D8D8'])
 
 type Props = {
   activeSubcategories: string[],
@@ -81,28 +83,28 @@ class Map extends Component<Props, State> {
     }
   }
 
-  getScale = (code: string) => {
-    const {activeSubcategories} = this.props
-
-    if (!activeSubcategories || !activeSubcategories.length || !data[code])
-      return null
-
-    return (
-      activeSubcategories.reduce((m, sc) => {
-        return m + data[code][sc.toLowerCase()] || 0
-      }, 0) / activeSubcategories.length
-    )
-  }
-
   handleMove = (geography: Geography, evt: window.Event) => {
     const x = evt.clientX + window.pageXOffset
     const y = evt.clientY + window.pageYOffset
 
-    const content =
-      geography.properties.iso_a3 === this.props.primaryCode
-        ? 'Pick a second country'
-        : geography.properties.name
-    this.props.dispatch(
+    const {
+      isShowingAll,
+      secondaryCode,
+      primaryCode,
+      dispatch,
+      activeSubcategories
+    } = this.props
+
+    const {properties: {iso_a3, name}} = geography
+    const content = isShowingAll
+      ? `${name}: ${(100 * getScale(activeSubcategories, iso_a3)).toFixed(1)}`
+      : primaryCode &&
+        secondaryCode &&
+        (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
+        ? 'Deselect'
+        : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+
+    dispatch(
       tooltipActions.show({
         origin: {x, y},
         content
@@ -113,8 +115,11 @@ class Map extends Component<Props, State> {
   handleZoomIn = (evt: window.Event) => {
     evt.preventDefault()
     evt.stopPropagation()
+    const x = evt.clientX + window.pageXOffset
+    const y = evt.clientY + window.pageYOffset
     this.setState((state: State) => ({
-      zoom: state.zoom * ZOOM
+      zoom: state.zoom * ZOOM,
+      center: [x, y]
     }))
   }
 
@@ -191,7 +196,7 @@ class Map extends Component<Props, State> {
 
                       let scale
                       if (isShowingAll) {
-                        scale = this.getScale(code)
+                        scale = getScale(activeSubcategories, code)
                         if (
                           typeof scale !== 'number' &&
                           !!activeSubcategories.length
@@ -221,7 +226,7 @@ class Map extends Component<Props, State> {
                           id={geography.properties.iso_a3}
                           geography={geography}
                           projection={projection}
-                          onClick={onGeographyClick}
+                          onClick={isShowingAll ? null : onGeographyClick}
                           onMouseMove={canHover ? this.handleMove : null}
                           onMouseLeave={canHover ? this.handleLeave : null}
                           style={{
@@ -237,7 +242,7 @@ class Map extends Component<Props, State> {
                             hover: {
                               fill: hoverColor,
                               outline: 'none',
-                              cursor: 'pointer'
+                              cursor: isShowingAll ? 'default' : 'pointer'
                             },
                             pressed: {
                               fill: hoverColor,

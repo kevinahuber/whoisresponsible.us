@@ -1,4 +1,6 @@
 
 
 - [] Redux everything!
-- [] Remove hover over once two are selected
+- [] Switch onhover to handle all selected
+- [] OnClick expand map
+- [] Remove onclick when all selected

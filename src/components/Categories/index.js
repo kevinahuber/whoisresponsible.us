@@ -6,7 +6,7 @@ import styles from './styles.css'
 import type {Category as CategoryType} from '../../types.js'
 import Info from './components/Info'
 import cn from 'classnames'
-import categories from './data.json'
+import categories from '../../resources/categories.json'
 
 const TIMEOUT = {
   enter: parseInt(styles.enter, 10),

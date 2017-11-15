@@ -2,7 +2,6 @@
 @import '../../../../mixins';
 
 .row {
-  text-align: center;
   margin: auto;
 
   &__bar--negative {
@@ -13,11 +12,22 @@
 
     .row__bar-value {
       bottom: -4px;
+      left: 0;
       position: absolute;
       right: auto;
-      left: 0;
     }
   }
+
+  &--negative {
+    text-align: center;
+  }
+
+  &--negative &__bar {
+    @include tablet-up {
+      width: calc(50% - 80px);
+    }
+  }
+
   &__title {
     box-sizing: border-box;
     color: $orange;
@@ -44,7 +54,7 @@
 
     @include tablet-up {
       display: inline-block;
-      width: calc(50% - 80px);
+      width: calc(100% - 160px);
     }
 
     &-primary,

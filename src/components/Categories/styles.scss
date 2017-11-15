@@ -51,6 +51,7 @@
   &__category-title {
     @include button;
     background-color: $trans-orange;
+    border: none;
     border-bottom: solid 1px $orange;
     color: $orange;
     width: 100%;

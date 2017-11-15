@@ -2,11 +2,10 @@
 import React, {Component} from 'react'
 import styles from './styles.css'
 
-import data from '../../../../resources/aggregate-by-country.json'
 import codes from '../../../../resources/codes.json'
 import Row from '../Row'
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
-
+import getAllScales from '../../../../services/getAllScales.js'
 // Import individual to utilize import bundling benefits
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
@@ -34,24 +33,9 @@ export default class TopComparisons extends Component<Props, State> {
   state = {
     isExpanded: false
   }
-  getAveragedSubcategories(activeSubcategories: string[]) {
-    return Object.keys(data).reduce((memo, code) => {
-      return [].concat(memo, {
-        code,
-        average:
-          activeSubcategories.reduce((m, sc) => {
-            return m + data[code][sc.toLowerCase()] || 0
-          }, 0) / activeSubcategories.length
-      })
-    }, [])
-  }
-
-  getScale = (index: number) => {
-    return (index - 0.5) * 2
-  }
 
   sortData(a: Object, b: Object) {
-    return b.average - a.average
+    return b.index - a.index
   }
 
   handleExpandToggle = () => {
@@ -68,9 +52,7 @@ export default class TopComparisons extends Component<Props, State> {
 
     const {isExpanded} = this.state
 
-    const averageSubcategories = this.getAveragedSubcategories(
-      activeSubcategories
-    ).sort(this.sortData)
+    const averageSubcategories = getAllScales(activeSubcategories)
     const sortedSubcategories = isSortedNegative
       ? averageSubcategories.sort(this.sortData).reverse()
       : averageSubcategories.sort(this.sortData)
@@ -85,7 +67,6 @@ export default class TopComparisons extends Component<Props, State> {
         <TransitionGroup>
           {isVisible &&
             visibleSubcategories.map((country, i) => {
-              const primaryScale = this.getScale(country.average)
               return (
                 <CSSTransition
                   unmountOnExit
@@ -96,9 +77,8 @@ export default class TopComparisons extends Component<Props, State> {
                 >
                   <Row
                     key={i}
-                    primaryScale={primaryScale}
+                    primaryScale={country.index}
                     title={codes[country.code]}
-                    isNegative={false}
                   />
                 </CSSTransition>
               )
