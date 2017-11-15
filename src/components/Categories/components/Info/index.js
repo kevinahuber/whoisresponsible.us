@@ -43,18 +43,24 @@ export default class Info extends Component<Props, State> {
               </div>
               {isExpanded && (
                 <div className="info__details">
-                  <b>Vulnerability</b> is the exposure a country has to climate
+                  <b>Vulnerability</b> measures a country’s exposure,
+                  sensitivity and capacity to adapt to the negative effects of
+                  climate change.
+                  <br />
+                  <br />
+                  <b>Preparedness</b> a country’s ability to leverage
+                  investments and convert them to adaptation actions.
+                  <br />
+                  <br />
+                  <b>Contribution</b> is still actively contributing to climate
                   change.
                   <br />
                   <br />
-                  <b>Preparedness</b> is the ability for a country to respond.
-                  <br />
-                  <br />
-                  <b>Contribution</b> is the amount of damage a country has done
-                  to the climate.
-                  <br />
-                  <br />
-                  In all categories, the higher the number, the worse off.
+                  <b>Responsibility Index</b> is a combination of all of the
+                  factors, as seen with 'see how everyone stacks up'. Categories
+                  that have no factors selected are not considered when
+                  calculating the index. The higher the number, the better. In
+                  all cases, the further left a candate is, the better.
                   <br />
                   <br />
                   All data is from 2014.

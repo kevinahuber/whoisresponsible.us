@@ -7,7 +7,9 @@ export default class Footer extends Component {
       <div className="footer">
         <div className="footer__container">
           <a
-            href="https://needlink.com"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://medium.com/@kevinahuber/climate-change-responsibility-wip-84cdcb9aa2cd"
             className="footer__responsibility-link"
           >
             Who is responsible for this data?
@@ -15,6 +17,8 @@ export default class Footer extends Component {
           <span className="footer__attribution">
             {'Developed & Designed with ♥  by '}
             <a
+              rel="noopener noreferrer"
+              target="_blank"
               className="footer__attribution-link"
               href="https://www.behance.net/csweetdesigns"
             >
@@ -22,6 +26,8 @@ export default class Footer extends Component {
             </a>
             {' and '}
             <a
+              rel="noopener noreferrer"
+              target="_blank"
               className="footer__attribution-link"
               href="https://kevinahuber.com"
             >
