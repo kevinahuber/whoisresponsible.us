@@ -9,6 +9,7 @@
 
 .categories {
   position: relative;
+  max-width: 50%;
   @include desktop-up {
     max-width: 475px;
     position: absolute;
@@ -65,8 +66,11 @@
 
   &__subcategory-title {
     margin-top: 10px;
-    width: calc(50% - 5px);
+    width: 100%;
+    border: solid 1px $orange;
+
     @include tablet-up {
+      border: none;
       margin: 0;
       width: 100%;
     }
