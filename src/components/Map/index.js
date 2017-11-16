@@ -27,7 +27,7 @@ const excludes = [
   // 'GRL'
 ]
 
-const ZOOM = 2
+const ZOOM = 10
 
 const popScale = scalePow()
   .domain([0, 1])
@@ -75,6 +75,13 @@ class Map extends Component<Props, State> {
     ) {
       this.setState((state: State) => ({isOptimizationDisabled: true}))
     }
+
+    if (
+      !(this.props.primaryCode && this.props.secondaryCode) &&
+      nextProps.primaryCode &&
+      nextProps.secondaryCode
+    )
+      this.setState({center: [0, 0], zoom: 1})
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -118,8 +125,8 @@ class Map extends Component<Props, State> {
     const x = evt.clientX + window.pageXOffset
     const y = evt.clientY + window.pageYOffset
     this.setState((state: State) => ({
-      zoom: state.zoom * ZOOM,
-      center: [x, y]
+      zoom: state.zoom * ZOOM
+      // center: [x, y]
     }))
   }
 
