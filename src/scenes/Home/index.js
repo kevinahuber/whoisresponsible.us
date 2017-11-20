@@ -223,7 +223,6 @@ class App extends Component<Props, State> {
                   : undefined
               }
               isShowingAll={isShowingAll}
-              // pause={this.handlePause}
             />
 
             <Categories

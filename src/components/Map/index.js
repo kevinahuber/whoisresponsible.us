@@ -8,6 +8,8 @@ import {
 } from 'react-simple-maps'
 import cn from 'classnames'
 
+import noDataCodes from '../../services/getNoDataCodes.js'
+
 // $FlowFixMe
 import {Motion, spring} from 'react-motion'
 import withRedux from 'next-redux-wrapper'
@@ -22,16 +24,13 @@ import type {Geography as GeographyType} from '../../types.js'
 
 import styles from './styles.css'
 
-const excludes = [
-  'ATA'
-  // 'GRL'
-]
+const excludedCodes = new Set(['ATA'])
 
-const ZOOM = 10
+const ZOOM = 2
 
 const popScale = scalePow()
   .domain([0, 1])
-  .range(['#1d1d25', '#D8D8D8'])
+  .range([styles.primary, styles.secondary])
 
 type Props = {
   activeSubcategories: string[],
@@ -103,13 +102,15 @@ class Map extends Component<Props, State> {
     } = this.props
 
     const {properties: {iso_a3, name}} = geography
-    const content = isShowingAll
-      ? `${name}: ${(100 * getScale(activeSubcategories, iso_a3)).toFixed(1)}`
-      : primaryCode &&
-        secondaryCode &&
-        (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
-        ? 'Deselect'
-        : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+    const content = noDataCodes.has(iso_a3)
+      ? `${name}: No Data Available`
+      : isShowingAll
+        ? `${name}: ${(100 * getScale(activeSubcategories, iso_a3)).toFixed(1)}`
+        : primaryCode &&
+          secondaryCode &&
+          (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
+          ? 'Deselect'
+          : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
 
     dispatch(
       tooltipActions.show({
@@ -122,11 +123,9 @@ class Map extends Component<Props, State> {
   handleZoomIn = (evt: window.Event) => {
     evt.preventDefault()
     evt.stopPropagation()
-    const x = evt.clientX + window.pageXOffset
-    const y = evt.clientY + window.pageYOffset
+
     this.setState((state: State) => ({
       zoom: state.zoom * ZOOM
-      // center: [x, y]
     }))
   }
 
@@ -134,8 +133,7 @@ class Map extends Component<Props, State> {
     evt.preventDefault()
     evt.stopPropagation()
     this.setState((state: State) => ({
-      zoom: state.zoom / ZOOM,
-      center: [0, 0]
+      zoom: Math.max(state.zoom / ZOOM, 1)
     }))
   }
 
@@ -161,7 +159,7 @@ class Map extends Component<Props, State> {
       <div
         className={cn('map', {
           'map--collapsed': primaryCode && secondaryCode,
-          'map--zoomed': zoom === ZOOM
+          'map--zoomed': zoom >= ZOOM
         })}
         onDoubleClick={zoom === ZOOM ? this.handleZoomOut : this.handleZoomIn}
       >
@@ -181,8 +179,8 @@ class Map extends Component<Props, State> {
           {({zoom, x, y}) => (
             <ComposableMap
               projectionConfig={{
-                scale: 205,
-                rotation: [-11, 0, 0]
+                scale: 200,
+                rotation: [-10, 0, 0]
               }}
               width={width}
               height={height}
@@ -191,7 +189,11 @@ class Map extends Component<Props, State> {
                 height: 'auto'
               }}
             >
-              <ZoomableGroup center={[x, y]} zoom={zoom}>
+              <ZoomableGroup
+                center={[x, y]}
+                zoom={zoom}
+                disablePanning={zoom === 1}
+              >
                 <Geographies
                   geographyUrl={'/world-50m-with-population.json'}
                   disableOptimization={isOptimizationDisabled}
@@ -199,7 +201,7 @@ class Map extends Component<Props, State> {
                   {(geographies, projection) =>
                     geographies.map((geography, i) => {
                       const code = geography.properties.iso_a3
-                      if (excludes.includes(code)) return null
+                      if (excludedCodes.has(code)) return null
 
                       let scale
                       if (isShowingAll) {
@@ -213,7 +215,7 @@ class Map extends Component<Props, State> {
 
                       const isActive = code === primaryCode
                       const isSecondary = code === secondaryCode
-
+                      const isDataless = noDataCodes.has(code)
                       // TODO: Import colors from css
                       const color = isShowingAll
                         ? popScale(scale)
@@ -233,7 +235,9 @@ class Map extends Component<Props, State> {
                           id={geography.properties.iso_a3}
                           geography={geography}
                           projection={projection}
-                          onClick={isShowingAll ? null : onGeographyClick}
+                          onClick={
+                            isShowingAll || isDataless ? null : onGeographyClick
+                          }
                           onMouseMove={canHover ? this.handleMove : null}
                           onMouseLeave={canHover ? this.handleLeave : null}
                           style={{
@@ -249,7 +253,10 @@ class Map extends Component<Props, State> {
                             hover: {
                               fill: hoverColor,
                               outline: 'none',
-                              cursor: isShowingAll ? 'default' : 'pointer'
+                              cursor:
+                                isShowingAll || isDataless
+                                  ? 'default'
+                                  : 'pointer'
                             },
                             pressed: {
                               fill: hoverColor,
@@ -265,6 +272,16 @@ class Map extends Component<Props, State> {
             </ComposableMap>
           )}
         </Motion>
+        {!(primaryCode && secondaryCode) && (
+          <div className="map__zoom">
+            <div className="map__zoom-in" onClick={this.handleZoomIn}>
+              +
+            </div>
+            <div className="map__zoom-in" onClick={this.handleZoomOut}>
+              -
+            </div>
+          </div>
+        )}
       </div>
     )
   }

@@ -123,12 +123,14 @@ $max-exit-duration: 255;
   line-height: 35px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   text-align: center;
-  // &--active {
-  //   opacity: 1;
-  // }
-  &--active,
-  &--active:hover {
+
+  &--active {
     background-color: $orange;
+    color: $bg-grey;
+  }
+
+  &--active:hover {
+    background-color: rgba($orange, 0.7);
     color: $bg-grey;
   }
 
@@ -142,9 +144,13 @@ $max-exit-duration: 255;
       background-color: $trans-orange;
     }
 
-    &--active,
-    &--active:hover {
+    &--active {
       background-color: $orange;
+      color: $bg-grey;
+    }
+
+    &--active:hover {
+      background-color: rgba($orange, 0.7);
       color: $bg-grey;
     }
   }

@@ -23,4 +23,25 @@
   &--zoomed {
     cursor: move;
   }
+
+  &__zoom {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+
+    &-in,
+    &-out {
+      border: solid 1px $orange;
+      color: $orange;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 24px;
+      height: 30px;
+      line-height: 28px;
+      margin: 5px;
+      text-align: center;
+      user-select: none;
+      width: 30px;
+    }
+  }
 }

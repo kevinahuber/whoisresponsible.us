@@ -8,8 +8,8 @@
 /* stylelint-enable */
 
 .categories {
-  position: relative;
   max-width: 50%;
+  position: relative;
   @include desktop-up {
     max-width: 475px;
     position: absolute;
@@ -65,19 +65,19 @@
   }
 
   &__subcategory-title {
+    border: solid 1px $orange;
     margin-top: 10px;
     width: 100%;
-    border: solid 1px $orange;
 
     @include tablet-up {
       border: none;
-      margin: 0;
+      margin: 0 0 2px;
       width: 100%;
-    }
-  }
 
-  &__subcategory-title:nth-of-type(2n + 1) {
-    margin-left: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__paris {
