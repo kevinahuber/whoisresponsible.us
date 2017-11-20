@@ -15,6 +15,8 @@ const TIMEOUT = {
 
 type SubcategoryProps = {
   activeSubcategories: string[],
+  activeSubcategory?: string,
+  isShowingAll?: boolean,
   onSubcategoryClick: (title: string) => mixed,
   subcategory: string,
   index: number
@@ -22,6 +24,8 @@ type SubcategoryProps = {
 
 const Subcategory = ({
   activeSubcategories,
+  activeSubcategory,
+  isShowingAll,
   onSubcategoryClick,
   subcategory,
   index
@@ -29,9 +33,9 @@ const Subcategory = ({
   <div
     key={index}
     className={cn('categories__subcategory-title', {
-      'categories__subcategory-title--active': activeSubcategories.includes(
-        subcategory
-      )
+      'categories__subcategory-title--active': isShowingAll
+        ? activeSubcategory === subcategory
+        : activeSubcategories.includes(subcategory)
     })}
     onClick={onSubcategoryClick(subcategory)}
   >
@@ -41,6 +45,8 @@ const Subcategory = ({
 
 type CategoryProps = {
   activeSubcategories: string[],
+  activeSubcategory?: string,
+  isShowingAll: boolean,
   onSubcategoryClick: (title: string) => mixed,
   category: CategoryType,
   isShowingParis: boolean,
@@ -95,9 +101,11 @@ const Category = ({
 
 type Props = {
   activeSubcategories: string[],
+  activeSubcategory?: string,
   onSubcategoryClick: (title: string) => mixed,
   isShowing: boolean,
   isShowingParis: boolean,
+  isShowingAll: boolean,
   onCategoryClick: (category: CategoryType) => mixed,
   onParisClick: () => mixed
 }

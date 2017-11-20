@@ -2,6 +2,7 @@
 import aggregateByCountry from '../resources/aggregate-by-country.json'
 import categories from '../resources/categories'
 
+// TODO: Switch to only accounting for single sub
 export default (activeSubcategories: string[], code: string): number => {
   let negativeCategories = 0
   let includedCategories = 0

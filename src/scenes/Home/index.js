@@ -16,13 +16,13 @@ import {initStore} from '../../store'
 import {Tooltip, actions as tooltipActions} from 'redux-tooltip'
 import type {Geography, Category} from '../../types.js'
 
-import data from '../../resources/aggregate-by-country.json'
 import './styles.css'
 
 const LIMIT = Infinity
 
 type State = {
   activeSubcategories: string[],
+  activeSubcategory?: string,
   isShowingAll: boolean,
   isShowingParis: boolean,
   isSortedNegative: boolean,
@@ -37,6 +37,7 @@ type Props = {
 class App extends Component<Props, State> {
   state = {
     activeSubcategories: [],
+    activeSubcategory: undefined,
     isPaused: false,
     isShowingAll: false,
     isShowingParis: false,
@@ -47,30 +48,35 @@ class App extends Component<Props, State> {
   }
 
   handleCategoryClick = (category: Category) => () => {
-    const {activeSubcategories} = this.state
-    const newActiveSubcategories = category.subcategories.every(s =>
-      activeSubcategories.includes(s)
-    )
-      ? activeSubcategories.filter(
-          s => !category.subcategories.find(sc => sc === s)
-        )
-      : category.subcategories
-          .map(s => s)
-          .filter(s => !activeSubcategories.includes(s))
-          .concat(activeSubcategories)
-    this.setState((state: State) => ({
-      activeSubcategories: newActiveSubcategories
-    }))
+    const {isShowingAll} = this.state
+
+    if (isShowingAll) return
+    this.setState((state: State) => {
+      const {activeSubcategories} = state
+      const newActiveSubcategories = category.subcategories.every(s =>
+        activeSubcategories.includes(s)
+      )
+        ? activeSubcategories.filter(
+            s => !category.subcategories.find(sc => sc === s)
+          )
+        : category.subcategories
+            .map(s => s)
+            .filter(s => !activeSubcategories.includes(s))
+            .concat(activeSubcategories)
+      return {activeSubcategories: newActiveSubcategories}
+    })
   }
 
   handleSubcategoryClick = (sub: string) => () => {
-    const {activeSubcategories} = this.state
-    const newActiveSubcategories = activeSubcategories.includes(sub)
-      ? this.state.activeSubcategories.filter(s => s !== sub)
-      : [sub].concat(this.state.activeSubcategories.slice(0, LIMIT - 1))
-    this.setState((state: State) => ({
-      activeSubcategories: newActiveSubcategories
-    }))
+    const {isShowingAll} = this.state
+    if (isShowingAll) return this.setState({activeSubcategory: sub})
+    this.setState((state: State) => {
+      const {activeSubcategories} = state
+      const newActiveSubcategories = activeSubcategories.includes(sub)
+        ? this.state.activeSubcategories.filter(s => s !== sub)
+        : [sub].concat(this.state.activeSubcategories.slice(0, LIMIT - 1))
+      return {activeSubcategories: newActiveSubcategories}
+    })
   }
 
   handleGeographyClick = (geography: Geography, evt: window.Event) => {
@@ -125,16 +131,18 @@ class App extends Component<Props, State> {
   }
 
   handleClearGeography = () => {
-    const newState = {
+    this.setState({
       primaryGeography: undefined,
       secondaryGeography: undefined,
       isShowingAll: false
-    }
-    this.setState((state: State) => newState)
+    })
   }
 
   handleAllToggle = () => {
     this.setState((state: State) => ({
+      activeSubcategory:
+        state.activeSubcategory ||
+        state.activeSubcategories[state.activeSubcategories.length - 1],
       isShowingAll: !state.isShowingAll
     }))
   }
@@ -146,15 +154,15 @@ class App extends Component<Props, State> {
   }
 
   handlePrimaryClick = () => {
-    this.setState((state: State) => ({
+    this.setState({
       primaryGeography: undefined
-    }))
+    })
   }
 
   handleSecondaryClick = () => {
-    this.setState((state: State) => ({
+    this.setState({
       secondaryGeography: undefined
-    }))
+    })
   }
 
   handleParisClick = () => {
@@ -163,22 +171,10 @@ class App extends Component<Props, State> {
     }))
   }
 
-  getScale = (code: string) => {
-    const {activeSubcategories} = this.state
-
-    if (!activeSubcategories || !activeSubcategories.length || !data[code])
-      return null
-
-    return (
-      activeSubcategories.reduce((m, sc) => {
-        return m + data[code][sc.toLowerCase()] || 0
-      }, 0) / activeSubcategories.length
-    )
-  }
-
   render() {
     const {
       activeSubcategories,
+      activeSubcategory,
       isShowingAll,
       isShowingParis,
       isSortedNegative,
@@ -212,6 +208,7 @@ class App extends Component<Props, State> {
             <Map
               onGeographyClick={this.handleGeographyClick}
               activeSubcategories={activeSubcategories}
+              activeSubcategory={activeSubcategory}
               primaryCode={
                 primaryGeography
                   ? primaryGeography.properties.iso_a3
@@ -230,7 +227,9 @@ class App extends Component<Props, State> {
               onSubcategoryClick={this.handleSubcategoryClick}
               onParisClick={this.handleParisClick}
               activeSubcategories={activeSubcategories}
+              activeSubcategory={activeSubcategory}
               isShowingParis={isShowingParis}
+              isShowingAll={isShowingAll}
               isShowing={!!primaryGeography && !!secondaryGeography}
             />
           </div>

@@ -33,7 +33,7 @@ const popScale = scalePow()
   .range([styles.primary, styles.secondary])
 
 type Props = {
-  activeSubcategories: string[],
+  activeSubcategory: string,
   dispatch: *, // TODO: Properly type
   primaryCode?: string,
   secondaryCode?: string,
@@ -61,18 +61,17 @@ class Map extends Component<Props, State> {
     const canHover =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(hover: hover)').matches
-    this.setState((state: State) => ({canHover}))
+    this.setState({canHover})
   }
 
   componentWillReceiveProps(nextProps: Props) {
     if (
-      this.props.activeSubcategories.length !==
-        nextProps.activeSubcategories.length ||
+      this.props.activeSubcategory !== nextProps.activeSubcategory ||
       this.props.primaryCode !== nextProps.primaryCode ||
       this.props.secondaryCode !== nextProps.secondaryCode ||
       this.props.isShowingAll !== nextProps.isShowingAll
     ) {
-      this.setState((state: State) => ({isOptimizationDisabled: true}))
+      this.setState({isOptimizationDisabled: true})
     }
 
     if (
@@ -98,14 +97,14 @@ class Map extends Component<Props, State> {
       secondaryCode,
       primaryCode,
       dispatch,
-      activeSubcategories
+      activeSubcategory
     } = this.props
 
     const {properties: {iso_a3, name}} = geography
     const content = noDataCodes.has(iso_a3)
       ? `${name}: No Data Available`
       : isShowingAll
-        ? `${name}: ${(100 * getScale(activeSubcategories, iso_a3)).toFixed(1)}`
+        ? `${name}: ${(100 * getScale([activeSubcategory], iso_a3)).toFixed(1)}`
         : primaryCode &&
           secondaryCode &&
           (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
@@ -143,9 +142,9 @@ class Map extends Component<Props, State> {
 
   render() {
     const {
-      activeSubcategories,
       primaryCode,
       secondaryCode,
+      activeSubcategory,
       isShowingAll,
       onGeographyClick
     } = this.props
@@ -205,11 +204,8 @@ class Map extends Component<Props, State> {
 
                       let scale
                       if (isShowingAll) {
-                        scale = getScale(activeSubcategories, code)
-                        if (
-                          typeof scale !== 'number' &&
-                          !!activeSubcategories.length
-                        )
+                        scale = getScale([activeSubcategory], code)
+                        if (typeof scale !== 'number' && activeSubcategory)
                           return null
                       }
 

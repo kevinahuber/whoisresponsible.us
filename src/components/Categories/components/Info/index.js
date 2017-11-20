@@ -56,13 +56,6 @@ export default class Info extends Component<Props, State> {
                   change.
                   <br />
                   <br />
-                  <b>Responsibility Index</b> is a combination of all of the
-                  factors, as seen with 'see how everyone stacks up'. Categories
-                  that have no factors selected are not considered when
-                  calculating the index. The higher the number, the better. In
-                  all cases, the further left a candate is, the better.
-                  <br />
-                  <br />
                   All data is from 2014.
                 </div>
               )}
