@@ -42,6 +42,7 @@
   &__responsibility-link {
     display: block;
     padding: 20px 30px;
+    user-select: none;
 
     @include desktop-up {
       padding: 0 30px;

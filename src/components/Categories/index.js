@@ -139,7 +139,12 @@ export default class Categories extends Component<Props, State> {
     const {isShowing, ...categoryProps} = this.props
     const {isExiting} = this.state
     return (
-      <div className="categories">
+      <div
+        className={cn('categories', {
+          'categories--all': categoryProps.isShowingAll,
+          'categories--showing': isShowing
+        })}
+      >
         <Info isShowing={isShowing} delay={isExiting[2] ? 50 : 0} />
         <TransitionGroup className="categories__container">
           {isShowing &&

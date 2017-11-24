@@ -98,6 +98,18 @@ $max-exit-duration: 255;
   }
 }
 
+@mixin animation-in {
+  animation-duration: 225ms;
+  animation-timing-function: ease-in-out;
+  @include tablet-up {
+    animation-duration: 295ms;
+  }
+
+  @include desktop-up {
+    animation-duration: 200ms;
+  }
+}
+
 @mixin transition-out {
   transition-duration: 195ms;
   transition-timing-function: ease-in-out;
@@ -111,8 +123,6 @@ $max-exit-duration: 255;
 }
 
 @mixin button {
-  // background-color: $orange;
-  // color: $bg-grey;
   background-color: $bg-grey;
   border: 1px solid $orange;
   color: $orange;
@@ -123,6 +133,7 @@ $max-exit-duration: 255;
   line-height: 35px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   text-align: center;
+  user-select: none;
 
   &--active {
     background-color: $orange;

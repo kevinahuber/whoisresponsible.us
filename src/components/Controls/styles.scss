@@ -7,7 +7,13 @@
   justify-content: space-between;
   margin: 20.5px auto 0;
   max-width: 975px;
+  position: relative;
   width: 100%;
+
+  &--all {
+    margin: auto;
+    position: relative;
+  }
 
   &__back,
   &__all {
@@ -24,6 +30,37 @@
     @include tablet-up {
       margin: 0;
       width: auto;
+    }
+  }
+
+  &__legend {
+    bottom: 0;
+    margin-bottom: -4px;
+    position: absolute;
+    right: 160px;
+    user-select: none;
+
+    &-label {
+      color: $bg-grey;
+      font-family: 'SanFranciscoText-RegularItalic';
+      font-size: 1rem;
+      left: auto;
+      line-height: 26px;
+      margin: 0 10px;
+      position: absolute;
+      right: 0;
+
+      &--first {
+        left: 0;
+        right: auto;
+      }
+    }
+
+    &-gradient {
+      background: linear-gradient(to left, $primary-color, $secondary-color);
+      display: inline-block;
+      height: 26px;
+      width: 400px;
     }
   }
 }

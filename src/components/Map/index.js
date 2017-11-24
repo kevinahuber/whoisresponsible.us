@@ -15,8 +15,7 @@ import {Motion, spring} from 'react-motion'
 import withRedux from 'next-redux-wrapper'
 import {initStore} from '../../store'
 import getScale from '../../services/getScale.js'
-
-import {actions as tooltipActions} from 'redux-tooltip'
+import {actions as tooltipActions} from '@kevinahuber/redux-tooltip'
 
 import {scalePow} from 'd3-scale'
 
@@ -101,20 +100,29 @@ class Map extends Component<Props, State> {
     } = this.props
 
     const {properties: {iso_a3, name}} = geography
-    const content = noDataCodes.has(iso_a3)
-      ? `${name}: No Data Available`
-      : isShowingAll
-        ? `${name}: ${(100 * getScale([activeSubcategory], iso_a3)).toFixed(1)}`
-        : primaryCode &&
-          secondaryCode &&
-          (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
-          ? 'Deselect'
-          : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+    const scale = getScale([activeSubcategory], iso_a3)
+    const content =
+      noDataCodes.has(iso_a3) || scale === null
+        ? `${name}: No Data Available`
+        : isShowingAll
+          ? `${name}: ${(100 * scale).toFixed(1)}`
+          : primaryCode &&
+            secondaryCode &&
+            (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
+            ? 'Deselect'
+            : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+    const tooltipColor = popScale(scale)
 
     dispatch(
       tooltipActions.show({
         origin: {x, y},
-        content
+        content,
+        contentStyles: {
+          color: isShowingAll ? tooltipColor : null
+        },
+        baseStyles: {
+          borderColor: isShowingAll ? tooltipColor : null
+        }
       })
     )
   }
@@ -140,6 +148,20 @@ class Map extends Component<Props, State> {
     this.props.dispatch(tooltipActions.hide())
   }
 
+  renderZoom = () => {
+    const {isShowingAll} = this.props
+    return (
+      <div className={cn('map__zoom', {'map__zoom--all': isShowingAll})}>
+        <div className="map__zoom-in" onClick={this.handleZoomIn}>
+          +
+        </div>
+        <div className="map__zoom-out" onClick={this.handleZoomOut}>
+          -
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const {
       primaryCode,
@@ -158,7 +180,8 @@ class Map extends Component<Props, State> {
       <div
         className={cn('map', {
           'map--collapsed': primaryCode && secondaryCode,
-          'map--zoomed': zoom >= ZOOM
+          'map--zoomed': zoom >= ZOOM,
+          'map--all': isShowingAll
         })}
         onDoubleClick={zoom === ZOOM ? this.handleZoomOut : this.handleZoomIn}
       >
@@ -202,22 +225,19 @@ class Map extends Component<Props, State> {
                       const code = geography.properties.iso_a3
                       if (excludedCodes.has(code)) return null
 
-                      let scale
-                      if (isShowingAll) {
-                        scale = getScale([activeSubcategory], code)
-                        if (typeof scale !== 'number' && activeSubcategory)
-                          return null
-                      }
+                      let scale = getScale([activeSubcategory], code)
 
                       const isActive = code === primaryCode
                       const isSecondary = code === secondaryCode
-                      const isDataless = noDataCodes.has(code)
+                      const isDataless = noDataCodes.has(code) || scale === null
                       // TODO: Import colors from css
-                      const color = isShowingAll
-                        ? popScale(scale)
-                        : isActive
-                          ? styles.primary
-                          : isSecondary ? styles.secondary : '#33343D'
+                      const color = isDataless
+                        ? '#33343D'
+                        : isShowingAll
+                          ? popScale(scale)
+                          : isActive
+                            ? styles.primary
+                            : isSecondary ? styles.secondary : '#33343D'
                       const hoverColor = isShowingAll
                         ? popScale(scale)
                         : isActive
@@ -268,16 +288,9 @@ class Map extends Component<Props, State> {
             </ComposableMap>
           )}
         </Motion>
-        {!(primaryCode && secondaryCode) && (
-          <div className="map__zoom">
-            <div className="map__zoom-in" onClick={this.handleZoomIn}>
-              +
-            </div>
-            <div className="map__zoom-in" onClick={this.handleZoomOut}>
-              -
-            </div>
-          </div>
-        )}
+        {!(primaryCode && secondaryCode) || isShowingAll
+          ? this.renderZoom()
+          : null}
       </div>
     )
   }

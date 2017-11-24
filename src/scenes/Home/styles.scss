@@ -41,14 +41,6 @@
     }
   }
 
-  &__tooltip--all {
-    border: solid 1px $dark-grey;
-
-    &-content {
-      color: $text-grey !important;
-    }
-  }
-
   &__body {
     padding-bottom: 175px;
 
@@ -58,6 +50,8 @@
   }
 
   &__container {
+    display: flex;
+    justify-content: space-between;
     margin: auto;
     max-width: 975px;
     position: relative;

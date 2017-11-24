@@ -18,6 +18,12 @@
     &--collapsed {
       max-width: 400px;
     }
+
+    &--all {
+      height: 559px;
+      max-width: 815px;
+      position: relative;
+    }
   }
 
   &--zoomed {
@@ -38,10 +44,14 @@
       font-size: 24px;
       height: 30px;
       line-height: 28px;
-      margin: 5px;
+      margin: 0 0 20px;
       text-align: center;
       user-select: none;
       width: 30px;
+    }
+
+    &-in {
+      border-right: none;
     }
   }
 }

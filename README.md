@@ -1,6 +1,5 @@
 
 
 - [] Redux everything!
-- [] Switch onhover to handle all selected
-- [] OnClick expand map
-- [] Remove onclick when all selected
+- [] Animate categories all transition
+- [] Review Land Use Data

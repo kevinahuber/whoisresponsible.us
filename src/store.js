@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux'
 
-import {reducer as tooltip} from 'redux-tooltip'
+import {reducer as tooltip} from '@kevinahuber/redux-tooltip'
 
 const initialState = {
   title: ''

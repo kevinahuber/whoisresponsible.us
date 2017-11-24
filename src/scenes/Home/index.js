@@ -13,7 +13,7 @@ import {
 import withRedux from 'next-redux-wrapper'
 import {initStore} from '../../store'
 // TODO: Abstract into component
-import {Tooltip, actions as tooltipActions} from 'redux-tooltip'
+import {Tooltip, actions as tooltipActions} from '@kevinahuber/redux-tooltip'
 import type {Geography, Category} from '../../types.js'
 
 import './styles.css'
@@ -28,23 +28,32 @@ type State = {
   isSortedNegative: boolean,
   primaryGeography?: Geography,
   secondaryGeography?: Geography,
-  clicktime: Date
+  clicktime: Date,
+  tooltipColor?: string
 }
 
 type Props = {
   dispatch: *
 }
+
+const testGeography = {
+  properties: {
+    iso_a3: 'USA',
+    name: 'Funland'
+  }
+}
 class App extends Component<Props, State> {
   state = {
     activeSubcategories: [],
-    activeSubcategory: undefined,
+    activeSubcategory: 'Food',
     isPaused: false,
-    isShowingAll: false,
+    isShowingAll: true,
     isShowingParis: false,
     isSortedNegative: false,
-    primaryGeography: undefined,
-    secondaryGeography: undefined,
-    clicktime: new Date()
+    primaryGeography: testGeography,
+    secondaryGeography: testGeography,
+    clicktime: new Date(),
+    tooltipColor: undefined
   }
 
   handleCategoryClick = (category: Category) => () => {
@@ -200,6 +209,7 @@ class App extends Component<Props, State> {
           }
           isShowingAll={isShowingAll}
           isSortedNegative={isSortedNegative}
+          activeSubcategory={activeSubcategory}
           onPrimaryClick={this.handlePrimaryClick}
           onSecondaryClick={this.handleSecondaryClick}
         />
@@ -237,6 +247,7 @@ class App extends Component<Props, State> {
             secondaryGeography && (
               <div className="app__details">
                 <Controls
+                  activeSubcategory={activeSubcategory}
                   onBackClick={this.handleClearGeography}
                   onAllToggle={this.handleAllToggle}
                   isShowingAll={isShowingAll}

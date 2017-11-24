@@ -3,13 +3,13 @@ import aggregateByCountry from '../resources/aggregate-by-country.json'
 import categories from '../resources/categories'
 
 // TODO: Switch to only accounting for single sub
-export default (activeSubcategories: string[], code: string): number => {
+export default (activeSubcategories: string[], code: string): number | null => {
   let negativeCategories = 0
   let includedCategories = 0
 
   const aggregate = aggregateByCountry[code]
 
-  if (!aggregate) return 0 // TODO: Handle
+  if (!aggregate) return null // TODO: Handle
   const total = categories.reduce((total, category) => {
     const filteredSubcategories = category.subcategories.filter(s =>
       activeSubcategories.includes(s)

@@ -52,13 +52,15 @@ export default class TopComparisons extends Component<Props, State> {
 
     const {isExpanded} = this.state
 
-    const averageSubcategories = getAllScales(activeSubcategories)
-    const sortedSubcategories = isSortedNegative
-      ? averageSubcategories.sort(this.sortData).reverse()
-      : averageSubcategories.sort(this.sortData)
-    const visibleSubcategories = isExpanded
-      ? sortedSubcategories
-      : sortedSubcategories.slice(0, LIMIT)
+    const averageCountries = getAllScales(activeSubcategories).filter(
+      c => !(c.index !== 0 && !c.index)
+    )
+    const sortedCountries = isSortedNegative
+      ? averageCountries.sort(this.sortData).reverse()
+      : averageCountries.sort(this.sortData)
+    const visibleCountries = isExpanded
+      ? sortedCountries
+      : sortedCountries.slice(0, LIMIT)
     return (
       <div className="top-comparisons">
         <span className="top-comparisons__toggle-sort" onClick={onSort}>
@@ -66,7 +68,7 @@ export default class TopComparisons extends Component<Props, State> {
         </span>
         <TransitionGroup>
           {isVisible &&
-            visibleSubcategories.map((country, i) => {
+            visibleCountries.map((country, i) => {
               return (
                 <CSSTransition
                   unmountOnExit

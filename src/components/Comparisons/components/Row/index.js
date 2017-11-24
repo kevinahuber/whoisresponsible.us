@@ -14,7 +14,7 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
       <div
         className="row__bar-primary"
         style={{
-          width: `${Math.abs(primaryScale || 0) * 100}%`
+          width: `${Math.abs(primaryScale) * 100}%`
         }}
       >
         <span className="row__bar-value">{`${(primaryScale * 100).toFixed(
@@ -39,7 +39,7 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
 )
 
 type Props = {
-  primaryScale: number,
+  primaryScale: number | null,
   secondaryScale?: number,
   title: string,
   isNegative?: boolean,
@@ -52,23 +52,28 @@ const Row = ({
   title,
   isNegative,
   hasNegative
-}: Props) => (
-  <div className={cn('row', {'row--negative': hasNegative})} key={title}>
-    {hasNegative && (
+}: Props) => {
+  if (primaryScale === null) return
+  return (
+    <div className={cn('row', {'row--negative': hasNegative})} key={title}>
+      {hasNegative && (
+        <Bar
+          primaryScale={isNegative ? primaryScale * -1 : primaryScale}
+          secondaryScale={
+            isNegative ? (secondaryScale || 0) * -1 : secondaryScale
+          }
+          isNegative
+        />
+      )}
+      <div className="row__title">{title}</div>
       <Bar
         primaryScale={isNegative ? primaryScale * -1 : primaryScale}
         secondaryScale={
           isNegative ? (secondaryScale || 0) * -1 : secondaryScale
         }
-        isNegative
       />
-    )}
-    <div className="row__title">{title}</div>
-    <Bar
-      primaryScale={isNegative ? primaryScale * -1 : primaryScale}
-      secondaryScale={isNegative ? (secondaryScale || 0) * -1 : secondaryScale}
-    />
-  </div>
-)
+    </div>
+  )
+}
 
 export default Row

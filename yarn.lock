@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@kevinahuber/redux-tooltip@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@kevinahuber/redux-tooltip/-/redux-tooltip-0.7.2.tgz#b718a6448bcd86111c437e4c08336806b9309acb"
+  dependencies:
+    blacklist "^1.1.4"
+    dompurify "^0.8.4"
+    is-dom "^1.0.5"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -5876,14 +5884,6 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
-
-redux-tooltip@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/redux-tooltip/-/redux-tooltip-0.7.2.tgz#59d51bc0e65b67a0e6137a50aa2b4e851652d78f"
-  dependencies:
-    blacklist "^1.1.4"
-    dompurify "^0.8.4"
-    is-dom "^1.0.5"
 
 redux@^3.7.2:
   version "3.7.2"

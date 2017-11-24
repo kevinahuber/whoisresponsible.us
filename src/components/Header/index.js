@@ -6,54 +6,45 @@ import './styles.css'
 type Props = {
   primaryName?: string,
   secondaryName?: string,
-  hoveredPrimaryName?: string,
-  hoveredSecondaryName?: string,
   onPrimaryClick: () => mixed,
   onSecondaryClick: () => mixed,
   isShowingAll: boolean,
-  isSortedNegative: boolean
+  activeSubcategory?: string
 }
 export default class Header extends Component<Props> {
   render() {
     const {
       primaryName,
       secondaryName,
-      hoveredPrimaryName,
-      hoveredSecondaryName,
       onPrimaryClick,
       onSecondaryClick,
       isShowingAll,
-      isSortedNegative
+      activeSubcategory
     } = this.props
-
-    const primary = hoveredPrimaryName || primaryName
-    const secondary = hoveredSecondaryName || secondaryName
 
     return (
       <header className="header">
         <h1 className="header__title">
-          {isShowingAll && isSortedNegative ? (
-            'Lowest Responsibility Index'
-          ) : isShowingAll ? (
-            'Highest Responsibility Index'
-          ) : !primary ? (
+          {isShowingAll ? (
+            activeSubcategory
+          ) : !primaryName ? (
             'Who is responsible for Climate Change?'
-          ) : secondary ? (
+          ) : secondaryName ? (
             <div>
               <span onClick={onPrimaryClick} className="header__title--primary">
-                {primary}
+                {primaryName}
               </span>
               {' or '}
               <span
                 onClick={onSecondaryClick}
                 className="header__title--secondary"
               >
-                {secondary}
+                {secondaryName}
               </span>
             </div>
           ) : (
             <span onClick={onPrimaryClick} className="header__title--primary">
-              {primary}
+              {primaryName}
             </span>
           )}
         </h1>

@@ -12,11 +12,15 @@
       "Sensitivity",
       "Water"
     ],
+    "highLabel": "At Risk",
+    "lowLabel": "Safe",
     "isNegative": true
   },
   {
     "title": "Preparedness",
     "subcategories": ["Economic", "Governance", "Social"],
+    "highLabel": "Not Ready",
+    "lowLabel": "Prepared",
     "paris": false,
     "isNegative": false
   },
@@ -30,6 +34,8 @@
       "Land-Use",
       "Bunker Fuels"
     ],
+    "highLabel": "High Volume",
+    "lowLabel": "Low Volume",
     "isNegative": true
   }
 ]
