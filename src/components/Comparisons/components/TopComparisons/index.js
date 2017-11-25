@@ -17,7 +17,7 @@ const TIMEOUT = {
   exit: parseInt(styles.exit, 10)
 }
 type Props = {
-  activeSubcategories: string[],
+  activeSubcategory: string,
   isSortedNegative: boolean,
   isVisible: boolean,
   onSort: () => mixed
@@ -43,16 +43,11 @@ export default class TopComparisons extends Component<Props, State> {
   }
 
   render() {
-    const {
-      activeSubcategories,
-      isSortedNegative,
-      onSort,
-      isVisible
-    } = this.props
+    const {activeSubcategory, isSortedNegative, onSort, isVisible} = this.props
 
     const {isExpanded} = this.state
 
-    const averageCountries = getAllScales(activeSubcategories).filter(
+    const averageCountries = getAllScales([activeSubcategory]).filter(
       c => !(c.index !== 0 && !c.index)
     )
     const sortedCountries = isSortedNegative

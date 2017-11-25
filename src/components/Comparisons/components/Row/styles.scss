@@ -23,9 +23,19 @@
   }
 
   &--negative &__bar {
-    @include tablet-up {
-      width: calc(50% - 80px);
-    }
+    height: 60px;
+    margin-bottom: 40px;
+    margin-top: -25px;
+    width: 50%;
+  }
+
+  &--negative &__title {
+    border-bottom: solid 3px $primary-color;
+    display: inline;
+  }
+
+  &--negative &__bar-primary {
+    height: 60px;
   }
 
   &__title {
@@ -33,28 +43,23 @@
     color: $orange;
     display: inline-block;
     font-size: 1rem;
-    height: 60px;
     overflow: hidden;
     padding-top: 17px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 160px;
-    @include tablet-up {
-      border-bottom: solid 12px $orange;
-    }
+    width: 100%;
   }
 
   &__bar {
     display: block;
     font-size: 1rem;
-    height: 60px;
     line-height: 2.1rem;
     position: relative;
     width: 100%;
 
     @include tablet-up {
       display: inline-block;
-      width: calc(100% - 160px);
+      width: 100%;
     }
 
     &-primary,
@@ -62,7 +67,6 @@
       border-bottom: solid 6px $primary-color;
       box-sizing: border-box;
       color: $primary-color;
-      height: 60px;
       position: absolute;
     }
 

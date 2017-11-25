@@ -5,6 +5,7 @@ import {DuelComparisons, TopComparisons} from './components'
 
 type Props = {
   activeSubcategories: string[],
+  activeSubcategory: string,
   isShowingAll: boolean,
   isShowingParis: boolean,
   isSortedNegative: boolean,
@@ -18,6 +19,7 @@ export default class Comparisons extends Component<Props> {
   render() {
     const {
       activeSubcategories,
+      activeSubcategory,
       isShowingAll,
       isShowingParis,
       isSortedNegative,
@@ -31,7 +33,7 @@ export default class Comparisons extends Component<Props> {
       <div className={isVisible ? 'comparisons' : ''}>
         {isShowingAll ? (
           <TopComparisons
-            activeSubcategories={activeSubcategories}
+            activeSubcategory={activeSubcategory}
             isShowingParis={isShowingParis}
             isSortedNegative={isSortedNegative}
             isVisible={isVisible}

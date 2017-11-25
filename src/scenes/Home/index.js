@@ -36,12 +36,12 @@ type Props = {
   dispatch: *
 }
 
-const testGeography = {
-  properties: {
-    iso_a3: 'USA',
-    name: 'Funland'
-  }
-}
+// const testGeography = {
+//   properties: {
+//     iso_a3: 'USA',
+//     name: 'Funland'
+//   }
+// }
 
 class App extends Component<Props, State> {
   state = {
@@ -51,8 +51,8 @@ class App extends Component<Props, State> {
     isShowingAll: false,
     isShowingParis: false,
     isSortedNegative: false,
-    primaryGeography: testGeography,
-    secondaryGeography: testGeography,
+    primaryGeography: undefined,
+    secondaryGeography: undefined,
     clicktime: new Date(),
     tooltipColor: undefined
   }
@@ -267,6 +267,7 @@ class App extends Component<Props, State> {
           {primaryGeography &&
             secondaryGeography && (
               <Comparisons
+                activeSubcategory={activeSubcategory}
                 activeSubcategories={activeSubcategories}
                 primaryCode={primaryGeography.properties.iso_a3}
                 secondaryCode={secondaryGeography.properties.iso_a3}

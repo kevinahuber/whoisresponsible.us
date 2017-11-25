@@ -56,22 +56,24 @@ const Row = ({
   if (primaryScale === null) return
   return (
     <div className={cn('row', {'row--negative': hasNegative})} key={title}>
-      {hasNegative && (
+      <div className="row__title">{title}</div>
+      <div>
+        {hasNegative && (
+          <Bar
+            primaryScale={isNegative ? primaryScale * -1 : primaryScale}
+            secondaryScale={
+              isNegative ? (secondaryScale || 0) * -1 : secondaryScale
+            }
+            isNegative
+          />
+        )}
         <Bar
           primaryScale={isNegative ? primaryScale * -1 : primaryScale}
           secondaryScale={
             isNegative ? (secondaryScale || 0) * -1 : secondaryScale
           }
-          isNegative
         />
-      )}
-      <div className="row__title">{title}</div>
-      <Bar
-        primaryScale={isNegative ? primaryScale * -1 : primaryScale}
-        secondaryScale={
-          isNegative ? (secondaryScale || 0) * -1 : secondaryScale
-        }
-      />
+      </div>
     </div>
   )
 }
