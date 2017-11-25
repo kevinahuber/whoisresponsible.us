@@ -1,6 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
+import data from '../../resources/aggregate-by-country.json'
 
 import styles from './styles.css'
 import type {Category as CategoryType} from '../../types.js'
@@ -13,13 +14,52 @@ const TIMEOUT = {
   exit: parseInt(styles.exit, 10)
 }
 
+const formatLabel = (value: number): string => {
+  return (value * 100).toFixed(1)
+}
+type SubcategoryValueProps = {
+  subcategory: string,
+  primaryCode: string,
+  secondaryCode: string
+}
+// TODO: Come up with a much better way to handle mobile than duplicating work
+const SubcategoryValue = ({
+  subcategory,
+  primaryCode,
+  secondaryCode
+}: SubcategoryValueProps) => {
+  const activeCategory = categories.find(c =>
+    c.subcategories.includes(subcategory)
+  )
+  const isNegative = (activeCategory || {}).isNegative
+  const primaryScale = data[primaryCode]
+    ? data[primaryCode][subcategory.toLowerCase()]
+    : 0
+  const secondaryScale = data[secondaryCode]
+    ? data[secondaryCode][subcategory.toLowerCase()]
+    : 0
+
+  return (
+    <div className="categories__subcategory-value">
+      <div className="categories__subcategory-value--primary">
+        {formatLabel(isNegative ? primaryScale * -1 : primaryScale)}
+      </div>
+      <div className="categories__subcategory-value--secondary">
+        {formatLabel(isNegative ? secondaryScale * -1 : secondaryScale)}
+      </div>
+    </div>
+  )
+}
+
 type SubcategoryProps = {
   activeSubcategories: string[],
   activeSubcategory?: string,
   isShowingAll?: boolean,
   onSubcategoryClick: (title: string) => mixed,
   subcategory: string,
-  index: number
+  index: number,
+  primaryCode: string,
+  secondaryCode: string
 }
 
 const Subcategory = ({
@@ -27,21 +67,42 @@ const Subcategory = ({
   activeSubcategory,
   isShowingAll,
   onSubcategoryClick,
+  primaryCode,
+  secondaryCode,
   subcategory,
   index
-}: SubcategoryProps) => (
-  <div
-    key={index}
-    className={cn('categories__subcategory-title', {
-      'categories__subcategory-title--active': isShowingAll
-        ? activeSubcategory === subcategory
-        : activeSubcategories.includes(subcategory)
-    })}
-    onClick={onSubcategoryClick(subcategory)}
-  >
-    {subcategory}
-  </div>
-)
+}: SubcategoryProps) => {
+  const isActive = activeSubcategories.includes(subcategory)
+  return (
+    <div
+      className={cn('categories__subcategory', {
+        'categories__subcategory--all': isShowingAll
+      })}
+      key={index}
+    >
+      <div
+        className={cn('categories__subcategory-title', {
+          'categories__subcategory-title--active': isShowingAll
+            ? activeSubcategory === subcategory
+            : isActive
+        })}
+        onClick={onSubcategoryClick(subcategory)}
+      >
+        {subcategory}
+      </div>
+      {isActive &&
+        !isShowingAll &&
+        primaryCode &&
+        secondaryCode && (
+          <SubcategoryValue
+            primaryCode={primaryCode}
+            secondaryCode={secondaryCode}
+            subcategory={subcategory}
+          />
+        )}
+    </div>
+  )
+}
 
 type CategoryProps = {
   activeSubcategories: string[],
@@ -52,7 +113,9 @@ type CategoryProps = {
   isShowingParis: boolean,
   delay: number,
   onCategoryClick: (category: CategoryType) => mixed,
-  onParisClick: () => mixed
+  onParisClick: () => mixed,
+  primaryCode: string,
+  secondaryCode: string
 }
 
 const Category = ({
@@ -107,7 +170,9 @@ type Props = {
   isShowingParis: boolean,
   isShowingAll: boolean,
   onCategoryClick: (category: CategoryType) => mixed,
-  onParisClick: () => mixed
+  onParisClick: () => mixed,
+  primaryCode?: string,
+  secondaryCode?: string
 }
 
 type State = {

@@ -36,12 +36,13 @@ type Props = {
   dispatch: *
 }
 
-// const testGeography = {
-//   properties: {
-//     iso_a3: 'USA',
-//     name: 'Funland'
-//   }
-// }
+const testGeography = {
+  properties: {
+    iso_a3: 'USA',
+    name: 'Funland'
+  }
+}
+
 class App extends Component<Props, State> {
   state = {
     activeSubcategories: [],
@@ -50,8 +51,8 @@ class App extends Component<Props, State> {
     isShowingAll: false,
     isShowingParis: false,
     isSortedNegative: false,
-    primaryGeography: undefined,
-    secondaryGeography: undefined,
+    primaryGeography: testGeography,
+    secondaryGeography: testGeography,
     clicktime: new Date(),
     tooltipColor: undefined
   }
@@ -231,8 +232,27 @@ class App extends Component<Props, State> {
               }
               isShowingAll={isShowingAll}
             />
-
+            {primaryGeography &&
+              secondaryGeography && (
+                <Controls
+                  activeSubcategory={activeSubcategory}
+                  onBackClick={this.handleClearGeography}
+                  onAllToggle={this.handleAllToggle}
+                  isShowingAll={isShowingAll}
+                  hasActiveSubcategories={!!activeSubcategories.length}
+                />
+              )}
             <Categories
+              primaryCode={
+                primaryGeography
+                  ? primaryGeography.properties.iso_a3
+                  : undefined
+              }
+              secondaryCode={
+                secondaryGeography
+                  ? secondaryGeography.properties.iso_a3
+                  : undefined
+              }
               onCategoryClick={this.handleCategoryClick}
               onSubcategoryClick={this.handleSubcategoryClick}
               onParisClick={this.handleParisClick}
@@ -243,27 +263,19 @@ class App extends Component<Props, State> {
               isShowing={!!primaryGeography && !!secondaryGeography}
             />
           </div>
+
           {primaryGeography &&
             secondaryGeography && (
-              <div className="app__details">
-                <Controls
-                  activeSubcategory={activeSubcategory}
-                  onBackClick={this.handleClearGeography}
-                  onAllToggle={this.handleAllToggle}
-                  isShowingAll={isShowingAll}
-                  hasActiveSubcategories={!!activeSubcategories.length}
-                />
-                <Comparisons
-                  activeSubcategories={activeSubcategories}
-                  primaryCode={primaryGeography.properties.iso_a3}
-                  secondaryCode={secondaryGeography.properties.iso_a3}
-                  onTopSort={this.handleTopSort}
-                  isSortedNegative={isSortedNegative}
-                  isShowingAll={isShowingAll}
-                  isShowingParis={isShowingParis}
-                  isVisible={!!activeSubcategories.length}
-                />
-              </div>
+              <Comparisons
+                activeSubcategories={activeSubcategories}
+                primaryCode={primaryGeography.properties.iso_a3}
+                secondaryCode={secondaryGeography.properties.iso_a3}
+                onTopSort={this.handleTopSort}
+                isSortedNegative={isSortedNegative}
+                isShowingAll={isShowingAll}
+                isShowingParis={isShowingParis}
+                isVisible={!!activeSubcategories.length}
+              />
             )}
         </div>
         <Footer />

@@ -11,6 +11,7 @@
 .map {
   display: inline-block;
   max-width: 980px;
+  position: relative;
   width: 100%;
   @include fade-in;
   @include resize;
@@ -20,8 +21,8 @@
     }
 
     &--all {
-      height: 559px;
-      max-width: 815px;
+      height: 541px;
+      max-width: 803px;
       position: relative;
     }
   }
@@ -45,7 +46,6 @@
       font-size: 20px;
       height: 26px;
       line-height: 24px;
-      margin: 0 0 20px;
       text-align: center;
       user-select: none;
       width: 26px;

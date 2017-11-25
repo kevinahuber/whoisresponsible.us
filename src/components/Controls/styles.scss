@@ -5,14 +5,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 20.5px auto 0;
+  margin: 20.5px auto 45px;
   max-width: 975px;
-  position: relative;
   width: 100%;
 
-  &--all {
-    margin: auto;
-    position: relative;
+  @include tablet-up {
+    bottom: 0;
+    margin-bottom: 0;
+    position: absolute;
   }
 
   &__back,
@@ -23,22 +23,26 @@
     cursor: pointer;
     display: inline-block;
     margin-top: 20px;
-    padding: 0 40px;
     text-align: center;
     width: 100%;
 
     @include tablet-up {
       margin: 0;
+      padding: 0 40px;
       width: auto;
     }
   }
 
   &__legend {
-    bottom: 0;
-    margin-bottom: -4px;
-    position: absolute;
-    right: 160px;
+    max-width: 100%;
     user-select: none;
+
+    @include tablet-up {
+      bottom: 0;
+      margin-bottom: -4px;
+      position: absolute;
+      right: 160px;
+    }
 
     &-label {
       color: $bg-grey;
@@ -60,6 +64,7 @@
       background: linear-gradient(to left, $primary-color, $secondary-color);
       display: inline-block;
       height: 26px;
+      max-width: 100%;
       width: 400px;
     }
   }

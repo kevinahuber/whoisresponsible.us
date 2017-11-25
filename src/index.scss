@@ -2,12 +2,12 @@
 @import 'variables';
 
 html {
-  background: $bg-black;
+  background: $bg-grey;
   height: calc(100% - 20px);
 }
 
 body {
-  background: #1d1d25;
+  background: $bg-grey;
   font-family: sans-serif;
   margin: 0;
   min-height: 100%;

@@ -41,19 +41,21 @@ export default class Controls extends Component<Props> {
 
     return (
       <div className={cn('controls', {'controls--all': isShowingAll})}>
+        {isShowingAll && this.renderLegend()}
         <div
           onClick={isShowingAll ? onAllToggle : onBackClick}
           className="controls__back"
         >
           <span className="controls__label">{'< Back'}</span>
         </div>
-        {isShowingAll ? (
-          this.renderLegend()
-        ) : hasActiveSubcategories ? (
-          <div onClick={onAllToggle} className="controls__all">
-            <span className="controls__label">See how everyone stacks up</span>
-          </div>
-        ) : null}
+        {!isShowingAll &&
+          hasActiveSubcategories && (
+            <div onClick={onAllToggle} className="controls__all">
+              <span className="controls__label">
+                See how everyone stacks up
+              </span>
+            </div>
+          )}
       </div>
     )
   }

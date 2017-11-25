@@ -254,8 +254,12 @@ class Map extends Component<Props, State> {
                           onClick={
                             isShowingAll || isDataless ? null : onGeographyClick
                           }
-                          onMouseMove={canHover ? this.handleMove : null}
-                          onMouseLeave={canHover ? this.handleLeave : null}
+                          onMouseMove={
+                            canHover && !isShowingAll ? this.handleMove : null
+                          }
+                          onMouseLeave={
+                            canHover && !isShowingAll ? this.handleLeave : null
+                          }
                           style={{
                             default: {
                               fill: color,

@@ -8,7 +8,6 @@
 /* stylelint-enable */
 
 .categories {
-  max-width: 50%;
   position: relative;
   z-index: 1;
   @include desktop-up {
@@ -25,64 +24,12 @@
 
   &--all {
     @include desktop-up {
-      animation-fill-mode: forwards;
-      animation-name: move;
-      @include animation-in;
+      max-width: 140px;
 
       .categories__container {
         flex-wrap: wrap;
         position: absolute;
       }
-
-      .categories__category {
-        animation-fill-mode: forwards;
-        animation-name: fade-in-out;
-        @include animation-in;
-
-        &:nth-child(2) {
-          animation-delay: 50ms;
-        }
-
-        &:nth-child(3) {
-          animation-delay: 100ms;
-        }
-      }
-    }
-  }
-
-  @keyframes move {
-    0% {
-      max-width: 475px;
-    }
-
-    49% {
-      max-width: 475px;
-    }
-
-    50% {
-      max-width: 140px;
-    }
-
-    100% {
-      max-width: 140px;
-    }
-  }
-
-  @keyframes fade-in-out {
-    0% {
-      opacity: 1;
-    }
-
-    49% {
-      opacity: 0;
-    }
-
-    50% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
     }
   }
 
@@ -128,17 +75,40 @@
     width: 100%;
   }
 
+  &__subcategory-value {
+    display: inline-block;
+    font-family: 'SanFranciscoText-RegularItalic';
+    width: 39%;
+
+    &--primary,
+    &--secondary {
+      display: inline-block;
+      text-align: center;
+      width: 50%;
+    }
+
+    &--primary {
+      color: $primary-color;
+    }
+
+    &--secondary {
+      color: $secondary-color;
+    }
+
+    @include tablet-up {
+      display: none;
+    }
+  }
+
   &__subcategory-title,
   &__paris {
     @include button;
     border-style: none;
   }
 
-  &__subcategory-title {
-    border: solid 1px $orange;
+  &__subcategory {
     margin-top: 10px;
     width: 100%;
-
     @include tablet-up {
       border: none;
       margin: 0 0 2px;
@@ -147,6 +117,29 @@
       &:last-child {
         margin-bottom: 0;
       }
+    }
+
+    &--all &-title {
+      width: 100%;
+    }
+  }
+
+  &__subcategory--all {
+    @include mobile-only {
+      display: inline-block;
+      width: calc(50% - 7px);
+    }
+  }
+
+  &__subcategory-title {
+    border: solid 1px $orange;
+    display: inline-block;
+    width: 60%;
+
+    @include tablet-up {
+      border: none;
+      display: inline-block;
+      width: 100%;
     }
   }
 

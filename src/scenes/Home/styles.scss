@@ -50,11 +50,15 @@
   }
 
   &__container {
-    display: flex;
-    justify-content: space-between;
     margin: auto;
     max-width: 975px;
+    padding-bottom: 44px;
     position: relative;
     width: 100%;
+
+    @include tablet-up {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }

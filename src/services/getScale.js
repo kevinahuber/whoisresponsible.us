@@ -9,7 +9,7 @@ export default (activeSubcategories: string[], code: string): number | null => {
 
   const aggregate = aggregateByCountry[code]
 
-  if (!aggregate) return null // TODO: Handle
+  if (!aggregate) return null
   const total = categories.reduce((total, category) => {
     const filteredSubcategories = category.subcategories.filter(s =>
       activeSubcategories.includes(s)

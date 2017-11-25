@@ -17,9 +17,9 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
           width: `${Math.abs(primaryScale) * 100}%`
         }}
       >
-        <span className="row__bar-value">{`${(primaryScale * 100).toFixed(
-          1
-        )}`}</span>
+        <span className="row__bar-value">
+          {(primaryScale * 100).toFixed(1)}
+        </span>
       </div>
     )}
     {typeof secondaryScale === 'number' &&
@@ -30,9 +30,9 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
             width: `${Math.abs(secondaryScale || 0) * 100}%`
           }}
         >
-          <span className="row__bar-value">{`${(secondaryScale * 100).toFixed(
-            1
-          )}`}</span>
+          <span className="row__bar-value">
+            {(secondaryScale * 100).toFixed(1)}
+          </span>
         </div>
       )}
   </div>
