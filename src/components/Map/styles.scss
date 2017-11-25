@@ -37,17 +37,18 @@
 
     &-in,
     &-out {
+      background-color: $bg-grey;
       border: solid 1px $orange;
       color: $orange;
       cursor: pointer;
       display: inline-block;
-      font-size: 24px;
-      height: 30px;
-      line-height: 28px;
+      font-size: 20px;
+      height: 26px;
+      line-height: 24px;
       margin: 0 0 20px;
       text-align: center;
       user-select: none;
-      width: 30px;
+      width: 26px;
     }
 
     &-in {

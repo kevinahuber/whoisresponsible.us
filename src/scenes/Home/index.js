@@ -36,22 +36,22 @@ type Props = {
   dispatch: *
 }
 
-const testGeography = {
-  properties: {
-    iso_a3: 'USA',
-    name: 'Funland'
-  }
-}
+// const testGeography = {
+//   properties: {
+//     iso_a3: 'USA',
+//     name: 'Funland'
+//   }
+// }
 class App extends Component<Props, State> {
   state = {
     activeSubcategories: [],
-    activeSubcategory: 'Food',
+    activeSubcategory: undefined,
     isPaused: false,
-    isShowingAll: true,
+    isShowingAll: false,
     isShowingParis: false,
     isSortedNegative: false,
-    primaryGeography: testGeography,
-    secondaryGeography: testGeography,
+    primaryGeography: undefined,
+    secondaryGeography: undefined,
     clicktime: new Date(),
     tooltipColor: undefined
   }

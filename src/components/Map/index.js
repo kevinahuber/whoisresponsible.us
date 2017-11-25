@@ -173,7 +173,7 @@ class Map extends Component<Props, State> {
 
     const {canHover, isOptimizationDisabled, zoom, center} = this.state
 
-    const height = 630
+    const height = 634
     const width = 959
 
     return (
