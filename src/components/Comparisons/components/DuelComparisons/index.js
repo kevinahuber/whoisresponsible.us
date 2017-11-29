@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import data from '../../../../resources/aggregate-by-country.json'
-import Row from '../Row'
+import Column from '../Column'
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
 import styles from './styles.css'
 import categories from '../../../../resources/categories.json'
@@ -15,7 +15,8 @@ type Props = {
   primaryCode: string,
   activeSubcategories: string[],
   isShowingParis: boolean,
-  secondaryCode: string
+  secondaryCode: string,
+  onColumnClick: (sub: string) => () => mixed
 }
 
 export default class DuelComparisons extends Component<Props> {
@@ -36,11 +37,17 @@ export default class DuelComparisons extends Component<Props> {
   render() {
     const {
       primaryCode,
-      activeSubcategories,
       isShowingParis,
-      secondaryCode
+      secondaryCode,
+      onColumnClick
     } = this.props
 
+    const activeSubcategories = categories.reduce(
+      (m, c) => m.concat(c.subcategories),
+      []
+    )
+
+    const size = 100 / activeSubcategories.length
     return (
       <div className="duel-comparisons">
         {isShowingParis && this.renderParis(primaryCode, secondaryCode)}
@@ -65,11 +72,13 @@ export default class DuelComparisons extends Component<Props> {
                 timeout={TIMEOUT}
                 classNames="duel-comparisons__row-fade"
               >
-                <Row
-                  hasNegative
-                  isNegative={isNegative}
-                  primaryScale={primaryScale}
-                  secondaryScale={secondaryScale}
+                <Column
+                  onClick={onColumnClick}
+                  primaryScale={isNegative ? primaryScale * -1 : primaryScale}
+                  secondaryScale={
+                    isNegative ? secondaryScale * -1 : secondaryScale
+                  }
+                  size={size}
                   title={as}
                 />
               </CSSTransition>

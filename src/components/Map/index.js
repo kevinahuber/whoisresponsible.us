@@ -145,6 +145,7 @@ class Map extends Component<Props, State> {
   }
 
   handleLeave = () => {
+    this.setState({hoveredSubregion: undefined})
     this.props.dispatch(tooltipActions.hide())
   }
 
@@ -255,10 +256,10 @@ class Map extends Component<Props, State> {
                             isShowingAll || isDataless ? null : onGeographyClick
                           }
                           onMouseMove={
-                            canHover && !isShowingAll ? this.handleMove : null
+                            canHover || isShowingAll ? this.handleMove : null
                           }
                           onMouseLeave={
-                            canHover && !isShowingAll ? this.handleLeave : null
+                            canHover || isShowingAll ? this.handleLeave : null
                           }
                           style={{
                             default: {

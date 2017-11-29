@@ -11,7 +11,6 @@
 .map {
   display: inline-block;
   max-width: 980px;
-  position: relative;
   width: 100%;
   @include fade-in;
   @include resize;

@@ -25,7 +25,6 @@ type State = {
   activeSubcategory?: string,
   isShowingAll: boolean,
   isShowingParis: boolean,
-  isSortedNegative: boolean,
   primaryGeography?: Geography,
   secondaryGeography?: Geography,
   clicktime: Date,
@@ -78,20 +77,12 @@ class App extends Component<Props, State> {
   }
 
   handleSubcategoryClick = (sub: string) => () => {
-    const {isShowingAll} = this.state
-    if (isShowingAll) return this.setState({activeSubcategory: sub})
-    this.setState((state: State) => {
-      const {activeSubcategories} = state
-      const newActiveSubcategories = activeSubcategories.includes(sub)
-        ? this.state.activeSubcategories.filter(s => s !== sub)
-        : [sub].concat(this.state.activeSubcategories.slice(0, LIMIT - 1))
-      return {activeSubcategories: newActiveSubcategories}
-    })
+    this.props.dispatch(tooltipActions.hide())
+    return this.setState({activeSubcategory: sub, isShowingAll: true})
   }
 
   handleGeographyClick = (geography: Geography, evt: window.Event) => {
     evt.stopPropagation()
-    if (!this.canClick()) return
     const newState = {}
 
     if (this.state.primaryGeography) {
@@ -132,14 +123,6 @@ class App extends Component<Props, State> {
     )
   }
 
-  canClick = () => {
-    const {clicktime} = this.state
-    if (!clicktime) return false
-    if (new Date() - clicktime < 500) return false
-    this.setState((state: State) => ({clicktime: new Date()}))
-    return true
-  }
-
   handleClearGeography = () => {
     this.setState({
       primaryGeography: undefined,
@@ -154,12 +137,6 @@ class App extends Component<Props, State> {
         state.activeSubcategory ||
         state.activeSubcategories[state.activeSubcategories.length - 1],
       isShowingAll: !state.isShowingAll
-    }))
-  }
-
-  handleTopSort = () => {
-    this.setState((state: State) => ({
-      isSortedNegative: !state.isSortedNegative
     }))
   }
 
@@ -187,7 +164,6 @@ class App extends Component<Props, State> {
       activeSubcategory,
       isShowingAll,
       isShowingParis,
-      isSortedNegative,
       primaryGeography,
       secondaryGeography
     } = this.state
@@ -209,7 +185,6 @@ class App extends Component<Props, State> {
             secondaryGeography && secondaryGeography.properties.name
           }
           isShowingAll={isShowingAll}
-          isSortedNegative={isSortedNegative}
           activeSubcategory={activeSubcategory}
           onPrimaryClick={this.handlePrimaryClick}
           onSecondaryClick={this.handleSecondaryClick}
@@ -260,22 +235,22 @@ class App extends Component<Props, State> {
               activeSubcategory={activeSubcategory}
               isShowingParis={isShowingParis}
               isShowingAll={isShowingAll}
-              isShowing={!!primaryGeography && !!secondaryGeography}
+              isShowing={primaryGeography && secondaryGeography && isShowingAll}
             />
           </div>
 
           {primaryGeography &&
-            secondaryGeography && (
+            secondaryGeography &&
+            !isShowingAll && (
               <Comparisons
+                onColumnClick={this.handleSubcategoryClick}
                 activeSubcategory={activeSubcategory}
                 activeSubcategories={activeSubcategories}
                 primaryCode={primaryGeography.properties.iso_a3}
                 secondaryCode={secondaryGeography.properties.iso_a3}
-                onTopSort={this.handleTopSort}
-                isSortedNegative={isSortedNegative}
                 isShowingAll={isShowingAll}
                 isShowingParis={isShowingParis}
-                isVisible={!!activeSubcategories.length}
+                isVisible
               />
             )}
         </div>

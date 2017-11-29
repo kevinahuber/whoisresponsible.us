@@ -8,11 +8,7 @@
   margin: 20px auto 0;
   max-width: 975px;
   min-height: 100px;
-  padding: 0 25px;
+  margin-top: 130px;
   position: relative;
   width: 100%;
-
-  @include mobile-only {
-    display: none;
-  }
 }

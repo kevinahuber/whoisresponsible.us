@@ -1,6 +1,8 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
+$primary-gridline-color: rgba($orange, 0.2);
+$secondary-gridline-color: rgba($orange, 0.1);
 /* stylelint-disable */
 :export {
   enter: $max-enter-duration;
@@ -9,9 +11,11 @@
 /* stylelint-enable */
 
 .duel-comparisons {
-  padding-top: 26px;
-
+  height: 40vh;
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
   &__row-fade {
-    @include create(97px, 100%);
+    // @include create(97px, 100%);
   }
 }

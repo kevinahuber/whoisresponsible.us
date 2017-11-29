@@ -1,0 +1,79 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+$gridline-color: rgba($orange, 0.2);
+$hovered-gridline-color: rgba($orange, 0.4);
+.column {
+  flex-grow: 1;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  padding-left: 10px;
+  cursor: pointer;
+  background-image: linear-gradient(
+      to right,
+      $gridline-color 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, $gridline-color 1px, transparent 1px);
+  &:hover {
+    background-image: linear-gradient(
+        to right,
+        $hovered-gridline-color 2px,
+        $gridline-color 1px
+      ),
+      linear-gradient(to bottom, $hovered-gridline-color 2px, transparent 1px);
+  }
+
+  &:hover &__title {
+    // background-color: $hovered-gridline-color;
+    // left: 0;
+    // right: 0;
+    // width: 100%;
+  }
+
+  &__primary,
+  &__secondary {
+    width: 49%;
+    position: absolute;
+    bottom: 50%;
+  }
+
+  &__primary {
+    background-color: $primary-color;
+    left: 0;
+  }
+
+  &__secondary {
+    background-color: $secondary-color;
+    right: 0;
+  }
+
+  &--negative {
+    bottom: auto;
+    top: 50%;
+  }
+
+  &__title {
+    color: $primary-color;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    right: 50%;
+    white-space: nowrap;
+    transform: rotate(-90deg);
+  }
+
+  &__dummy,
+  &__value {
+    opacity: 0;
+  }
+
+  &__label--primary {
+    color: $primary-color;
+  }
+
+  &__label--secondary {
+    color: $secondary-color;
+  }
+}
