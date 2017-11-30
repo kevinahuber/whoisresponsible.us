@@ -8,7 +8,6 @@ type Props = {
   onBackClick: () => mixed,
   onAllToggle: () => mixed,
   isShowingAll: boolean,
-  hasActiveSubcategories: boolean,
   activeSubcategory: string
 }
 
@@ -32,12 +31,7 @@ export default class Controls extends Component<Props> {
   }
 
   render() {
-    const {
-      onBackClick,
-      onAllToggle,
-      isShowingAll,
-      hasActiveSubcategories
-    } = this.props
+    const {onBackClick, onAllToggle, isShowingAll} = this.props
 
     return (
       <div className={cn('controls', {'controls--all': isShowingAll})}>
@@ -48,14 +42,11 @@ export default class Controls extends Component<Props> {
         >
           <span className="controls__label">{'< Back'}</span>
         </div>
-        {!isShowingAll &&
-          hasActiveSubcategories && (
-            <div onClick={onAllToggle} className="controls__all">
-              <span className="controls__label">
-                See how everyone stacks up
-              </span>
-            </div>
-          )}
+        {!isShowingAll && (
+          <div onClick={onAllToggle} className="controls__all">
+            <span className="controls__label">See how everyone stacks up</span>
+          </div>
+        )}
       </div>
     )
   }
