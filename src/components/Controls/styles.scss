@@ -65,7 +65,10 @@
       display: inline-block;
       height: 26px;
       max-width: 100%;
-      width: 400px;
+      width: 600px;
+      @include tablet-up {
+        width: 400px;
+      }
     }
   }
 }

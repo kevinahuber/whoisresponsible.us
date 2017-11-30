@@ -7,19 +7,20 @@ $widescreen-width: 1440px;
 $max-enter-duration: 300;
 $max-exit-duration: 255;
 
-@mixin create($height, $width) {
-  @include slide($height, $width);
+@mixin create($height, $width, $margin) {
+  @include slide($height, $width, $margin);
   @include fade;
-  transition-property: opacity, max-height, width;
+  transition-property: opacity, max-height, width, margin-bottom;
 }
 
-@mixin slide($height, $width) {
+@mixin slide($height, $width, $margin) {
   max-height: 0;
   overflow-y: hidden;
-  transition-property: max-height, width;
+  transition-property: max-height, width, margin-bottom;
 
   &-enter,
   &-appear {
+    margin-bottom: 0;
     max-height: 0;
     width: 0;
     @include transition-in;
@@ -27,17 +28,20 @@ $max-exit-duration: 255;
 
   &-enter-active,
   &-appear-active {
+    margin-bottom: $margin;
     max-height: $height;
     width: $width;
   }
 
   &-exit {
+    margin-bottom: $margin;
     max-height: $height;
     width: $width;
     @include transition-out;
   }
 
   &-exit-active {
+    margin-bottom: 0;
     max-height: 0;
     width: 0;
   }

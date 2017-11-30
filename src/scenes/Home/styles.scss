@@ -56,7 +56,7 @@
     position: relative;
     width: 100%;
 
-    @include tablet-up {
+    @include desktop-up {
       display: flex;
       justify-content: space-between;
     }

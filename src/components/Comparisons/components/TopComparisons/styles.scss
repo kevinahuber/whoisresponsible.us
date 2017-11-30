@@ -9,7 +9,7 @@
 /* stylelint-enable */
 
 .top-comparisons {
-  padding-bottom: 26px;
+  padding: 26px 0;
 
   &__toggle-expand {
     color: $orange;
@@ -31,7 +31,7 @@
   }
 
   &__row-fade {
-    @include create(64px, 100%);
+    @include create(100%, 100%, 20px);
 
     &-enter,
     &-appear,

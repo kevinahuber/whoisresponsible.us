@@ -9,6 +9,7 @@ import {
   Header,
   Map
 } from '../../components'
+import categories from '../../resources/categories.json'
 
 import withRedux from 'next-redux-wrapper'
 import {initStore} from '../../store'
@@ -152,7 +153,8 @@ class App extends Component<Props, State> {
     this.setState((state: State) => ({
       activeSubcategory:
         state.activeSubcategory ||
-        state.activeSubcategories[state.activeSubcategories.length - 1],
+        state.activeSubcategories[state.activeSubcategories.length - 1] ||
+        categories[0].subcategories[0],
       isShowingAll: !state.isShowingAll
     }))
   }
@@ -275,7 +277,11 @@ class App extends Component<Props, State> {
                 isSortedNegative={isSortedNegative}
                 isShowingAll={isShowingAll}
                 isShowingParis={isShowingParis}
-                isVisible={!!activeSubcategories.length}
+                isVisible={
+                  isShowingAll
+                    ? activeSubcategory
+                    : !!activeSubcategories.length
+                }
               />
             )}
         </div>

@@ -9,9 +9,9 @@
 /* stylelint-enable */
 
 .duel-comparisons {
-  padding-top: 26px;
+  padding: 20px 0 0;
 
   &__row-fade {
-    @include create(97px, 100%);
+    @include create(123.33px, 100%, 20px);
   }
 }

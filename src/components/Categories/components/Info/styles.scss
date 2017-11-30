@@ -43,13 +43,14 @@ $size: 20px;
   &__details {
     background-color: $bg-grey;
     bottom: 0;
+    height: 100%;
     left: 0;
-    margin: -1px;
+    // margin: -1px;
     position: absolute;
     right: 0;
     top: 0;
     width: calc(100% + 3px);
-
+    z-index: 1;
     @include widescreen-up {
       background-color: transparent;
       left: auto;

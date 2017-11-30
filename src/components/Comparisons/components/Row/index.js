@@ -30,9 +30,9 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
             width: `${Math.abs(secondaryScale || 0) * 100}%`
           }}
         >
-          <span className="row__bar-value">
-            {(secondaryScale * 100).toFixed(1)}
-          </span>
+          <span className="row__bar-value">{`${(secondaryScale * 100).toFixed(
+            1
+          )}`}</span>
         </div>
       )}
   </div>
@@ -56,24 +56,22 @@ const Row = ({
   if (primaryScale === null) return
   return (
     <div className={cn('row', {'row--negative': hasNegative})} key={title}>
-      <div className="row__title">{title}</div>
-      <div>
-        {hasNegative && (
-          <Bar
-            primaryScale={isNegative ? primaryScale * -1 : primaryScale}
-            secondaryScale={
-              isNegative ? (secondaryScale || 0) * -1 : secondaryScale
-            }
-            isNegative
-          />
-        )}
+      {hasNegative && (
         <Bar
           primaryScale={isNegative ? primaryScale * -1 : primaryScale}
           secondaryScale={
             isNegative ? (secondaryScale || 0) * -1 : secondaryScale
           }
+          isNegative
         />
-      </div>
+      )}
+      <div className="row__title">{title}</div>
+      <Bar
+        primaryScale={isNegative ? primaryScale * -1 : primaryScale}
+        secondaryScale={
+          isNegative ? (secondaryScale || 0) * -1 : secondaryScale
+        }
+      />
     </div>
   )
 }
