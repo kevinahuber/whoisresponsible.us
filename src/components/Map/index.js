@@ -7,7 +7,7 @@ import {
   ZoomableGroup
 } from 'react-simple-maps'
 import cn from 'classnames'
-
+import * as errors from '../../errors.js'
 import noDataCodes from '../../services/getNoDataCodes.js'
 
 // $FlowFixMe
@@ -100,11 +100,11 @@ class Map extends Component<Props, State> {
     } = this.props
 
     const {properties: {iso_a3, name}} = geography
-    const scale = getScale([activeSubcategory], iso_a3)
+    const scale = getScale(activeSubcategory, iso_a3)
     const content =
-      noDataCodes.has(iso_a3) || scale === null
+      noDataCodes.has(iso_a3) || scale === errors.INVALID_COUNTRY
         ? `${name}: No Data Available`
-        : isShowingAll
+        : isShowingAll && scale !== errors.INVALID_SUBCATEGORY
           ? `${name}: ${(100 * scale).toFixed(1)}`
           : primaryCode &&
             secondaryCode &&
@@ -225,7 +225,10 @@ class Map extends Component<Props, State> {
                       const code = geography.properties.iso_a3
                       if (excludedCodes.has(code)) return null
 
-                      let scale = getScale([activeSubcategory], code)
+                      let scale
+
+                      if (activeSubcategory)
+                        scale = getScale(activeSubcategory, code)
 
                       const isActive = code === primaryCode
                       const isSecondary = code === secondaryCode

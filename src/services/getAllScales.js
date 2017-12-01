@@ -1,13 +1,14 @@
 // @flow
 import aggregateByCountry from '../resources/aggregate-by-country.json'
 import getScale from './getScale.js'
+import errors from '../errors.js'
 export default (
-  activeSubcategories: string[]
-): {code: string, index: number | null}[] => {
+  activeSubcategory: string
+): {code: string, index: number | $Values<typeof errors>}[] => {
   return Object.keys(aggregateByCountry).reduce((memo, code) => {
     return [].concat(memo, {
       code,
-      index: getScale(activeSubcategories, code)
+      index: getScale(activeSubcategory, code)
     })
   }, [])
 }

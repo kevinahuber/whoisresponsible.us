@@ -59,14 +59,13 @@ $row-height: $bar-height * 3;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+    user-select: none;
   }
 
   &__bar {
     display: block;
-
     position: relative;
     width: 100%;
-    // padding: 10px 0;
 
     @include tablet-up {
       display: inline-block;
@@ -79,6 +78,7 @@ $row-height: $bar-height * 3;
       bottom: 50%;
       box-sizing: border-box;
       color: $primary-color;
+      max-width: 100%;
       position: absolute;
     }
 

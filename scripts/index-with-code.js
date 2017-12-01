@@ -3,12 +3,12 @@ const contributions = require('./archive/contribution/total-with-code.json')
 const file = './scripts/archive/contribution/index-with-code-cleaned.json'
 
 const names = {
-  Energy: 'Energy',
-  'Industrial Processes': 'Industrial',
-  Agriculture: 'Agriculture',
-  Waste: 'Waste',
-  'Bunker Fuels': 'Bunker Fuels',
-  'Land-Use Change and Forestry': 'Land-Use'
+  'Energy Per Capita (tCO2e Per Capita)': 'Energy',
+  'Industrial Processes Per Capita (tCO2e Per Capita)': 'Industrial',
+  'Agriculture Per Capita (tCO2e Per Capita)': 'Agriculture',
+  'Waste Per Capita (tCO2e Per Capita)': 'Waste',
+  'Bunker Fuels Per Capita (tCO2 Per Capita)': 'Bunker Fuels',
+  'Land-Use Change and Forestry Per Capita (tCO2 Per Capita)': 'Land-Use'
 }
 
 const defaultMaxes = Object.keys(names).reduce(

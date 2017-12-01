@@ -47,7 +47,7 @@ export default class TopComparisons extends Component<Props, State> {
 
     const {isExpanded} = this.state
 
-    const averageCountries = getAllScales([activeSubcategory]).filter(
+    const averageCountries = getAllScales(activeSubcategory).filter(
       c => !(c.index !== 0 && !c.index)
     )
     const sortedCountries = isSortedNegative

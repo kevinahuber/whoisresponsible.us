@@ -2,6 +2,8 @@
 import React from 'react'
 import './styles.css'
 import cn from 'classnames'
+import errors from '../../../../errors.js'
+
 type BarProps = {
   primaryScale: number,
   secondaryScale?: number,
@@ -39,7 +41,7 @@ const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
 )
 
 type Props = {
-  primaryScale: number | null,
+  primaryScale: number | $Values<typeof errors>,
   secondaryScale?: number,
   title: string,
   isNegative?: boolean,
@@ -53,7 +55,13 @@ const Row = ({
   isNegative,
   hasNegative
 }: Props) => {
-  if (primaryScale === null) return
+  if (
+    primaryScale === errors.INVALID_COUNTRY ||
+    primaryScale === errors.INVALID_SUBCATEGORY ||
+    secondaryScale === errors.INVALID_COUNTRY ||
+    secondaryScale === errors.INVALID_SUBCATEGORY
+  )
+    return
   return (
     <div className={cn('row', {'row--negative': hasNegative})} key={title}>
       {hasNegative && (
