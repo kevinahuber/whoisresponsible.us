@@ -41,6 +41,14 @@
     }
   }
 
+  &__tooltip--all {
+    border: solid 1px $text-grey;
+
+    &-content {
+      color: $text-grey;
+    }
+  }
+
   &__body {
     padding-bottom: 175px;
 

@@ -1,6 +1,7 @@
 const jsonfile = require('jsonfile')
 const contributions = require('./archive/contribution/total-with-code.json')
-const file = './scripts/archive/contribution/index-with-code-cleaned.json'
+const file = './scripts/archive/contribution/total-with-code-cleaned.json'
+const maxFile = './src/resources/maxes.json'
 
 const names = {
   'Energy Per Capita (tCO2e Per Capita)': 'Energy',
@@ -16,13 +17,18 @@ const defaultMaxes = Object.keys(names).reduce(
   {}
 )
 
-const maxes = contributions.reduce((m, c) => {
+const calcedMaxes = contributions.reduce((m, c) => {
   return Object.keys(m).reduce((me, n) => {
     return Object.assign({}, me, {[n]: Math.max(m[n], c[n])})
   }, {})
 }, defaultMaxes)
 
-console.log(maxes)
+const maxes = Object.keys(calcedMaxes).reduce((m, c) => {
+  const newMax = Object.assign({}, m, {[names[c]]: calcedMaxes[c]})
+  delete newMax[c]
+  return newMax
+}, calcedMaxes)
+
 const obj = contributions.map(c => {
   return Object.assign(
     {},
@@ -31,10 +37,11 @@ const obj = contributions.map(c => {
     },
     Object.keys(names).reduce((m, t) => {
       return Object.assign({}, m, {
-        [names[t]]: typeof c[t] === 'number' ? c[t] / maxes[t] : null
+        [names[t]]: typeof c[t] === 'number' ? c[t] : null
       })
     }, {})
   )
 })
 
 jsonfile.writeFile(file, obj, console.error)
+jsonfile.writeFile(maxFile, maxes, console.error)

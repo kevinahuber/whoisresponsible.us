@@ -14,7 +14,8 @@
     ],
     "highLabel": "At Risk",
     "lowLabel": "Safe",
-    "isNegative": true
+    "isNegative": true,
+    "isIndex": true
   },
   {
     "title": "Preparedness",
@@ -22,7 +23,8 @@
     "highLabel": "Not Ready",
     "lowLabel": "Prepared",
     "paris": false,
-    "isNegative": false
+    "isNegative": false,
+    "isIndex": true
   },
   {
     "title": "Contribution",
@@ -36,6 +38,7 @@
     ],
     "highLabel": "High Volume",
     "lowLabel": "Low Volume",
-    "isNegative": true
+    "isNegative": true,
+    "isIndex": false
   }
 ]

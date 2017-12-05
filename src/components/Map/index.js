@@ -7,9 +7,11 @@ import {
   ZoomableGroup
 } from 'react-simple-maps'
 import cn from 'classnames'
-import * as errors from '../../errors.js'
+import errors from '../../errors.js'
 import noDataCodes from '../../services/getNoDataCodes.js'
-
+import negativeSubcategories from '../../services/getNegativeSubcategories.js'
+import getLabel from '../../services/getLabel.js'
+import categories from '../../resources/categories.json'
 // $FlowFixMe
 import {Motion, spring} from 'react-motion'
 import withRedux from 'next-redux-wrapper'
@@ -20,16 +22,17 @@ import {actions as tooltipActions} from '@kevinahuber/redux-tooltip'
 import {scalePow} from 'd3-scale'
 
 import type {Geography as GeographyType} from '../../types.js'
-
 import styles from './styles.css'
 
 const excludedCodes = new Set(['ATA'])
 
 const ZOOM = 2
 
-const popScale = scalePow()
-  .domain([0, 1])
-  .range([styles.primary, styles.secondary])
+const popScale = (scale: *, activeSubcategory: string) => {
+  return scalePow()
+    .domain(negativeSubcategories.has(activeSubcategory) ? [1, 0] : [0, 1])
+    .range([styles.primary, styles.secondary])(scale)
+}
 
 type Props = {
   activeSubcategory: string,
@@ -101,27 +104,31 @@ class Map extends Component<Props, State> {
 
     const {properties: {iso_a3, name}} = geography
     const scale = getScale(activeSubcategory, iso_a3)
-    const content =
+    const category = categories.find(c =>
+      c.subcategories.includes(activeSubcategory)
+    )
+    const isDataless =
       noDataCodes.has(iso_a3) || scale === errors.INVALID_COUNTRY
-        ? `${name}: No Data Available`
-        : isShowingAll && scale !== errors.INVALID_SUBCATEGORY
-          ? `${name}: ${(100 * scale).toFixed(1)}`
-          : primaryCode &&
-            secondaryCode &&
-            (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
-            ? 'Deselect'
-            : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
-    const tooltipColor = popScale(scale)
+    const content = isDataless
+      ? `${name}: No Data Available`
+      : isShowingAll && typeof scale === 'number'
+        ? `${name}: ${getLabel(scale, category.isIndex)}`
+        : primaryCode &&
+          secondaryCode &&
+          (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
+          ? 'Deselect'
+          : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+    const tooltipColor = popScale(scale, activeSubcategory)
 
     dispatch(
       tooltipActions.show({
         origin: {x, y},
         content,
         contentStyles: {
-          color: isShowingAll ? tooltipColor : null
+          color: isShowingAll && !isDataless ? tooltipColor : null
         },
         baseStyles: {
-          borderColor: isShowingAll ? tooltipColor : null
+          borderColor: isShowingAll && !isDataless ? tooltipColor : null
         }
       })
     )
@@ -237,12 +244,12 @@ class Map extends Component<Props, State> {
                       const color = isDataless
                         ? '#33343D'
                         : isShowingAll
-                          ? popScale(scale)
+                          ? popScale(scale, activeSubcategory)
                           : isActive
                             ? styles.primary
                             : isSecondary ? styles.secondary : '#33343D'
                       const hoverColor = isShowingAll
-                        ? popScale(scale)
+                        ? popScale(scale, activeSubcategory)
                         : isActive
                           ? styles.primary
                           : isSecondary

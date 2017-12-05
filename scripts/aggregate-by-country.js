@@ -1,9 +1,9 @@
 const jsonfile = require('jsonfile')
 const fs = require('fs')
-const file = 'aggregate-by-country.json'
+const file = './src/resources/aggregate-by-country.json'
 const readinessFolder = './scripts/archive/readiness'
 const vulnerabilitiesFolder = './scripts/archive/vulnerabilities'
-const contributions = require('./archive/contribution/index-with-code-cleaned.json')
+const contributions = require('./archive/contribution/total-with-code-cleaned.json')
 const year = '2014'
 const obj = {}
 

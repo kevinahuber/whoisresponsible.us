@@ -2,50 +2,68 @@
 import React from 'react'
 import './styles.css'
 import cn from 'classnames'
-import errors from '../../../../errors.js'
+import categories from '../../../../resources/categories.json'
+import {type Errors} from '../../../../errors.js'
+import getWidth from '../../../../services/getWidth.js'
+import getLabel from '../../../../services/getLabel.js'
 
 type BarProps = {
   primaryScale: number,
   secondaryScale?: number,
-  isNegative?: boolean
+  isNegative?: boolean,
+  subcategory: string
 }
 
-const Bar = ({primaryScale, secondaryScale, isNegative}: BarProps) => (
-  <div className={cn('row__bar', {'row__bar--negative': isNegative})}>
-    {(isNegative ? primaryScale < 0 : primaryScale > 0) && (
-      <div
-        className="row__bar-primary"
-        style={{
-          width: `${Math.abs(primaryScale) * 100}%`
-        }}
-      >
-        <span className="row__bar-value">
-          {(primaryScale * 100).toFixed(1)}
-        </span>
-      </div>
-    )}
-    {typeof secondaryScale === 'number' &&
-      (isNegative ? secondaryScale < 0 : secondaryScale > 0) && (
+const Bar = ({
+  primaryScale,
+  secondaryScale,
+  isNegative,
+  subcategory
+}: BarProps) => {
+  const category = categories.find(c => c.subcategories.includes(subcategory))
+
+  return (
+    <div className={cn('row__bar', {'row__bar--negative': isNegative})}>
+      {(isNegative ? primaryScale < 0 : primaryScale > 0) && (
         <div
-          className="row__bar-bar row__bar-secondary"
+          className="row__bar-primary"
           style={{
-            width: `${Math.abs(secondaryScale || 0) * 100}%`
+            width: `${getWidth(subcategory, primaryScale, category.isIndex)}%`
           }}
         >
-          <span className="row__bar-value">{`${(secondaryScale * 100).toFixed(
-            1
-          )}`}</span>
+          <span className="row__bar-value">
+            {getLabel(primaryScale, category.isIndex)}
+          </span>
         </div>
       )}
-  </div>
-)
+      {typeof secondaryScale === 'number' &&
+        (isNegative ? secondaryScale < 0 : secondaryScale > 0) && (
+          <div
+            className="row__bar-bar row__bar-secondary"
+            style={{
+              width: `${getWidth(
+                subcategory,
+                secondaryScale,
+                category.isIndex
+              )}%`
+            }}
+          >
+            <span className="row__bar-value">
+              {getLabel(secondaryScale, category.isIndex)}
+            </span>
+          </div>
+        )}
+    </div>
+  )
+}
 
 type Props = {
-  primaryScale: number | $Values<typeof errors>,
-  secondaryScale?: number,
+  primaryScale: number | Errors,
+  secondaryScale?: number | Errors,
   title: string,
   isNegative?: boolean,
-  hasNegative?: boolean
+  hasNegative?: boolean,
+  subcategory: string
 }
 
 const Row = ({
@@ -53,13 +71,12 @@ const Row = ({
   secondaryScale,
   title,
   isNegative,
-  hasNegative
+  hasNegative,
+  subcategory
 }: Props) => {
   if (
-    primaryScale === errors.INVALID_COUNTRY ||
-    primaryScale === errors.INVALID_SUBCATEGORY ||
-    secondaryScale === errors.INVALID_COUNTRY ||
-    secondaryScale === errors.INVALID_SUBCATEGORY
+    typeof primaryScale !== 'number' ||
+    (secondaryScale && typeof secondaryScale !== 'number')
   )
     return
   return (
@@ -71,6 +88,7 @@ const Row = ({
             isNegative ? (secondaryScale || 0) * -1 : secondaryScale
           }
           isNegative
+          subcategory={subcategory}
         />
       )}
       <div className="row__title">{title}</div>
@@ -79,6 +97,7 @@ const Row = ({
         secondaryScale={
           isNegative ? (secondaryScale || 0) * -1 : secondaryScale
         }
+        subcategory={subcategory}
       />
     </div>
   )

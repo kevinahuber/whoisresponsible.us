@@ -57,9 +57,9 @@ $row-height: $bar-height * 3;
     overflow: hidden;
     // padding-top: 17px;
     text-overflow: ellipsis;
+    user-select: none;
     white-space: nowrap;
     width: 100%;
-    user-select: none;
   }
 
   &__bar {
@@ -98,6 +98,7 @@ $row-height: $bar-height * 3;
     position: absolute;
     right: 0;
     transition: opacity 200ms ease-in-out;
+    white-space: nowrap;
   }
 
   &__bar-secondary &__bar-value {

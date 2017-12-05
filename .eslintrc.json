@@ -12,6 +12,9 @@
     "prettier/standard"
   ],
   "plugins": ["flowtype", "prettier"],
+  "globals": {
+    "$Keys": true
+  },
   "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": 2,

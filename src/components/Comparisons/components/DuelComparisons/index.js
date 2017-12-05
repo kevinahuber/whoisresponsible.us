@@ -71,6 +71,7 @@ export default class DuelComparisons extends Component<Props> {
                   primaryScale={primaryScale}
                   secondaryScale={secondaryScale}
                   title={as}
+                  subcategory={as}
                 />
               </CSSTransition>
             )

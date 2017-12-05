@@ -6,3 +6,4 @@
 - [ ] Recenter on zoom out
 - [ ] Convert `activeSubcategories` to set
 - [ ] Add alphabetical sort
+- [ ] Add tooltips to Subcategories

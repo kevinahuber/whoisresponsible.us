@@ -76,6 +76,7 @@ export default class TopComparisons extends Component<Props, State> {
                     key={i}
                     primaryScale={country.index}
                     title={codes[country.code]}
+                    subcategory={activeSubcategory}
                   />
                 </CSSTransition>
               )
