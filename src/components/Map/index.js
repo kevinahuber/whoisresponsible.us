@@ -12,6 +12,8 @@ import noDataCodes from '../../services/getNoDataCodes.js'
 import negativeSubcategories from '../../services/getNegativeSubcategories.js'
 import getLabel from '../../services/getLabel.js'
 import categories from '../../resources/categories.json'
+
+import mapData from './world-50m-with-population.json'
 // $FlowFixMe
 import {Motion, spring} from 'react-motion'
 import withRedux from 'next-redux-wrapper'
@@ -224,7 +226,7 @@ class Map extends Component<Props, State> {
                 disablePanning={zoom === 1}
               >
                 <Geographies
-                  geographyUrl={'/world-50m-with-population.json'}
+                  geography={mapData}
                   disableOptimization={isOptimizationDisabled}
                 >
                   {(geographies, projection) =>

@@ -5762,9 +5762,9 @@ react-scripts@1.0.13:
   optionalDependencies:
     fsevents "1.1.2"
 
-react-simple-maps@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-simple-maps/-/react-simple-maps-0.9.0.tgz#a5e8f4fc95892ecf3a51004276ba43ed169c4d18"
+react-simple-maps@0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/react-simple-maps/-/react-simple-maps-0.10.1.tgz#4d884ac24a55c327a86076113f3890e61c92906a"
   dependencies:
     d3-geo "1.6.3"
     d3-geo-projection "1.2.2"
