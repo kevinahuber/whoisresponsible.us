@@ -49,7 +49,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars3.githubusercontent.com/u/6272414?v=4" width="100px;"/><br /><sub><b>Kevin Huber</b></sub>](http://kevinahuber.com)<br />[📝](#blog-kevinahuber "Blogposts") [💻](https://github.com/kevinahuber/whoisresponsible.us/commits?author=kevinahuber "Code") [📖](https://github.com/kevinahuber/whoisresponsible.us/commits?author=kevinahuber "Documentation") [🤔](#ideas-kevinahuber "Ideas, Planning, & Feedback") |
+| [<img src="https://avatars3.githubusercontent.com/u/6272414?v=4" width="100px;"/><br /><sub><b>Kevin Huber</b></sub>](http://kevinahuber.com)<br />[📝](#blog-kevinahuber "Blogposts") [💻](https://github.com/kevinahuber/whoisresponsible.us/commits?author=kevinahuber "Code") [📖](https://github.com/kevinahuber/whoisresponsible.us/commits?author=kevinahuber "Documentation") [🤔](#ideas-kevinahuber "Ideas, Planning, & Feedback") [🎨](#design-kevinahuber "Design") |
 | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
