@@ -1,0 +1,23 @@
+{
+  "projectName": "whoisresponsible.us",
+  "projectOwner": "kevinahuber",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "kevinahuber",
+      "name": "Kevin Huber",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6272414?v=4",
+      "profile": "http://kevinahuber.com",
+      "contributions": [
+        "blog",
+        "code",
+        "doc",
+        "ideas"
+      ]
+    }
+  ]
+}
