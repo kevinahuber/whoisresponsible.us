@@ -81,7 +81,6 @@ const Subcategory = ({
       key={index}
     >
       <div
-        title="hello"
         className={cn('categories__subcategory-title', {
           'categories__subcategory-title--active': isShowingAll
             ? activeSubcategory === subcategory

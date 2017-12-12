@@ -19,10 +19,13 @@
     "prettier:write": "prettier --write \"{scripts, src}/*.js\"",
     "lint:scss": "stylelint \"**/*.scss\"",
     "lint:scss:fix": "yarn lint:scss --fix",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
     "flow": "flow"
   },
   "dependencies": {
     "@kevinahuber/redux-tooltip": "^0.7.2",
+    "all-contributors-cli": "^4.10.0",
     "classnames": "^2.2.5",
     "d3-scale": "^1.0.6",
     "next-redux-wrapper": "^1.3.4",
