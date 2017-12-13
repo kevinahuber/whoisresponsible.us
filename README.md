@@ -54,6 +54,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
 
+## References
+**Vulnerability and Preparedness (Readiness) Data**: ND-GAIN. 2014. Notre Dame Global Adaptation Initiative.  South Bend, IN: University of Nortre Dame. http://index.nd-gain.org/.
+**Contribution Data**: CAIT. 2014. Climate Analysis Indicators Tool: WRI’s Climate Data Explorer. Washington, DC: World Resources Institute. http://cait2.wri.org.
 
 ## License
 [MIT](LICENSE.md)
