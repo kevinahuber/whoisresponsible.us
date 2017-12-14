@@ -17,7 +17,7 @@ export default class Footer extends Component {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://medium.com/@kevinahuber/climate-change-responsibility-wip-84cdcb9aa2cd"
+            href="https://medium.com/@kevinahuber/who-is-responsible-for-climate-change-84cdcb9aa2cd"
             className="footer__responsibility-link"
           >
             Learn More

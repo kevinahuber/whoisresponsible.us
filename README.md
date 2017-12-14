@@ -8,7 +8,7 @@
 
 ## Why?
 
-The effects of climate change are reaching everyone, but in a staggeringly disproportionate way. This project seeks to explore the data behind that assertion. You can read more in my [article]().
+The effects of climate change are reaching everyone, but in a staggeringly disproportionate way. This project seeks to explore the data behind that assertion. You can [learn more in my article](https://medium.com/@kevinahuber/who-is-responsible-for-climate-change-84cdcb9aa2cd).
 
 ## Contributing
 
