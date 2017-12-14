@@ -9,22 +9,22 @@ export default class Footer extends Component {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://medium.com/@kevinahuber/climate-change-responsibility-wip-84cdcb9aa2cd"
+            href="https://github.com/kevinahuber/whoisresponsible.us#references"
             className="footer__responsibility-link"
           >
             Who is responsible for this data?
           </a>
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://medium.com/@kevinahuber/climate-change-responsibility-wip-84cdcb9aa2cd"
+            className="footer__responsibility-link"
+          >
+            Learn More
+          </a>
+
           <span className="footer__attribution">
             {'Developed & Designed with ♥  by '}
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              className="footer__attribution-link"
-              href="https://www.behance.net/csweetdesigns"
-            >
-              Claire Sweet
-            </a>
-            {' and '}
             <a
               rel="noopener noreferrer"
               target="_blank"
@@ -32,6 +32,15 @@ export default class Footer extends Component {
               href="https://kevinahuber.com"
             >
               Kevin A. Huber
+            </a>
+            {' & '}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              className="footer__attribution-link"
+              href="https://www.behance.net/csweetdesigns"
+            >
+              Claire Sweet
             </a>
           </span>
         </div>

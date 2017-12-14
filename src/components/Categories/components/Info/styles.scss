@@ -61,4 +61,12 @@ $size: 20px;
       width: 180px;
     }
   }
+
+  &__link {
+    color: $orange;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
 }

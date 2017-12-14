@@ -4,7 +4,7 @@
 .footer {
   background: $bg-black;
   bottom: 0;
-  color: $dark-grey;
+  color: rgba($text-grey, 0.7);
   font-family: 'SanFranciscoText-RegularItalic';
   left: 0;
   position: absolute;
@@ -30,7 +30,7 @@
 
   &__responsibility-link,
   &__attribution-link {
-    color: $dark-grey;
+    color: rgba($text-grey, 0.7);
     text-decoration: none;
 
     &:hover {
@@ -45,7 +45,7 @@
     user-select: none;
 
     @include desktop-up {
-      padding: 0 30px;
+      padding: 0 20px;
     }
   }
 }

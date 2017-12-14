@@ -45,12 +45,12 @@ export default class Info extends Component<Props, State> {
                 <div className="info__details">
                   <b>Vulnerability</b> measures a country’s exposure,
                   sensitivity and capacity to adapt to the negative effects of
-                  climate change. Vulnerability is an index between 0 and 100
+                  climate change. Vulnerability is an index between 0 and 100.
                   <br />
                   <br />
                   <b>Preparedness</b> a country’s ability to leverage
                   investments and convert them to adaptation actions.
-                  Preparedness is an index between 0 and 100
+                  Preparedness is an index between 0 and 100.
                   <br />
                   <br />
                   <b>Contribution</b> is still actively contributing to climate
@@ -59,6 +59,15 @@ export default class Info extends Component<Props, State> {
                   <br />
                   <br />
                   All data is from 2014.
+                  <br />
+                  <a
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href="https://github.com/kevinahuber/whoisresponsible.us#references"
+                    className="info__link"
+                  >
+                    Data Sources
+                  </a>
                 </div>
               )}
             </div>
