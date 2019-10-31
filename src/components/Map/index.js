@@ -161,12 +161,12 @@ class Map extends Component<Props, State> {
     const {isShowingAll} = this.props
     return (
       <div className={cn('map__zoom', {'map__zoom--all': isShowingAll})}>
-        <div className="map__zoom-in" onClick={this.handleZoomIn}>
+        <button className="map__zoom-in" onClick={this.handleZoomIn} aria-label="Zoom in">
           +
-        </div>
-        <div className="map__zoom-out" onClick={this.handleZoomOut}>
+        </button>
+        <button className="map__zoom-out" onClick={this.handleZoomOut} aria-label="Zoom out">
           -
-        </div>
+        </button>
       </div>
     )
   }
