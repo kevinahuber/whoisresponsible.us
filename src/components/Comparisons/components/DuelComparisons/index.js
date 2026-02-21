@@ -1,25 +1,18 @@
-// @flow
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import data from '../../../../resources/aggregate-by-country.json'
 import Row from '../Row'
-import {TransitionGroup, CSSTransition} from 'react-transition-group'
-import styles from './styles.css'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import './styles.scss'
 import categories from '../../../../resources/categories.json'
+import { ENTER_DURATION, EXIT_DURATION } from '../../../../constants'
 
 const TIMEOUT = {
-  enter: parseInt(styles.enter, 10),
-  exit: parseInt(styles.exit, 10)
+  enter: ENTER_DURATION,
+  exit: EXIT_DURATION
 }
 
-type Props = {
-  primaryCode: string,
-  activeSubcategories: string[],
-  isShowingParis: boolean,
-  secondaryCode: string
-}
-
-export default class DuelComparisons extends Component<Props> {
-  renderParis(primaryCode: string, secondaryCode: string) {
+export default class DuelComparisons extends Component {
+  renderParis(primaryCode, secondaryCode) {
     return (
       <div className="duel-comparisons__paris">
         <span className="duel-comparisons__paris-title">Paris Agreement</span>

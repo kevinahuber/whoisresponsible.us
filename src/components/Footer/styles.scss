@@ -4,7 +4,7 @@
 .footer {
   background: $bg-black;
   bottom: 0;
-  color: rgba($text-grey, 0.7);
+  color: $text-grey;
   font-family: 'SanFranciscoText-RegularItalic';
   left: 0;
   position: absolute;
@@ -30,7 +30,7 @@
 
   &__responsibility-link,
   &__attribution-link {
-    color: rgba($text-grey, 0.7);
+    color: $text-grey;
     text-decoration: none;
 
     &:hover {

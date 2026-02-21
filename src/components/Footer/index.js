@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import './styles.css'
+import React, { Component } from 'react'
+import './styles.scss'
 
 export default class Footer extends Component {
   render() {
     return (
-      <div className="footer">
+      <footer className="footer">
         <div className="footer__container">
           <a
             rel="noopener noreferrer"
@@ -44,7 +44,7 @@ export default class Footer extends Component {
             </a>
           </span>
         </div>
-      </div>
+      </footer>
     )
   }
 }

@@ -1,5 +1,5 @@
-// @flow
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   ComposableMap,
   Geographies,
@@ -14,45 +14,26 @@ import getLabel from '../../services/getLabel.js'
 import categories from '../../resources/categories.json'
 
 import mapData from './world-50m-with-population.json'
-// $FlowFixMe
-import {Motion, spring} from 'react-motion'
-import withRedux from 'next-redux-wrapper'
-import {initStore} from '../../store'
+import { Motion, spring } from 'react-motion'
 import getScale from '../../services/getScale.js'
-import {actions as tooltipActions} from '@kevinahuber/redux-tooltip'
+import { actions as tooltipActions } from '../../tooltip'
 
-import {scalePow} from 'd3-scale'
+import { scalePow } from 'd3-scale'
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants'
 
-import type {Geography as GeographyType} from '../../types.js'
-import styles from './styles.css'
+import './styles.scss'
 
 const excludedCodes = new Set(['ATA'])
 
 const ZOOM = 2
 
-const popScale = (scale: *, activeSubcategory: string) => {
+const popScale = (scale, activeSubcategory) => {
   return scalePow()
     .domain(negativeSubcategories.has(activeSubcategory) ? [1, 0] : [0, 1])
-    .range([styles.primary, styles.secondary])(scale)
+    .range([PRIMARY_COLOR, SECONDARY_COLOR])(scale)
 }
 
-type Props = {
-  activeSubcategory: string,
-  dispatch: *, // TODO: Properly type
-  primaryCode?: string,
-  secondaryCode?: string,
-  isShowingAll: boolean,
-  onGeographyClick: (geography: GeographyType) => mixed
-}
-
-type State = {
-  canHover: boolean,
-  isOptimizationDisabled: boolean,
-  zoom: number,
-  center: [number, number]
-}
-
-class Map extends Component<Props, State> {
+class Map extends Component {
   state = {
     canHover: false,
     isOptimizationDisabled: false,
@@ -65,17 +46,17 @@ class Map extends Component<Props, State> {
     const canHover =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(hover: hover)').matches
-    this.setState({canHover})
+    this.setState({ canHover })
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.activeSubcategory !== nextProps.activeSubcategory ||
       this.props.primaryCode !== nextProps.primaryCode ||
       this.props.secondaryCode !== nextProps.secondaryCode ||
       this.props.isShowingAll !== nextProps.isShowingAll
     ) {
-      this.setState({isOptimizationDisabled: true})
+      this.setState({ isOptimizationDisabled: true })
     }
 
     if (
@@ -83,16 +64,17 @@ class Map extends Component<Props, State> {
       nextProps.primaryCode &&
       nextProps.secondaryCode
     )
-      this.setState({center: [0, 0], zoom: 1})
+      this.setState({ center: [0, 0], zoom: 1 })
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps) {
     if (this.state.isOptimizationDisabled) {
-      this.setState((state: State) => ({isOptimizationDisabled: false}))
+      this.setState(() => ({ isOptimizationDisabled: false }))
     }
   }
 
-  handleMove = (geography: Geography, evt: window.Event) => {
+  // geography is captured via closure from the render loop
+  handleMove = (geography, evt) => {
     const x = evt.clientX + window.pageXOffset
     const y = evt.clientY + window.pageYOffset
 
@@ -104,7 +86,7 @@ class Map extends Component<Props, State> {
       activeSubcategory
     } = this.props
 
-    const {properties: {iso_a3, name}} = geography
+    const { iso_a3, name } = geography.properties
     const scale = getScale(activeSubcategory, iso_a3)
     const category = categories.find(c =>
       c.subcategories.includes(activeSubcategory)
@@ -117,14 +99,14 @@ class Map extends Component<Props, State> {
         ? `${name}: ${getLabel(scale, category.isIndex)}`
         : primaryCode &&
           secondaryCode &&
-          (primaryCode === iso_a3 || secondaryCode === iso_a3) // eslint-disable-line camelcase
+          (primaryCode === iso_a3 || secondaryCode === iso_a3)
           ? 'Deselect'
-          : iso_a3 === primaryCode ? 'Pick a second country' : name // eslint-disable-line camelcase
+          : iso_a3 === primaryCode ? 'Pick a second country' : name
     const tooltipColor = popScale(scale, activeSubcategory)
 
     dispatch(
       tooltipActions.show({
-        origin: {x, y},
+        origin: { x, y },
         content,
         contentStyles: {
           color: isShowingAll && !isDataless ? tooltipColor : null
@@ -136,19 +118,19 @@ class Map extends Component<Props, State> {
     )
   }
 
-  handleZoomIn = (evt: window.Event) => {
+  handleZoomIn = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
 
-    this.setState((state: State) => ({
+    this.setState((state) => ({
       zoom: state.zoom * ZOOM
     }))
   }
 
-  handleZoomOut = (evt: window.Event) => {
+  handleZoomOut = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    this.setState((state: State) => ({
+    this.setState((state) => ({
       zoom: Math.max(state.zoom / ZOOM, 1)
     }))
   }
@@ -158,9 +140,9 @@ class Map extends Component<Props, State> {
   }
 
   renderZoom = () => {
-    const {isShowingAll} = this.props
+    const { isShowingAll } = this.props
     return (
-      <div className={cn('map__zoom', {'map__zoom--all': isShowingAll})}>
+      <div className={cn('map__zoom', { 'map__zoom--all': isShowingAll })}>
         <button className="map__zoom-in" onClick={this.handleZoomIn} aria-label="Zoom in">
           +
         </button>
@@ -180,7 +162,7 @@ class Map extends Component<Props, State> {
       onGeographyClick
     } = this.props
 
-    const {canHover, isOptimizationDisabled, zoom, center} = this.state
+    const { canHover, zoom, center } = this.state
 
     const height = 634
     const width = 959
@@ -202,12 +184,12 @@ class Map extends Component<Props, State> {
             y: 20
           }}
           style={{
-            zoom: spring(zoom, {stiffness: 210, damping: 20}),
-            x: spring(center[0], {stiffness: 210, damping: 20}),
-            y: spring(center[1], {stiffness: 210, damping: 20})
+            zoom: spring(zoom, { stiffness: 210, damping: 20 }),
+            x: spring(center[0], { stiffness: 210, damping: 20 }),
+            y: spring(center[1], { stiffness: 210, damping: 20 })
           }}
         >
-          {({zoom, x, y}) => (
+          {({ zoom, x, y }) => (
             <ComposableMap
               projectionConfig={{
                 scale: 200,
@@ -219,17 +201,15 @@ class Map extends Component<Props, State> {
                 width: '100%',
                 height: 'auto'
               }}
+              role="img"
+              aria-label="World map showing climate change responsibility data by country"
             >
               <ZoomableGroup
                 center={[x, y]}
                 zoom={zoom}
-                disablePanning={zoom === 1}
               >
-                <Geographies
-                  geography={mapData}
-                  disableOptimization={isOptimizationDisabled}
-                >
-                  {(geographies, projection) =>
+                <Geographies geography={mapData}>
+                  {({ geographies }) =>
                     geographies.map((geography, i) => {
                       const code = geography.properties.iso_a3
                       if (excludedCodes.has(code)) return null
@@ -242,45 +222,43 @@ class Map extends Component<Props, State> {
                       const isActive = code === primaryCode
                       const isSecondary = code === secondaryCode
                       const isDataless = noDataCodes.has(code) || scale === null
-                      // TODO: Import colors from css
                       const color = isDataless
                         ? '#33343D'
                         : isShowingAll
                           ? popScale(scale, activeSubcategory)
                           : isActive
-                            ? styles.primary
-                            : isSecondary ? styles.secondary : '#33343D'
+                            ? PRIMARY_COLOR
+                            : isSecondary ? SECONDARY_COLOR : '#33343D'
                       const hoverColor = isShowingAll
                         ? popScale(scale, activeSubcategory)
                         : isActive
-                          ? styles.primary
+                          ? PRIMARY_COLOR
                           : isSecondary
-                            ? styles.secondary
-                            : primaryCode ? styles.secondary : styles.primary
+                            ? SECONDARY_COLOR
+                            : primaryCode ? SECONDARY_COLOR : PRIMARY_COLOR
+                      const showTooltip = canHover || isShowingAll
                       return (
                         <Geography
                           key={i}
                           id={geography.properties.iso_a3}
                           geography={geography}
-                          projection={projection}
                           onClick={
-                            isShowingAll || isDataless ? null : onGeographyClick
+                            isShowingAll || isDataless
+                              ? undefined
+                              : (evt) => onGeographyClick(geography, evt)
                           }
                           onMouseMove={
-                            canHover || isShowingAll ? this.handleMove : null
+                            showTooltip
+                              ? (evt) => this.handleMove(geography, evt)
+                              : undefined
                           }
                           onMouseLeave={
-                            canHover || isShowingAll ? this.handleLeave : null
+                            showTooltip ? this.handleLeave : undefined
                           }
                           style={{
                             default: {
                               fill: color,
-                              outline: 'none',
-                              right: -10,
-                              left: -10,
-                              top: -10,
-                              bottom: -10,
-                              position: 'absolute'
+                              outline: 'none'
                             },
                             hover: {
                               fill: hoverColor,
@@ -312,4 +290,4 @@ class Map extends Component<Props, State> {
   }
 }
 
-export default withRedux(initStore)(Map)
+export default connect()(Map)

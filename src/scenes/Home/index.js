@@ -1,5 +1,5 @@
-// @flow
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import {
   Categories,
@@ -11,40 +11,13 @@ import {
 } from '../../components'
 import categories from '../../resources/categories.json'
 
-import withRedux from 'next-redux-wrapper'
-import {initStore} from '../../store'
-// TODO: Abstract into component
-import {Tooltip, actions as tooltipActions} from '@kevinahuber/redux-tooltip'
-import type {Geography, Category} from '../../types.js'
+import { Tooltip, actions as tooltipActions } from '../../tooltip'
 
-import './styles.css'
+import './styles.scss'
 
 const LIMIT = Infinity
 
-type State = {
-  activeSubcategories: string[],
-  activeSubcategory?: string,
-  isShowingAll: boolean,
-  isShowingParis: boolean,
-  isSortedNegative: boolean,
-  primaryGeography?: Geography,
-  secondaryGeography?: Geography,
-  clicktime: Date,
-  tooltipColor?: string
-}
-
-type Props = {
-  dispatch: *
-}
-
-// const testGeography = {
-//   properties: {
-//     iso_a3: 'USA',
-//     name: 'Funland'
-//   }
-// }
-
-class App extends Component<Props, State> {
+class App extends Component {
   state = {
     activeSubcategories: [],
     activeSubcategory: undefined,
@@ -58,12 +31,12 @@ class App extends Component<Props, State> {
     tooltipColor: undefined
   }
 
-  handleCategoryClick = (category: Category) => () => {
-    const {isShowingAll} = this.state
+  handleCategoryClick = (category) => () => {
+    const { isShowingAll } = this.state
 
     if (isShowingAll) return
-    this.setState((state: State) => {
-      const {activeSubcategories} = state
+    this.setState((state) => {
+      const { activeSubcategories } = state
       const newActiveSubcategories = category.subcategories.every(s =>
         activeSubcategories.includes(s)
       )
@@ -74,23 +47,23 @@ class App extends Component<Props, State> {
             .map(s => s)
             .filter(s => !activeSubcategories.includes(s))
             .concat(activeSubcategories)
-      return {activeSubcategories: newActiveSubcategories}
+      return { activeSubcategories: newActiveSubcategories }
     })
   }
 
-  handleSubcategoryClick = (sub: string) => () => {
-    const {isShowingAll} = this.state
-    if (isShowingAll) return this.setState({activeSubcategory: sub})
-    this.setState((state: State) => {
-      const {activeSubcategories} = state
+  handleSubcategoryClick = (sub) => () => {
+    const { isShowingAll } = this.state
+    if (isShowingAll) return this.setState({ activeSubcategory: sub })
+    this.setState((state) => {
+      const { activeSubcategories } = state
       const newActiveSubcategories = activeSubcategories.includes(sub)
         ? this.state.activeSubcategories.filter(s => s !== sub)
         : [sub].concat(this.state.activeSubcategories.slice(0, LIMIT - 1))
-      return {activeSubcategories: newActiveSubcategories}
+      return { activeSubcategories: newActiveSubcategories }
     })
   }
 
-  handleGeographyClick = (geography: Geography, evt: window.Event) => {
+  handleGeographyClick = (geography, evt) => {
     evt.stopPropagation()
     if (!this.canClick()) return
     const newState = {}
@@ -117,14 +90,14 @@ class App extends Component<Props, State> {
     const y = evt.clientY + window.pageYOffset
 
     this.setState(
-      (state: State) => newState,
+      (state) => newState,
       () => {
         if (this.state.primaryGeography && this.state.secondaryGeography) {
           this.props.dispatch(tooltipActions.hide())
         } else {
           this.props.dispatch(
             tooltipActions.show({
-              origin: {x, y},
+              origin: { x, y },
               content: 'Pick a second country'
             })
           )
@@ -134,10 +107,10 @@ class App extends Component<Props, State> {
   }
 
   canClick = () => {
-    const {clicktime} = this.state
+    const { clicktime } = this.state
     if (!clicktime) return false
     if (new Date() - clicktime < 500) return false
-    this.setState((state: State) => ({clicktime: new Date()}))
+    this.setState((state) => ({ clicktime: new Date() }))
     return true
   }
 
@@ -150,7 +123,7 @@ class App extends Component<Props, State> {
   }
 
   handleAllToggle = () => {
-    this.setState((state: State) => ({
+    this.setState((state) => ({
       activeSubcategory:
         state.activeSubcategory ||
         state.activeSubcategories[state.activeSubcategories.length - 1] ||
@@ -160,7 +133,7 @@ class App extends Component<Props, State> {
   }
 
   handleTopSort = () => {
-    this.setState((state: State) => ({
+    this.setState((state) => ({
       isSortedNegative: !state.isSortedNegative
     }))
   }
@@ -178,7 +151,7 @@ class App extends Component<Props, State> {
   }
 
   handleParisClick = () => {
-    this.setState((state: State) => ({
+    this.setState((state) => ({
       isShowingParis: !state.isShowingParis
     }))
   }
@@ -196,6 +169,7 @@ class App extends Component<Props, State> {
 
     return (
       <div className="app">
+        <a href="#main-content" className="skip-nav">Skip to main content</a>
         <Tooltip
           className={
             isShowingAll
@@ -216,7 +190,7 @@ class App extends Component<Props, State> {
           onPrimaryClick={this.handlePrimaryClick}
           onSecondaryClick={this.handleSecondaryClick}
         />
-        <div className="app__body">
+        <main id="main-content" className="app__body">
           <div className="app__container">
             <Map
               onGeographyClick={this.handleGeographyClick}
@@ -284,11 +258,11 @@ class App extends Component<Props, State> {
                 }
               />
             )}
-        </div>
+        </main>
         <Footer />
       </div>
     )
   }
 }
 
-export default withRedux(initStore)(App)
+export default connect()(App)

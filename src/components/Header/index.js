@@ -1,17 +1,7 @@
-// @flow
+import React, { Component } from 'react'
+import './styles.scss'
 
-import React, {Component} from 'react'
-import './styles.css'
-
-type Props = {
-  primaryName?: string,
-  secondaryName?: string,
-  onPrimaryClick: () => mixed,
-  onSecondaryClick: () => mixed,
-  isShowingAll: boolean,
-  activeSubcategory?: string
-}
-export default class Header extends Component<Props> {
+export default class Header extends Component {
   render() {
     const {
       primaryName,
@@ -31,21 +21,21 @@ export default class Header extends Component<Props> {
             'Who is responsible for Climate Change?'
           ) : secondaryName ? (
             <div>
-              <span onClick={onPrimaryClick} className="header__title--primary">
+              <button onClick={onPrimaryClick} className="header__title--primary">
                 {primaryName}
-              </span>
+              </button>
               {' or '}
-              <span
+              <button
                 onClick={onSecondaryClick}
                 className="header__title--secondary"
               >
                 {secondaryName}
-              </span>
+              </button>
             </div>
           ) : (
-            <span onClick={onPrimaryClick} className="header__title--primary">
+            <button onClick={onPrimaryClick} className="header__title--primary">
               {primaryName}
-            </span>
+            </button>
           )}
         </h1>
       </header>

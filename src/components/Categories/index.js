@@ -1,33 +1,27 @@
-// @flow
-import React, {Component} from 'react'
-import {TransitionGroup, CSSTransition} from 'react-transition-group'
+import React, { Component } from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import data from '../../resources/aggregate-by-country.json'
 
-import styles from './styles.css'
-import type {Category as CategoryType} from '../../types.js'
+import './styles.scss'
 import Info from './components/Info'
 import cn from 'classnames'
 import categories from '../../resources/categories.json'
+import { ENTER_DURATION, EXIT_DURATION } from '../../constants'
 
 const TIMEOUT = {
-  enter: parseInt(styles.enter, 10),
-  exit: parseInt(styles.exit, 10)
+  enter: ENTER_DURATION,
+  exit: EXIT_DURATION
 }
 
-const formatLabel = (value: number): string => {
+const formatLabel = (value) => {
   return (value * 100).toFixed(1)
 }
-type SubcategoryValueProps = {
-  subcategory: string,
-  primaryCode: string,
-  secondaryCode: string
-}
-// TODO: Come up with a much better way to handle mobile than duplicating work
+
 const SubcategoryValue = ({
   subcategory,
   primaryCode,
   secondaryCode
-}: SubcategoryValueProps) => {
+}) => {
   const activeCategory = categories.find(c =>
     c.subcategories.includes(subcategory)
   )
@@ -51,17 +45,6 @@ const SubcategoryValue = ({
   )
 }
 
-type SubcategoryProps = {
-  activeSubcategories: string[],
-  activeSubcategory?: string,
-  isShowingAll?: boolean,
-  onSubcategoryClick: (title: string) => mixed,
-  subcategory: string,
-  index: number,
-  primaryCode: string,
-  secondaryCode: string
-}
-
 const Subcategory = ({
   activeSubcategories,
   activeSubcategory,
@@ -71,7 +54,7 @@ const Subcategory = ({
   secondaryCode,
   subcategory,
   index
-}: SubcategoryProps) => {
+}) => {
   const isActive = activeSubcategories.includes(subcategory)
   return (
     <div
@@ -80,7 +63,7 @@ const Subcategory = ({
       })}
       key={index}
     >
-      <div
+      <button
         className={cn('categories__subcategory-title', {
           'categories__subcategory-title--active': isShowingAll
             ? activeSubcategory === subcategory
@@ -89,7 +72,7 @@ const Subcategory = ({
         onClick={onSubcategoryClick(subcategory)}
       >
         {subcategory}
-      </div>
+      </button>
       {isActive &&
         !isShowingAll &&
         primaryCode &&
@@ -104,20 +87,6 @@ const Subcategory = ({
   )
 }
 
-type CategoryProps = {
-  activeSubcategories: string[],
-  activeSubcategory?: string,
-  isShowingAll: boolean,
-  onSubcategoryClick: (title: string) => mixed,
-  category: CategoryType,
-  isShowingParis: boolean,
-  delay: number,
-  onCategoryClick: (category: CategoryType) => mixed,
-  onParisClick: () => mixed,
-  primaryCode: string,
-  secondaryCode: string
-}
-
 const Category = ({
   category,
   isShowingParis,
@@ -125,19 +94,19 @@ const Category = ({
   onParisClick,
   delay,
   ...subcategoryProps
-}: CategoryProps) => {
+}) => {
   return (
     <div
-      style={{transitionDelay: `${delay}ms`}}
+      style={{ transitionDelay: `${delay}ms` }}
       className="categories__category"
     >
       <div className="categories__category-container">
-        <div
+        <button
           className="categories__category-title"
           onClick={onCategoryClick(category)}
         >
           {category.title}
-        </div>
+        </button>
         {category.subcategories &&
           category.subcategories.map((subcategory, i) => (
             <Subcategory
@@ -149,60 +118,43 @@ const Category = ({
           ))}
       </div>
       {category.paris && (
-        <div
+        <button
           onClick={onParisClick}
           className={cn('categories__paris', {
             'categories__paris--active': isShowingParis
           })}
         >
           Paris Accord
-        </div>
+        </button>
       )}
     </div>
   )
 }
 
-type Props = {
-  activeSubcategories: string[],
-  activeSubcategory?: string,
-  onSubcategoryClick: (title: string) => mixed,
-  isShowing: boolean,
-  isShowingParis: boolean,
-  isShowingAll: boolean,
-  onCategoryClick: (category: CategoryType) => mixed,
-  onParisClick: () => mixed,
-  primaryCode?: string,
-  secondaryCode?: string
-}
-
-type State = {
-  isExiting: boolean[]
-}
-
-export default class Categories extends Component<Props, State> {
+export default class Categories extends Component {
   state = {
     isExiting: []
   }
 
-  handleExit = (index: number) => () => {
-    this.setState((state: State) => {
+  handleExit = (index) => () => {
+    this.setState((state) => {
       const isExiting = state.isExiting.slice()
       isExiting[index] = true
-      return {isExiting}
+      return { isExiting }
     })
   }
 
-  handleExited = (index: number) => () => {
-    this.setState((state: State) => {
+  handleExited = (index) => () => {
+    this.setState((state) => {
       const isExiting = state.isExiting.slice()
       isExiting[index] = false
-      return {isExiting}
+      return { isExiting }
     })
   }
 
   render() {
-    const {isShowing, ...categoryProps} = this.props
-    const {isExiting} = this.state
+    const { isShowing, ...categoryProps } = this.props
+    const { isExiting } = this.state
     return (
       <div
         className={cn('categories', {

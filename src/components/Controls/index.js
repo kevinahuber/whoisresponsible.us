@@ -1,19 +1,11 @@
-// @flow
-
-import React, {Component} from 'react'
-import './styles.css'
+import React, { Component } from 'react'
+import './styles.scss'
 import categories from '../../resources/categories.json'
 import cn from 'classnames'
-type Props = {
-  onBackClick: () => mixed,
-  onAllToggle: () => mixed,
-  isShowingAll: boolean,
-  activeSubcategory: string
-}
 
-export default class Controls extends Component<Props> {
+export default class Controls extends Component {
   renderLegend = () => {
-    const {activeSubcategory} = this.props
+    const { activeSubcategory } = this.props
     const activeCategory =
       categories.find(c => c.subcategories.includes(activeSubcategory)) || {}
     return (
@@ -31,21 +23,21 @@ export default class Controls extends Component<Props> {
   }
 
   render() {
-    const {onBackClick, onAllToggle, isShowingAll} = this.props
+    const { onBackClick, onAllToggle, isShowingAll } = this.props
 
     return (
-      <div className={cn('controls', {'controls--all': isShowingAll})}>
+      <div className={cn('controls', { 'controls--all': isShowingAll })}>
         {isShowingAll && this.renderLegend()}
-        <div
+        <button
           onClick={isShowingAll ? onAllToggle : onBackClick}
           className="controls__back"
         >
           <span className="controls__label">{'< Back'}</span>
-        </div>
+        </button>
         {!isShowingAll && (
-          <div onClick={onAllToggle} className="controls__all">
+          <button onClick={onAllToggle} className="controls__all">
             <span className="controls__label">See how everyone stacks up</span>
-          </div>
+          </button>
         )}
       </div>
     )

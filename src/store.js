@@ -1,6 +1,5 @@
-import {createStore, combineReducers} from 'redux'
-
-import {reducer as tooltip} from '@kevinahuber/redux-tooltip'
+import { createStore, combineReducers } from 'redux'
+import { reducer as tooltip } from './tooltip'
 
 const initialState = {
   title: ''
@@ -13,6 +12,6 @@ const appReducer = (state = initialState, action) => {
   }
 }
 
-export const initStore = (initState = {appReducer: initialState}) => {
-  return createStore(combineReducers({appReducer, tooltip}), initState)
+export const initStore = (initState = { appReducer: initialState }) => {
+  return createStore(combineReducers({ appReducer, tooltip }), initState)
 }

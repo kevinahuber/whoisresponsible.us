@@ -49,6 +49,10 @@ $max-exit-duration: 255;
 
 @mixin fade-in {
   animation: fade-in-animation 1s;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 @keyframes fade-in-animation {
@@ -100,6 +104,10 @@ $max-exit-duration: 255;
   @include desktop-up {
     transition-duration: 200ms;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
+  }
 }
 
 @mixin animation-in {
@@ -112,6 +120,10 @@ $max-exit-duration: 255;
   @include desktop-up {
     animation-duration: 200ms;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 0ms;
+  }
 }
 
 @mixin transition-out {
@@ -123,6 +135,10 @@ $max-exit-duration: 255;
 
   @include desktop-up {
     transition-duration: 175ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0ms;
   }
 }
 
@@ -145,8 +161,9 @@ $max-exit-duration: 255;
   }
 
   &--active:hover {
-    background-color: rgba($orange, 0.7);
+    background-color: $orange;
     color: $bg-grey;
+    opacity: 0.85;
   }
 
   @include tablet-up {

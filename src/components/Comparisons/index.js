@@ -1,21 +1,8 @@
-// @flow
-import React, {Component} from 'react'
-import './styles.css'
-import {DuelComparisons, TopComparisons} from './components'
+import React, { Component } from 'react'
+import './styles.scss'
+import { DuelComparisons, TopComparisons } from './components'
 
-type Props = {
-  activeSubcategories: string[],
-  activeSubcategory: string,
-  isShowingAll: boolean,
-  isShowingParis: boolean,
-  isSortedNegative: boolean,
-  isVisible: boolean,
-  onTopSort: () => mixed,
-  primaryCode: string,
-  secondaryCode: string
-}
-
-export default class Comparisons extends Component<Props> {
+export default class Comparisons extends Component {
   render() {
     const {
       activeSubcategories,

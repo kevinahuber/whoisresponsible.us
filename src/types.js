@@ -1,13 +1,3 @@
-// @flow
-export type Category = {
-  title: string,
-  subcategories: string[],
-  paris?: boolean
-}
-
-export type Geography = {
-  properties: {
-    name: string,
-    iso_a3: string
-  }
-}
+// Type definitions (formerly Flow types, kept for documentation)
+// Category: { title: string, subcategories: string[], paris?: boolean }
+// Geography: { properties: { name: string, iso_a3: string } }
